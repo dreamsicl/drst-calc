@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <title>starlight stage calculator</title>
+
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="stylesheets/github-light.css">
+  <meta name="viewport" content="width=device-width">
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="app.js"></script>
+  <script src="constants.js"></script>
+  <script src="countdownTimer.js"></script>
+
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>starlight stage token event calculator</h1>
+    </header>
+    <section ng-app="main">
+      <div class="panel-group" id="accordion" ng-controller="timeCtrl">
+
+        <!-- remaining time -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a data-toggle="collapse" data-parent="#accordion" href="#time">
+              <h3 class="panel-title">Remaining Time</h3></a>
+            </div>
+            <div id="time" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <form>
+                  <h4>Automatic Calculation</h4>
+                  now: {{clock | date: 'medium'}}
+                  <p ng-show="deadline">
+                    event end: {{deadline | date: 'medium'}}<br/>
+                    time left: {{ms/1000/60 | time:'mm':'hhh mmm':false}}<br/>
+                  </p>
+                  <p ng-hide="deadline">no event!</p>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      <div ng-controller="liveController">
+
+        <form name="settings" novalidate>
+
+          <!-- live settings -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <a data-toggle="collapse" data-parent="#accordion" href="#liveSettings">
+                <h3 class="panel-title">Live Settings</h3></a>
+            </div>
+            <div id="liveSettings" class="panel-collapse collapse">
+              <div class="panel-body">
+                <div ng-include="'liveSettings.htm'"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- status -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <a data-toggle="collapse" data-parent="#accordion" href="#status">
+                <h3 class="panel-title">Status</h3></a>
+            </div>
+            <div id="status" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <div style="width: 48%;vertical-align: top; display: inline-block">
+                  <p><label>Current Rank</label>
+                    <input type="number" name="lvl" ng-model="user.lvl" min="1" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required></p>
+                    <span ng-show="settings.lvl.$error.required">The rank is required.</span>
+                    <p>Current EXP <input type="number" name="exp" ng-model="user.exp" reg-ex-input reg-ex="^[0-9]*$" ng-change="updateStatus()" required>
+                      <span ng-show="settings.exp.$error.required">EXP is required.</span></p>
+                </div>
+                <div style="width: 48%; vertical-align: top;display: inline-block">
+                  <p>Points Earned <input type="number" name="pts" ng-model="user.pts" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+                    <span ng-show="settings.pts.$error.required">Points Earned is required.</span><br/>
+                    Current Tokens <input type="number" name="tok" ng-model="user.tok" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+                    <span ng-show="settings.tok.$error.required">Current Tokens is required.</span><br/>
+                    Goal <input type="number" name="end" ng-model="user.end" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
+                    <span ng-show="settings.end.$error.required">Goal is required.</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <center><button type="submit" class="btn btn-primary" ng-disabled="settings.$invalid">Submit</button></center>
+
+
+        <!-- results -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <a data-toggle="collapse" data-parent="#accordion" href="#results">
+              <h3 class="panel-title">Results</h3></a>
+          </div>
+          <div id="results" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <pre>event lives needed: {{calcEventLivesNeeded()}}</pre>
+              <pre>tokens needed to earn {{ }}</pre>
+              <pre>normal lives needed: {{calcNormalLivesNeeded()}}</pre>
+              <pre>end rank: {{calcEndRank()}}</pre>
+              <pre>stamina deficit: {{calcStamDeficit()}}</pre>
+              <pre>play time: {{calcPlayTime() | time:'mm':'hhh mmm':false}}</pre>
+              <div ng-show="{{calcPlayTime() > timeLeft}}">error! cannot reach goal, not enough time left</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <footer>
+      <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </footer>
+  </div>
+<script src="javascripts/scale.fix.js"></script>
+</body>
+</html>

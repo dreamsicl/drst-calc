@@ -1,0 +1,28 @@
+<form name="lives">
+  <div style="width: 48%; display: inline-block">
+  <p><label for="n_stam">Normal Live Stamina Cost: </label>
+  <select name="n_stam" id="n_stam" ng-model="norm.stam"
+    ng-options="stam for stam in staminas" ng-change="updateNorm()"></select></p>
+
+  <p><label for="n_score">Normal Live Score Rank: </label>
+    <select name="n_score" id="n_score" ng-model="norm.score"
+      ng-options="score for score in scores" ng-change="updateNorm()"></select></p>
+
+  <p><label for="n_mul">Normal Live Multiplier: </label>
+    <select name="n_mul" id="n_mul" ng-model="norm.mul"
+      ng-options="mul for mul in nmuls" ng-change="updateNorm()"></select></p>
+  </div>
+  <div style="width: 48%; display: inline-block">
+    <p><label for="e_diff">Event Live Difficulty: </label>
+    <select name="e_diff" id="e_diff" ng-model="tokn.diff"
+      ng-options="diff for diff in difficulties" ng-change="updateTokn()"></select></p>
+
+  <p><label for="e_score">Event Live Score Rank: </label>
+    <select name="e_score" id="e_score" ng-model="tokn.score"
+      ng-options="score for score in scores" ng-change="updateTokn()"></select></p>
+
+  <p><label for="e_mul">Event Live Multiplier: </label>
+    <select name="e_mul" id="e_mul" ng-model="tokn.mul"
+      ng-options="mul for mul in tmuls" ng-change="updateTokn()"></select></p>
+  </div>
+</form>
