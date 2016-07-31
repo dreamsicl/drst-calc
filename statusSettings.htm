@@ -1,0 +1,28 @@
+<div style="width: 48%;vertical-align: top; display: inline-block">
+    <p>
+        <label for="lvl">Current Rank</label>
+        <input type="number" name="lvl" ng-model="user.lvl" min="1" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
+    </p>
+    <span ng-show="settings.lvl.$error.required">The rank is required.</span>
+    <p>
+        <label for="exp">Current EXP</label>
+        <input type="number" name="exp" ng-model="user.exp" reg-ex-input reg-ex="^[0-9]*$" ng-change="updateStatus()" required>
+        <span ng-show="settings.exp.$error.required">EXP is required.</span>
+    </p>
+</div>
+<div style="width: 48%; vertical-align: top;display: inline-block">
+    <p> <label for="pts">Points Earned</label>
+        <input type="number" name="pts" ng-model="user.pts" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
+        <br/>
+        <span ng-show="settings.pts.$error.required">Points Earned is required.</span>
+        <br/>
+        <label for="tok">Current Tokens</label>
+        <input type="number" name="tok" ng-model="user.tok" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
+        <br/>
+        <span ng-show="settings.tok.$error.required">Current Tokens is required.</span>
+        <br/>
+        <label for="end">Goal</label>
+        <input type="number" name="end" ng-model="user.end" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
+        <span ng-show="settings.end.$error.required">Goal is required.</span>
+    </p>
+</div>
