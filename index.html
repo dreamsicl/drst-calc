@@ -53,16 +53,16 @@
                                 </div>
                             </div>
                         </div>
+
                         <div ng-controller="liveController">
-
                             <form name="settings" novalidate>
-
                                 <!-- live settings -->
                                 <div class="col-sm-6 col-lg-3">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <a data-toggle="collapse" href="#liveSettings">
-                                                <h3 class="panel-title"><span></span>Live Settings</h3>
+                                                <h3 class="panel-title">
+                                                    <span></span>Live Settings</h3>
                                             </a>
                                         </div>
                                         <div id="liveSettings" class="panel-collapse collapse in">
@@ -84,9 +84,6 @@
                                     </div>
                                 </div>
                             </form>
-                            <!--<center>
-                        <button type="submit" class="btn btn-primary" ng-disabled="settings.$invalid">Submit</button>
-                    </center>-->
 
                             <!-- results -->
                             <div class="col-sm-6 col-lg-3">
@@ -113,18 +110,17 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="tab-pane fade active in" id="groove"></div>
+            </section>
+            <footer>
+                <p>
+                    <small>Hosted on GitHub Pages &mdash; Theme by
+                        <a href="https://github.com/orderedlist">orderedlist</a>
+                    </small>
+                </p>
+            </footer>
+        </div>
+    </body>
 
-                    <div class="tab-pane fade active in" id="groove"></div>
-                </section>
-                <footer>
-                    <p>
-                        <small>Hosted on GitHub Pages &mdash; Theme by
-                            <a href="https://github.com/orderedlist">orderedlist</a>
-                        </small>
-                    </p>
-                </footer>
-            </div>
-            <script src="javascripts/scale.fix.js"></script>
-        </body>
-
-    </html>
+</html>
