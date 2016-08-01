@@ -16,13 +16,6 @@
         <script src="javascripts/angular.min.1.5.8.js"></script>
         <script src="javascripts/app.js"></script>
         <script src="javascripts/constants.js"></script>
-        <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
-        <script>
-        $('.grid').masonry({
-  itemSelector: '.grid-item', // use a separate class for itemSelector, other than .col-
-  columnWidth: '.grid-sizer',
-  percentPosition: true
-});</script>
 
         <!--[if lt IE 9]> <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     </head>
@@ -42,29 +35,26 @@
                 </ul>
 
             </header>
-            <section class="tab-content container-fluid grid" ng-app="calc">
-                <div class="tab-pane fade active in" id="token">
-                    <div class="panel-group" ng-controller="timeCtrl">
-                      <div class="grid-sizer col-xs-12 col-sm-6 col-md-6 col-lg-4"></div>
-                        <!-- remaining time -->
-                        <div class="col-sm-6 col-lg-3 grid-item">
-                            <div class="panel panel-default grid-item-content">
-                                <div class="panel-heading">
-                                    <a data-toggle="collapse" href="#time">
-                                        <h3 class="panel-title">Remaining Time</h3>
-                                    </a>
-                                </div>
-                                <div id="time" class="panel-collapse collapse in">
-                                    <div class="panel-body" ng-include="'timeLeft.htm'"></div>
-                                </div>
-                            </div>
-                        </div>
+            <section class="tab-content container-fluid" ng-app="calc">
+                <div class="tab-pane fade active in panel-group row" id="token">
 
                         <div ng-controller="liveController">
-                            <form name="settings" novalidate>
+                        <form name="settings" novalidate>
+                            <!-- remaining time -->
+                            <div ng-controller="timeCtrl">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#time">
+                                            <h3 class="panel-title">Remaining Time</h3>
+                                        </a>
+                                    </div>
+                                    <div id="time" class="panel-collapse collapse in">
+                                        <div class="panel-body" ng-include="'timeLeft.htm'"></div>
+                                    </div>
+                                </div>
+                            </div>
                                 <!-- live settings -->
-                                <div class="col-sm-6 col-lg-3 grid-item">
-                                    <div class="panel panel-default grid-item-content">
+                                    <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <a data-toggle="collapse" href="#liveSettings">
                                                 <h3 class="panel-title">
@@ -75,10 +65,8 @@
                                             <div class="panel-body" ng-include="'liveSettings.htm'"></div>
                                         </div>
                                     </div>
-                                </div>
                                 <!-- status -->
-                                <div class="col-sm-6 col-lg-3 grid-item">
-                                    <div ng-class="settings.$error.required ? 'panel panel-danger grid-item' : 'panel panel-default grid-item' ">
+                                    <div ng-class="settings.$error.required ? 'panel panel-danger' : 'panel panel-default' ">
                                         <div class="panel-heading">
                                             <a data-toggle="collapse" href="#status">
                                                 <h3 class="panel-title">Status</h3>
@@ -88,12 +76,10 @@
                                             <div class="panel-body" ng-include="'statusSettings.htm'"></div>
                                         </div>
                                     </div>
-                                </div>
                             </form>
 
                             <!-- results -->
-                            <div class="col-sm-6 col-lg-3 grid-item">
-                                <div class="panel panel-primary grid-item-content">
+                                <div class="panel panel-primary">
                                     <div class="panel-heading">
                                         <a data-toggle="collapse" href="#results">
                                             <h3 class="panel-title">Results</h3>
@@ -117,12 +103,12 @@
                                                 error! cannot reach goal, not enough time left</div>
                                         </div>
                                     </div>
-                                </div>
 
                             </div>
                         </div>
+
+
                     </div>
-                </div>
                 <div class="tab-pane fade active in" id="groove"></div>
             </section>
         </div>
