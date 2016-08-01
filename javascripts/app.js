@@ -70,7 +70,7 @@ app.directive("regExInput", function() {
     };
 });
 
-app.controller('timeCtrl', function($scope, $http, $timeout, Data) {
+app.controller('TokenController', function($scope, $http, $timeout, Data, $filter, NormalLive, TokenLive, Exp) {
     var url = "https://crossorigin.me/https://starlight.kirara.ca/api/v1/happening/now";
     $scope.deadline = null;
 
@@ -98,9 +98,7 @@ app.controller('timeCtrl', function($scope, $http, $timeout, Data) {
         $timeout(tick, tickInterval);
     }
     $timeout(tick, tickInterval);
-});
 
-app.controller('liveController', function($scope, $filter, Data, NormalLive, TokenLive, Exp) {
     /***** gather input *****/
     $scope.norm = {};
     $scope.tokn = {};
@@ -215,7 +213,7 @@ app.controller('liveController', function($scope, $filter, Data, NormalLive, Tok
         if (extraNorm > 0) {
             nPlay += extraNorm;
         }
-        return nPlay;
+        return Math.max(nPlay, 0);
     }
 
     $scope.calcEndRank = function() {
