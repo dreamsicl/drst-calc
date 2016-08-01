@@ -36,9 +36,7 @@
 
             </header>
             <section class="tab-content" ng-app="calc">
-                <div class="tab-pane fade active in" id="token" ng-controller="TokenCtrl">
-                    <div class="panel-group">
-
+                <div class="tab-pane fade active in panel-group" id="token" ng-controller="TokenCtrl">
                         <!-- remaining time -->
                         <div class="col-sm-6 col-lg-3">
                             <div class="panel panel-default">
@@ -95,15 +93,15 @@
                                         <div class="panel-body">
                                             <ul class="list-group">
                                                 <li class="list-group-item">Event Lives to Play:
-                                                    {{calcEventLivesNeeded()}}</li>
+                                                    <span class="badge">{{calcEventLivesNeeded()}}</span></li>
                                                 <li class="list-group-item">Normal Lives Needed:
-                                                    {{calcNormalLivesNeeded()}}</li>
+                                                    <span class="badge">{{calcNormalLivesNeeded()}}</span></li>
                                                 <li class="list-group-item">end rank:
-                                                    {{calcEndRank()}}</li>
+                                                    <span class="badge">{{calcEndRank()}}</span></li>
                                                 <li class="list-group-item">stamina deficit:
-                                                    {{calcStamDeficit()}}</li>
+                                                    <span class="badge">{{calcStamDeficit()}}</span></li>
                                                 <li class="list-group-item">play time:
-                                                    {{calcPlayTime() | time:'mm':'hhh mmm':false}}</li>
+                                                    <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span></li>
                                             </ul>
                                             <div ng-show="{{enoughTime()}}">
                                                 error! cannot reach goal, not enough time left</div>
@@ -113,8 +111,7 @@
 
                             </div>
                     </div>
-                </div>
-                <div class="tab-pane fade active in" id="groove"></div>
+                <div class="tab-pane fade active in panel-group" id="groove"></div>
             </section>
         </div>
         <footer>
