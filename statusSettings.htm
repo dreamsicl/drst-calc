@@ -23,6 +23,6 @@
         <br/>
         <label for="end">Goal</label>
         <input type="number" name="end" ng-model="user.end" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
-        <span ng-show="settings.end.$error.required">Goal is required.</span>
     </p>
 </div>
+<div class="alert alert-danger" role="alert" ng-show="settings.$error.required">Missing input.</div>

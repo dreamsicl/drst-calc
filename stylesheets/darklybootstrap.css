@@ -4387,6 +4387,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 .alert-danger .alert-link {
     color: #e6e6e6
 }
+
 @-webkit-keyframes progress-bar-stripes {
     from {
         background-position: 40px 0
@@ -5965,23 +5966,4 @@ a.list-group-item-danger.active:hover, a.list-group-item-danger.active:focus {
 }
 .panel-default>.panel-heading {
     background-color: #464545
-}
-select{
-  background-color: #777;
-  border: none;
-  border-radius: 3px;
-  padding: 3px 5px;
-}
-input {
-    color: #444;
-    background-color: #666;
-    padding: 3px 0px 3px 10px;
-    border: none;
-    border-radius: 3px;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-}
-input:focus{
-  background-color: #aaa;
-  color: #222;
 }
