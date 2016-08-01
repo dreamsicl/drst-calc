@@ -35,88 +35,89 @@
                 </ul>
 
             </header>
-            <section class="tab-content container-fluid" ng-app="calc">
-                <div class="tab-pane fade active in panel-group row" id="token">
+            <section class="tab-content" ng-app="calc">
+                <div class="tab-pane fade active in" id="token" ng-controller="TokenCtrl">
+                    <div class="panel-group">
 
-                    <div ng-controller="TokenController">
-                        <form name="settings" novalidate>
-                            <!-- remaining time -->
-                                <div class="panel panel-default col-sm-12">
-                                    <div class="panel-heading">
-                                        <a data-toggle="collapse" href="#time">
-                                            <h3 class="panel-title">Remaining Time</h3>
-                                        </a>
-                                    </div>
-                                    <div id="time" class="panel-collapse collapse in">
-                                        <div class="panel-body" ng-include="'timeLeft.htm'"></div>
-                                    </div>
-                                </div>
-                            <!-- live settings -->
+                        <!-- remaining time -->
+                        <div class="col-sm-6 col-lg-3">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <a data-toggle="collapse" href="#liveSettings">
-                                        <h3 class="panel-title">
-                                            <span></span>Live Settings</h3>
+                                    <a data-toggle="collapse" href="#time">
+                                        <h3 class="panel-title">Remaining Time</h3>
                                     </a>
                                 </div>
-                                <div id="liveSettings" class="panel-collapse collapse in">
-                                    <div class="panel-body" ng-include="'liveSettings.htm'"></div>
+                                <div id="time" class="panel-collapse collapse in">
+                                    <div class="panel-body" ng-include="'timeLeft.htm'"></div>
                                 </div>
                             </div>
-
-                            <!-- status -->
-                            <div ng-class="settings.$error.required ? 'panel panel-danger col-sm-12' : 'panel panel-default col-sm-12' ">
-                                <div class="panel-heading">
-                                    <a data-toggle="collapse" href="#status">
-                                        <h3 class="panel-title">Status</h3>
-                                    </a>
-                                </div>
-                                <div id="status" class="panel-collapse collapse in">
-                                    <div class="panel-body" ng-include="'statusSettings.htm'"></div>
-                                </div>
-                            </div>
-                        </form>
-
-                        <!-- results -->
-                        <div class="panel panel-primary col-sm-12">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" href="#results">
-                                    <h3 class="panel-title">Results</h3>
-                                </a>
-                            </div>
-                            <div id="results" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Event Lives to Play:
-                                            <span class="badge">{{calcEventLivesNeeded()}}</span>
-                                        </li>
-                                        <li class="list-group-item">Normal Lives Needed:
-                                            <span class="badge">{{calcNormalLivesNeeded()}}</span>
-                                        </li>
-                                        <li class="list-group-item">end rank:
-                                            <span class="badge">{{calcEndRank()}}</span>
-                                        </li>
-                                        <li class="list-group-item">stamina deficit:
-                                            <span class="badge">{{calcStamDeficit()}}</span>
-                                        </li>
-                                        <li class="list-group-item">play time:
-                                            <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
-                                        </li>
-                                    </ul>
-                                    <div ng-show="{{enoughTime()}}">
-                                        error! cannot reach goal, not enough time left</div>
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
 
+                            <form name="settings" novalidate>
+                                <!-- live settings -->
+                                <div class="col-sm-6 col-lg-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <a data-toggle="collapse" href="#liveSettings">
+                                                <h3 class="panel-title">
+                                                    <span></span>Live Settings</h3>
+                                            </a>
+                                        </div>
+                                        <div id="liveSettings" class="panel-collapse collapse in">
+                                            <div class="panel-body" ng-include="'liveSettings.htm'"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- status -->
+                                <div class="col-sm-6 col-lg-3">
+                                    <div ng-class="settings.$error.required ? 'panel panel-danger' : 'panel panel-default' ">
+                                        <div class="panel-heading">
+                                            <a data-toggle="collapse" href="#status">
+                                                <h3 class="panel-title">Status</h3>
+                                            </a>
+                                        </div>
+                                        <div id="status" class="panel-collapse collapse in">
+                                            <div class="panel-body" ng-include="'statusSettings.htm'"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- results -->
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" href="#results">
+                                            <h3 class="panel-title">Results</h3>
+                                        </a>
+                                    </div>
+                                    <div id="results" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">Event Lives to Play:
+                                                    {{calcEventLivesNeeded()}}</li>
+                                                <li class="list-group-item">Normal Lives Needed:
+                                                    {{calcNormalLivesNeeded()}}</li>
+                                                <li class="list-group-item">end rank:
+                                                    {{calcEndRank()}}</li>
+                                                <li class="list-group-item">stamina deficit:
+                                                    {{calcStamDeficit()}}</li>
+                                                <li class="list-group-item">play time:
+                                                    {{calcPlayTime() | time:'mm':'hhh mmm':false}}</li>
+                                            </ul>
+                                            <div ng-show="{{enoughTime()}}">
+                                                error! cannot reach goal, not enough time left</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade active in" id="groove"></div>
             </section>
         </div>
         <footer>
-        <li class="list-group-item">
             <small class="text-muted">Hosted on GitHub Pages &mdash; Theme by
                 <a href="https://github.com/orderedlist">orderedlist</a>
             </small>

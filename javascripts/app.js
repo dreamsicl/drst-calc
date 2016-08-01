@@ -70,7 +70,7 @@ app.directive("regExInput", function() {
     };
 });
 
-app.controller('TokenController', function($scope, $http, $timeout, Data, $filter, NormalLive, TokenLive, Exp) {
+app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, NormalLive, TokenLive, Exp) {
     var url = "https://crossorigin.me/https://starlight.kirara.ca/api/v1/happening/now";
     $scope.deadline = null;
 
@@ -208,7 +208,7 @@ app.controller('TokenController', function($scope, $http, $timeout, Data, $filte
     $scope.calcNormalLivesNeeded = function() {
         var ePlay = $scope.calcEventLivesNeeded();
         var tokNeed = ePlay * $scope.tokn.cost * $scope.tokn.mul;
-        var nPlay = (tokNeed - $scope.user.tok) / ($scope.norm.toknEarn);
+        var nPlay = Math.floor((tokNeed - $scope.user.tok) / ($scope.norm.toknEarn));
         var extraNorm = Math.ceil((ptDeficit - totalPtsTokn * ePlay) / $scope.norm.toknEarn);
         if (extraNorm > 0) {
             nPlay += extraNorm;
