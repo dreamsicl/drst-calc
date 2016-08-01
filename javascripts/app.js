@@ -1,4 +1,4 @@
-var app = angular.module('calc', ['ui.bootstrap']);
+var app = angular.module('calc', []);
 
 app.factory('Data', function() {
     var ret = {};
