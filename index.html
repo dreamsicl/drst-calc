@@ -13,7 +13,6 @@
         <script src="javascripts/bootstrap.min.3.3.6.js"></script>
         <link rel="stylesheet" href="stylesheets/darklybootstrap.css">
         <link rel="stylesheet" href="stylesheets/custom.css">
-
         <script src="javascripts/angular.min.1.5.8.js"></script>
         <script src="javascripts/app.js"></script>
         <script src="javascripts/constants.js"></script>
@@ -87,7 +86,7 @@
 
                             <!-- results -->
                             <div class="col-sm-6 col-lg-3">
-                                <div class="panel panel-default">
+                                <div class="panel panel-info">
                                     <div class="panel-heading">
                                         <a data-toggle="collapse" href="#results">
                                             <h3 class="panel-title">Results</h3>
@@ -95,13 +94,19 @@
                                     </div>
                                     <div id="results" class="panel-collapse collapse in">
                                         <div class="panel-body">
-                                            <pre>event lives needed: {{calcEventLivesNeeded()}}</pre>
-                                            <pre>tokens needed to earn {{ }}</pre>
-                                            <pre>normal lives needed: {{calcNormalLivesNeeded()}}</pre>
-                                            <pre>end rank: {{calcEndRank()}}</pre>
-                                            <pre>stamina deficit: {{calcStamDeficit()}}</pre>
-                                            <pre>play time: {{calcPlayTime() | time:'mm':'hhh mmm':false}}</pre>
-                                            <div ng-show="{{enoughTime()}}">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">Event Lives to Play:
+                                                    <span class="badge">{{calcEventLivesNeeded()}}</span></li>
+                                                <li class="list-group-item">Normal Lives Needed:
+                                                    <span class="badge">{{calcNormalLivesNeeded()}}</span></li>
+                                                <li class="list-group-item">end rank:
+                                                    <span class="badge">{{calcEndRank()}}</span></li>
+                                                <li class="list-group-item">stamina deficit:
+                                                    <span class="badge">{{calcStamDeficit()}}</span></li>
+                                                <li class="list-group-item">play time:
+                                                    <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span></li>
+                                            </ul>
+                                            <div ng-show="<span class="badge">{{enoughTime()</span>">
                                                 error! cannot reach goal, not enough time left</div>
                                         </div>
                                     </div>
@@ -113,14 +118,15 @@
                 </div>
                 <div class="tab-pane fade active in" id="groove"></div>
             </section>
-            <footer>
-                <p>
-                    <small>Hosted on GitHub Pages &mdash; Theme by
-                        <a href="https://github.com/orderedlist">orderedlist</a>
-                    </small>
-                </p>
-            </footer>
         </div>
-    </body>
+        <footer>
+        <li class="list-group-item">
+            <small class="text-muted">Hosted on GitHub Pages &mdash; Theme by
+                <a href="https://github.com/orderedlist">orderedlist</a>
+            </small>
+        </li>
+    </footer>
+
+</body>
 
 </html>

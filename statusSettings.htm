@@ -1,23 +1,23 @@
- <form class="form-horizontal" role="form" name="status">
-   <div class="form-group">
-    <label class="control-label col-xs-4 col-sm-12 col-md-5 col-lg-12" for="lvl">Current Rank</label>
-    <input class="col-xs-8 col-sm-12 col-md-7 col-lg-12" type="number" name="lvl" ng-model="user.lvl"  ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
-</div>
-<div class="form-group">
-    <label class="control-label col-xs-4 col-sm-12 col-md-5 col-lg-12" for="exp">Current EXP</label>
-    <input class="col-xs-8 col-sm-12 col-md-7 col-lg-12" type="number" name="exp" ng-model="user.exp" reg-ex-input reg-ex="^[0-9]*$" ng-change="updateStatus()" required><br/>
-</div>
-<div class="form-group">
-    <label class="control-label col-xs-4 col-sm-12 col-md-5 col-lg-12" for="pts">Points Earned</label>
-    <input class="col-xs-8 col-sm-12 col-md-7 col-lg-12" type="number" name="pts" ng-model="user.pts" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
-</div>
-<div class="form-group">
-    <label class="control-label col-xs-4 col-sm-12 col-md-5 col-lg-12" for="tok">Current Tokens</label>
-    <input class="col-xs-8 col-sm-12 col-md-7 col-lg-12" type="number" name="tok" ng-model="user.tok" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
-</div>
-<div class="form-group">
-    <label class="control-label col-xs-4 col-sm-12 col-md-5 col-lg-12" for="end">Goal</label>
-    <input class="col-xs-8 col-sm-12 col-md-7 col-lg-12" type="number" name="end" ng-model="user.end" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
-</div>
-<p class="text-warning" ng-show="settings.$error.required">Missing field. Make sure you've input everything!</span>
+<form class="form-horizontal" role="form" name="status">
+    <div class="form-group row">
+        <label class="col-xs-12 col-md-4 col-form-labl" for="lvl">Current Rank</label>
+        <input class="col-xs-12 col-md-8" type="number" name="lvl" ng-model="user.lvl" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+    </div>
+    <div class="form-group row">
+        <label class="col-xs-12 col-md-4 col-form-labl" for="exp">Current EXP</label>
+        <input class="col-xs-12 col-md-8" type="number" name="exp" ng-model="user.exp" reg-ex-input reg-ex="^[0-9]*$" ng-change="updateStatus()" required><br/>
+    </div>
+    <div class="form-group row">
+        <label class="col-xs-12 col-md-4 col-form-labl" for="pts">Points Earned</label>
+        <input class="col-xs-12 col-md-8" type="number" name="pts" ng-model="user.pts" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+    </div>
+    <div class="form-group row">
+        <label class="col-xs-12 col-md-4 col-form-labl" for="tok">Current Tokens</label>
+        <input class="col-xs-12 col-md-8" type="number" name="tok" ng-model="user.tok" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+    </div>
+    <div class="form-group row">
+        <label class="col-xs-12 col-md-4 col-form-labl" for="end">Goal</label>
+        <input class="col-xs-12 col-md-8" type="number" name="end" ng-model="user.end" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
+    </div>
+    <p class="text-warning" ng-show="settings.$error.required">Missing field. Make sure you've input everything!</span>
 </form>
