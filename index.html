@@ -9,87 +9,106 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="javascripts/respond.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="stylesheets/darklybootstrap.css">
-        <link rel="stylesheet" href="stylesheets/custom.css">
 
-   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.0.0.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
         <script src="javascripts/app.js"></script>
         <script src="javascripts/constants.js"></script>
 
         <!--[if lt IE 9]> <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     </head>
 
-    <body ng-app="calc">
+    <body>
         <div class="wrapper">
             <header>
                 <h1>starlight stage event calculator</h1>
 
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#token" data-toggle="tab" aria-expanded="true">Token</a>
+                    </li>
+                    <li class="">
+                        <a href="#groove" data-toggle="tab" aria-expanded="false">Live Groove</a>
+                    </li>
+                </ul>
             </header>
-            <section class="tab-content">
-                <uib-tabset active="active">
-                    <uib-tab index="0" heading="Token">Token
+            <section class="tab-content" ng-app="calc">
+              <div class="tab-pane fade active in" id="token">
+                <div class="panel-group" ng-controller="timeCtrl">
 
-                        <uib-accordion close-others="true">
+                    <!-- remaining time -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a data-toggle="collapse" href="#time">
+                                <h3 class="panel-title">Remaining Time</h3>
+                            </a>
+                        </div>
+                        <div id="time" class="panel-collapse collapse in">
+                            <div class="panel-body" ng-include="'timeLeft.htm'"></div>
+                        </div>
+                    </div>
 
-                            <!-- remaining time -->
-                            <div uib-accordion-group class="panel-default" is-open="true" heading="Remaining Time">
-                                <div ng-controller="timeCtrl" ng-include="'timeLeft.htm'"></div>
+                </div>
+
+                <div ng-controller="liveController">
+
+                    <form name="settings" novalidate>
+
+                        <!-- live settings -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a data-toggle="collapse" href="#liveSettings">
+                                    <h3 class="panel-title">Live Settings</h3>
+                                </a>
                             </div>
-
-                            <div ng-controller="liveController">
-                                <form name="settings" novalidate>
-                                    <!-- live settings -->
-                                    <div uib-accordion-group class="panel-default" heading="Live Settings">
-                                        <div ng-include="'liveSettings.htm'"></div>
-                                    </div>
-
-                                    <!-- status -->
-                                    <div uib-accordion-group class="panel-default" heading="Status">
-                                        <div ng-include="'statusSettings.htm'"></div>
-                                    </div>
-                                </form>
-                              </div>
-                                <!--<center>
-                        <button type="submit" class="btn btn-primary" ng-disabled="settings.$invalid">Submit</button>
-                    </center>-->
-
-                                <!-- results -->
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">
-                                        <a data-toggle="collapse" href="#results">
-                                            <h3 class="panel-title">Results</h3>
-                                        </a>
-                                    </div>
-                                    <div id="results" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <p>event lives needed:
-                                                {{calcEventLivesNeeded()}}</p>
-                                            <p>normal lives needed:
-                                                {{calcNormalLivesNeeded()}}</p>
-                                            <p>end rank:
-                                                {{calcEndRank()}}</p>
-                                            <p>stamina deficit:
-                                                {{calcStamDeficit()}}</p>
-                                            <p>play time:
-                                                {{calcPlayTime() | time:'mm':'hhh mmm':false}}</p>
-                                            <div ng-show="{{enoughTime()}}">
-                                                error! cannot reach goal, not enough time left</div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            <div id="liveSettings" class="panel-collapse collapse in">
+                                <div class="panel-body" ng-include="'liveSettings.htm'"></div>
                             </div>
                         </div>
 
-                    </uib-tab>
+                        <!-- status -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a data-toggle="collapse" href="#status">
+                                    <h3 class="panel-title">Status</h3>
+                                </a>
+                            </div>
+                            <div id="status" class="panel-collapse collapse in">
+                                <div class="panel-body" ng-include="'statusSettings.htm'"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--<center>
+                        <button type="submit" class="btn btn-primary" ng-disabled="settings.$invalid">Submit</button>
+                    </center>-->
 
-                    <uib-tab index="1" heading="Live Groove">Live Groove</uib-tab>
-                </uib-tabset>
+                    <!-- results -->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <a data-toggle="collapse" href="#results">
+                                <h3 class="panel-title">Results</h3>
+                            </a>
+                        </div>
+                        <div id="results" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <p>event lives needed: {{calcEventLivesNeeded()}}</p>
+                                <p>normal lives needed: {{calcNormalLivesNeeded()}}</p>
+                                <p>end rank: {{calcEndRank()}}</p>
+                                <pre>stamina deficit: {{calcStamDeficit()}}</pre>
+                                <pre>play time: {{calcPlayTime() | time:'mm':'hhh mmm':false}}</pre>
+                                <div ng-show="{{enoughTime()}}">
+                                    error! cannot reach goal, not enough time left</div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="tab-pane fade active in" id="groove"></div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade active in" id="groove">
+              </div>
             </section>
             <footer>
                 <p>
