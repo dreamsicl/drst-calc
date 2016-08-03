@@ -19,5 +19,4 @@
         <label class="col-xs-12 col-md-4 col-form-labl" for="end">Goal</label>
         <input class="col-xs-12 col-md-8" type="number" min="0" name="end" ng-model="user.end" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
     </div>
-    <p class="text-warning" ng-show="settings.$error.required">Missing field. Make sure you've input everything!</span>
 </form>

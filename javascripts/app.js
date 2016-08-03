@@ -202,7 +202,7 @@ app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, Nor
 
     // total event lives needed
     $scope.calcEventLivesNeeded = function() {
-        return Math.floor(ptDeficit / totalPtsTokn)
+        return Math.max(Math.floor(ptDeficit / totalPtsTokn),0);
     }
 
     $scope.calcNormalLivesNeeded = function() {
@@ -265,4 +265,15 @@ app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, Nor
       return playTime < $scope.timeLeft;
     }
 
+    // percent to goal
+    $scope.getPercentCompletion = function (){
+      return user.pts/user.end*100;
+    }
+
+    $scope.calcNaturalPts = function(){
+        var naturalNormPlays = Math.floor($scope.naturalStam / $scope.norm.stam);
+        var naturalTokens = naturalNormPlays * $scope.norm.toknEarn;
+        var naturalToknPlays = naturalTokens/$scope.tokn.cost;
+        return naturalTokens + naturalToknPlays*$scope.tokn.ptsEarned;
+    }
 });

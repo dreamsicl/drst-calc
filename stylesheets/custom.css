@@ -9,6 +9,7 @@ select {
   border-radius: 3px;
   padding: 3px 5px;
   display: inline;
+  text-align: center;
 }
 input {
     color: #ddd;
@@ -73,12 +74,20 @@ footer {
  -webkit-column-gap: .5em;
 
 }
-
 .panel {
  display: inline-block;
  margin:  .5em;
  padding:  0;
  width:98%;
+}
+.panel-body .alert, .panel-body .list-group {
+  margin: 0
+}
+.panel-heading .glyphicon {
+  margin-right: 5px;
+}
+.panel-group .panel+.panel {
+    margin-top: .5em;
 }
 form {
   margin: 0px;
