@@ -52,16 +52,6 @@ footer {
   background:#464545;
 
 }
-#liveSettings {
-  padding: 0px;
-}
-.form-group label {
-  padding: 0px;
-}
-#status {
-  padding: 0px 15px;
-}
-
 .panel .list-group, .panel .list-group-item {
   background-color: #222;
 }
@@ -103,4 +93,8 @@ a, a:hover, a:active, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-t
 }
 .form-group select {
   margin-bottom: 15px;
+}
+.panel-heading {
+  cursor: pointer;
+  font: inherit;
 }

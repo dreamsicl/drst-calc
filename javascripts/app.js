@@ -101,6 +101,12 @@ app.factory('autoTime', function($http, $timeout) {
 
 app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive, TokenLive, Exp) {
 
+    $scope.collapse = {
+      time: false,
+      song: false,
+      status: false,
+      results: false,
+    }
     /*** timing settings ****/
     $scope.time = autoTime;
 
