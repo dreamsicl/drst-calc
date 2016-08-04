@@ -88,6 +88,7 @@ app.factory('autoTime', function($http, $timeout) {
     var tick = function() {
         if (time.deadline) {
             time.remainingMs = time.deadline - time.clock;
+            time.naturalStam = Math.floor(time.remainingMs / 1000 / 60 / 5);
         }
         time.clock = Date.now();
         $timeout(tick, tickInterval);
@@ -236,13 +237,7 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
         return endRank;
     }
 
-    $scope.$watch(function() {
-        return Data.getTimeLeft();
-    }, function(n, o) {
-        if (n !== o) {
-            $scope.naturalStam = Math.floor(n / 1000 / 60 / 5);
-        }
-    })
+
     $scope.calcStamDeficit = function() {
         var nPlay = $scope.calcNormalLivesNeeded();
         var endRank = $scope.calcEndRank();
@@ -251,7 +246,7 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
         for (var i = $scope.user.lvl + 1; i <= endRank; i++) {
             staFromLevelUp += Exp[i - 1]["Stamina"];
         }
-        return Math.max($scope.norm.stam * nPlay - staFromLevelUp - $scope.naturalStam, 0);
+        return Math.max($scope.norm.stam * nPlay - staFromLevelUp - $scope.time.naturalStam, 0);
     }
 
     // play time in minutes
@@ -273,7 +268,7 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
     }
 
     $scope.calcNaturalPts = function() {
-        var naturalNormPlays = Math.floor($scope.naturalStam / $scope.norm.stam);
+        var naturalNormPlays = Math.floor($scope.time.naturalStam / $scope.norm.stam);
         var naturalTokens = naturalNormPlays * $scope.norm.toknEarn;
         var naturalToknPlays = naturalTokens / $scope.tokn.cost;
         return naturalTokens + naturalToknPlays * $scope.tokn.ptsEarned;
@@ -282,4 +277,19 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
 
 app.controller('GrooveCtrl', function($scope, autoTime) {
   $scope.time = autoTime;
+  $scope.grve = {};
+  $scope.user = {};
+
+  /**** groove settings */
+  $scope.grve.diff = "Debut";
+
+  $scope.grve.applauseLevels = ['Average', '50+']
+  for (var i = 49; i > 0; i--){
+    $scope.grve.applauseLevels.push(i);
+  }
+  $scope.grve.appl = $scope.grve.applauseLevels[0];
+
+  $scope.grve.scores = ['S','A','B','C'];
+  $scope.grve.encoreScore = $scope.grve.scores[0];
+  $scope.grve.grooveScore = $scope.grve.scores[0];
 });

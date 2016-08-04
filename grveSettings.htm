@@ -1,0 +1,42 @@
+<div class="panel-heading">
+    <a data-toggle="collapse" href="#toknSettings">
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-minus"></span>
+            Groove Settings</h3>
+    </a>
+</div>
+<div id="grveSettings" class="panel-collapse collapse in">
+    <div class="panel-body">
+        <form class="form-horizontal" role="form" name="grooves">
+            <div class="button-group" data-toggle="buttons">
+                <label class="btn btn-info btn-radio active"><input type="radio" ng-model="grve.diff" value="Debut" id="Debut">
+                    Debut</label>
+
+                <label class="btn btn-info btn-radio"><input type="radio" ng-model="grve.diff" value="Debut" id="Debut">
+                    Regular</label>
+
+                <label class="btn btn-info btn-radio"><input type="radio" ng-model="grve.diff" value="Debut" id="Debut">
+                    Pro</label>
+
+                <label class="btn btn-info btn-radio"><input type="radio" ng-model="grve.diff" value="Debut" id="Debut">
+                    Master</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-md-7 col-lg-12" for="appl">Applause Level:
+                </label>
+                <select class="col-xs-12 col-md-5 col-lg-12" name="appl" id="appl" ng-model="grve.appl" ng-options="appl for appl in grve.applauseLevels"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-md-7 col-lg-12" for="g_score">Groove Score:
+                </label>
+                <select class="col-xs-12 col-md-5 col-lg-12" name="e_score" id="g_score" ng-model="grve.grooveScore" ng-options="score for score in grve.scores"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-md-7 col-lg-12" for="e_score">Encore Song Score:
+                </label>
+                <select class="col-xs-12 col-md-5 col-lg-12" name="e_score" id="e_score" ng-model="grve.encoreScore" ng-options="score for score in grve.scores"></select>
+            </div>
+            <tt>grve:
+                {{grve|json}}</tt>
+        </div>
+    </div>

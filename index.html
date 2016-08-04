@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>starlight stage calculator</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="javascripts/respond.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="javascripts/bootstrap.min.3.3.6.js"></script>
+        <link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css">
+        <link rel="stylesheet" href="stylesheets/custom.css">
+        <script src="javascripts/angular.min.1.5.8.js"></script>
+        <script src="javascripts/app.js"></script>
+        <script src="javascripts/constants.js"></script>
+        <script>
+            $('.panel-collapse').on('shown.bs.collapse', function() {
+                $(this).prev().find(".glyphicon").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+            });
+
+            //The reverse of the above on hidden event:
+
+            $('.panel-collapse').on('hidden.bs.collapse', function() {
+                $(this).prev().find(".glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+            });
+        </script>
+
+        <!--[if lt IE 9]> <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+    </head>
+
+    <body>
+        <div class="container">
+            <header>
+                <!--<h1>starlight stage event calculator</h1>-->
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#token" data-toggle="tab" aria-expanded="true">Token</a>
+                    </li>
+                    <li class="">
+                        <a href="#groove" data-toggle="tab" aria-expanded="false">Live Groove</a>
+                    </li>
+                </ul>
+
+            </header>
+            <section class="tab-content" ng-app="calc">
+                <div class="tab-pane fade active in panel-group container-fluid row" id="token" ng-controller="TokenCtrl" ng-include="'token.htm'"></div>
+
+                <div class="tab-pane fade in panel-group container-fluid row" id="groove" ng-controller="GrooveCtrl">
+                    <div class="panel panel-default" ng-include="'timeLeft.htm'"></div>
+
+                    <form name="grooveSettings" novalidate>
+                        <div class="panel panel-default" ng-include="'grveSettings.htm'"></div>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <footer>
+            <small class="text-muted">
+                Theme:
+                <a href="https://bootswatch.com/darkly/">Darkly by Bootswatch</a>
+                &mdash; Issues? Contact
+                <a href="http://twitter.com/aloIaninetales">Hosted Darkly @aloIaninetales</a>
+            </small>
+        </li>
+    </footer>
+
+</body>
+
+</html>

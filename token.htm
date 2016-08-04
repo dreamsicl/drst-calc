@@ -1,0 +1,59 @@
+<!-- remaining time -->
+<div class="panel panel-default" ng-include="'timeLeft.htm'"></div>
+
+<form name="tokenSettings" novalidate>
+    <!-- live settings -->
+    <div class="panel panel-default" ng-include="'toknSettings.htm'"></div>
+
+    <!-- status -->
+    <div ng-class="tokenSettings.$error.required ? 'panel panel-warning' : 'panel panel-default' " ng-include="'toknStatus.htm'"></div>
+</form>
+
+<!-- results -->
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <a data-toggle="collapse" href="#results">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-minus"></span>Results</h3>
+        </a>
+    </div>
+    <div id="results" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <div ng-hide="time.deadline" class="alert alert-warning">
+                no event!
+            </div>
+            <div ng-show="time.deadline">
+                <div class="alert alert-warning" ng-show="toknSettings.$error.required">
+                    Missing input from Status.
+                </div>
+                <div ng-hide="toknSettings.$error.required">
+                    <ul class="list-group">
+                        <!--Progress: {{user.pts/user.end*100}}
+                                    <div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="{{getPercentCompletion()}}" aria-valuemin="0" aria-valuemax="100" style="width: {{getPercentCompletion()}}%"></div></div>-->
+                        <li class="list-group-item">Event Lives Needed:
+                            <span class="badge">{{calcEventLivesNeeded()}}</span>
+                        </li>
+                        <li class="list-group-item">Normal Lives:
+                            <span class="badge">{{calcNormalLivesNeeded()}}</span>
+                        </li>
+                        <li class="list-group-item">End Rank:
+                            <span class="badge">{{calcEndRank()}}</span>
+                        </li>
+                        <li class="list-group-item">Points w/ Natural Stamina:
+                            <span class="badge">{{calcNaturalPts() | number: 0}}</span>
+                        </li>
+                        <li class="list-group-item">Stamina Deficit:
+                            <span class="badge">{{calcStamDeficit()}}</span>
+                        </li>
+                        <li class="list-group-item" ng-class="">Play Time:
+                            <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
+                        </li>
+                    </ul>
+                    <div class="alert alert-warning" ng-show="{{enoughTime()}}">The event will have ended before reaching your goal :(</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
