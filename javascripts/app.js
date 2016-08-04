@@ -70,46 +70,38 @@ app.directive("regExInput", function() {
     };
 });
 
-app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, NormalLive, TokenLive, Exp) {
-
-    /*** timing settings ****/
-    $scope.time = {};
-    /*    $scope.time.manual = false;
-        $scope.time.remainingHrs = 198;
-        $scope.time.remainingMs = $scope.time.remainingHrs * 3600000;*/
+app.factory('autoTime', function($http, $timeout) {
+    var time = {};
 
     var url = "https://crossorigin.me/https://starlight.kirara.ca/api/v1/happening/now";
-    $scope.time.deadline = null;
+    time.deadline = false;
 
-    $scope.$watch('time.deadline', function(newValue, oldValue) {
-        $http.get(url).then(function(response) {
-            $scope.time.deadline = response.data.events[0].end_date * 1000;
-        }, function(response) {
-            $scope.time.deadline = false;
-        })
-        if (newValue !== oldValue) {
-            $scope.time.deadline = n;
-        }
-    });
+    $http.get(url).then(function(response) {
+        time.deadline = response.data.events[0].end_date * 1000;
+    }, function(response) {
+        time.deadline = false;
+    })
 
     /** clock **/
-    $scope.time.clock = Date.now();
-    Data.setTimeLeft(0);
+    time.clock = Date.now();
     var tickInterval = 1000;
     var tick = function() {
-        if ($scope.time.deadline) {
-            $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
-            Data.setTimeLeft($scope.time.remainingMs);
-        } else if ($scope.time.manual) {
-            $scope.time.remainingMs = $scope.time.remainingHrs * 3600000;
+        if (time.deadline) {
+            time.remainingMs = time.deadline - time.clock;
         }
-        $scope.time.clock = Date.now();
+        time.clock = Date.now();
         $timeout(tick, tickInterval);
     }
     $timeout(tick, tickInterval);
 
+    return time;
+});
 
 
+app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive, TokenLive, Exp) {
+
+    /*** timing settings ****/
+    $scope.time = autoTime;
 
     /***** gather input *****/
     $scope.norm = {};
@@ -244,12 +236,10 @@ app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, Nor
         return endRank;
     }
 
-    $scope.timeLeft = 0;
     $scope.$watch(function() {
         return Data.getTimeLeft();
     }, function(n, o) {
         if (n !== o) {
-            $scope.timeLeft = n;
             $scope.naturalStam = Math.floor(n / 1000 / 60 / 5);
         }
     })
@@ -288,4 +278,8 @@ app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, Nor
         var naturalToknPlays = naturalTokens / $scope.tokn.cost;
         return naturalTokens + naturalToknPlays * $scope.tokn.ptsEarned;
     }
+});
+
+app.controller('GrooveCtrl', function($scope, autoTime) {
+  $scope.time = autoTime;
 });

@@ -50,108 +50,76 @@
                 <div class="tab-pane fade active in panel-group container-fluid" id="token" ng-controller="TokenCtrl">
                     <!-- remaining time -->
                     <div class="row">
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" ng-include="'timeLeft.htm'"></div>
+
+                        <form name="tokenSettings" novalidate>
+                            <!-- live settings -->
+                            <div class="panel panel-default" ng-include="'toknSettings.htm'"></div>
+
+                            <!-- status -->
+                            <div ng-class="tokenSettings.$error.required ? 'panel panel-warning' : 'panel panel-default' " ng-include="'toknStatus.htm'"></div>
+                        </form>
+
+                        <!-- results -->
+                        <div class="panel panel-info">
                             <div class="panel-heading">
-                                <a data-toggle="collapse" href="#time">
+                                <a data-toggle="collapse" href="#results">
                                     <h3 class="panel-title">
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                        Remaining Time</h3>
+                                        <span class="glyphicon glyphicon-minus"></span>Results</h3>
                                 </a>
                             </div>
-                            <div id="time" class="panel-collapse collapse in">
-                                <div class="panel-body" ng-include="'timeLeft.htm'">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form name="settings" novalidate>
-                        <!-- live settings -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" href="#liveSettings">
-                                    <h3 class="panel-title">
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                        Live Settings</h3>
-                                </a>
-                            </div>
-                            <div id="liveSettings" class="panel-collapse collapse in">
-                                <div class="panel-body" ng-include="'liveSettings.htm'"></div>
-                            </div>
-                        </div>
-
-                        <!-- status -->
-                        <div ng-class="settings.$error.required ? 'panel panel-warning' : 'panel panel-default' ">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" href="#status">
-                                    <h3 class="panel-title">
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                        Status</h3>
-                                </a>
-                            </div>
-                            <div id="status" class="panel-collapse collapse in">
-                                <div class="panel-body" ng-include="'statusSettings.htm'"></div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- results -->
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <a data-toggle="collapse" href="#results">
-                                <h3 class="panel-title">
-                                    <span class="glyphicon glyphicon-minus"></span>Results</h3>
-                            </a>
-                        </div>
-                        <div id="results" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <div ng-hide="time.deadline" class="alert alert-warning">
-                                    no event!
-                                </div>
-                                <div ng-show="time.deadline">
-                                    <div class="alert alert-warning" ng-show="settings.$error.required">
-                                        missing input
+                            <div id="results" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <div ng-hide="time.deadline" class="alert alert-warning">
+                                        no event!
                                     </div>
-                                    <div ng-hide="settings.$error.required">
-                                        <ul class="list-group">
-                                            <!--Progress: {{user.pts/user.end*100}}
+                                    <div ng-show="time.deadline">
+                                        <div class="alert alert-warning" ng-show="toknSettings.$error.required">
+                                            Missing input from Status.
+                                        </div>
+                                        <div ng-hide="toknSettings.$error.required">
+                                            <ul class="list-group">
+                                                <!--Progress: {{user.pts/user.end*100}}
                                     <div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="{{getPercentCompletion()}}" aria-valuemin="0" aria-valuemax="100" style="width: {{getPercentCompletion()}}%"></div></div>-->
-                                            <li class="list-group-item">Event Lives:
-                                                <span class="badge">{{calcEventLivesNeeded()}}</span>
-                                            </li>
-                                            <li class="list-group-item">Normal Lives:
-                                                <span class="badge">{{calcNormalLivesNeeded()}}</span>
-                                            </li>
-                                            <li class="list-group-item">End Rank:
-                                                <span class="badge">{{calcEndRank()}}</span>
-                                            </li>
-                                            <li class="list-group-item">Points w/ Natural Stamina:
-                                                <span class="badge">{{calcNaturalPts() | number: 0}}</span>
-                                            </li>
-                                            <li class="list-group-item">Stamina Deficit:
-                                                <span class="badge">{{calcStamDeficit()}}</span>
-                                            </li>
-                                            <li class="list-group-item" ng-class="">Play Time:
-                                                <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
-                                            </li>
-                                        </ul>
-                                        <div class="alert alert-warning" ng-show="{{enoughTime()}}">The event will have ended before reaching your goal :(</div>
+                                                <li class="list-group-item">Event Lives Needed:
+                                                    <span class="badge">{{calcEventLivesNeeded()}}</span>
+                                                </li>
+                                                <li class="list-group-item">Normal Lives:
+                                                    <span class="badge">{{calcNormalLivesNeeded()}}</span>
+                                                </li>
+                                                <li class="list-group-item">End Rank:
+                                                    <span class="badge">{{calcEndRank()}}</span>
+                                                </li>
+                                                <li class="list-group-item">Points w/ Natural Stamina:
+                                                    <span class="badge">{{calcNaturalPts() | number: 0}}</span>
+                                                </li>
+                                                <li class="list-group-item">Stamina Deficit:
+                                                    <span class="badge">{{calcStamDeficit()}}</span>
+                                                </li>
+                                                <li class="list-group-item" ng-class="">Play Time:
+                                                    <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
+                                                </li>
+                                            </ul>
+                                            <div class="alert alert-warning" ng-show="{{enoughTime()}}">The event will have ended before reaching your goal :(</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
+            <div class="tab-pane fade active in panel-group container-fluid row" id="groove" ng-controller="GrooveCtrl">
+                <div class="panel panel-default" ng-include="'timeLeft.htm'"></div>
             </div>
-            <div class="tab-pane fade active in panel-group" id="groove"></div>
         </section>
     </div>
     <footer>
-        <small class="text-muted">Hosted on GitHub Pages &mdash; Theme:
+        <small class="text-muted">
+            Theme:
             <a href="https://bootswatch.com/darkly/">Darkly by Bootswatch</a>
-            &mdash; Written in AngularJS &mdash; Issues?
-            <a href="http://twitter.com/aloIaninetales">@aloIaninetales</a>
+            &mdash; Issues? Contact
+            <a href="http://twitter.com/aloIaninetales">Hosted Darkly @aloIaninetales</a>
         </small>
     </li>
 </footer>

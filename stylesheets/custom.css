@@ -79,7 +79,7 @@ footer {
  margin:  .5em;
  padding:  0;
  width:98%;
- min-width: 300px;
+ min-width: 325px;
 }
 .panel-body .alert, .panel-body .list-group {
   margin: 0
@@ -93,7 +93,7 @@ footer {
 form {
   margin: 0px;
 }
-a, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+a, a:hover, a:active, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
   color: #3498db;
 }
 .btn-radio>input[type=radio] {
