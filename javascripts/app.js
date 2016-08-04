@@ -71,33 +71,45 @@ app.directive("regExInput", function() {
 });
 
 app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, NormalLive, TokenLive, Exp) {
-    var url = "https://crossorigin.me/https://starlight.kirara.ca/api/v1/happening/now";
-    $scope.deadline = null;
 
-    $scope.$watch('deadline', function(newValue, oldValue) {
+    /*** timing settings ****/
+    $scope.time = {};
+    /*    $scope.time.manual = false;
+        $scope.time.remainingHrs = 198;
+        $scope.time.remainingMs = $scope.time.remainingHrs * 3600000;*/
+
+    var url = "https://crossorigin.me/https://starlight.kirara.ca/api/v1/happening/now";
+    $scope.time.deadline = null;
+
+    $scope.$watch('time.deadline', function(newValue, oldValue) {
         $http.get(url).then(function(response) {
-            $scope.deadline = response.data.events[0].end_date*1000;
+            $scope.time.deadline = response.data.events[0].end_date * 1000;
         }, function(response) {
-            $scope.deadline = "could not load event";
+            $scope.time.deadline = false;
         })
         if (newValue !== oldValue) {
-          $scope.deadline = n;
+            $scope.time.deadline = n;
         }
     });
 
     /** clock **/
-    $scope.clock = Date.now();
+    $scope.time.clock = Date.now();
     Data.setTimeLeft(0);
     var tickInterval = 1000;
     var tick = function() {
-        if ($scope.deadline) {
-            $scope.ms = $scope.deadline - $scope.clock;
-            Data.setTimeLeft($scope.ms);
+        if ($scope.time.deadline) {
+            $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
+            Data.setTimeLeft($scope.time.remainingMs);
+        } else if ($scope.time.manual) {
+            $scope.time.remainingMs = $scope.time.remainingHrs * 3600000;
         }
-        $scope.clock = Date.now();
+        $scope.time.clock = Date.now();
         $timeout(tick, tickInterval);
     }
     $timeout(tick, tickInterval);
+
+
+
 
     /***** gather input *****/
     $scope.norm = {};
@@ -202,7 +214,7 @@ app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, Nor
 
     // total event lives needed
     $scope.calcEventLivesNeeded = function() {
-        return Math.max(Math.floor(ptDeficit / totalPtsTokn),0);
+        return Math.max(Math.floor(ptDeficit / totalPtsTokn), 0);
     }
 
     $scope.calcNormalLivesNeeded = function() {
@@ -260,20 +272,20 @@ app.controller('TokenCtrl', function($scope, $http, $timeout, Data, $filter, Nor
     }
 
     // time left/play time
-    $scope.enoughTime = function () {
-      var playTime = $scope.calcPlayTime();
-      return playTime < $scope.timeLeft;
+    $scope.enoughTime = function() {
+        var playTime = $scope.calcPlayTime();
+        return playTime < $scope.timeLeft;
     }
 
     // percent to goal
-    $scope.getPercentCompletion = function (){
-      return user.pts/user.end*100;
+    $scope.getPercentCompletion = function() {
+        return user.pts / user.end * 100;
     }
 
-    $scope.calcNaturalPts = function(){
+    $scope.calcNaturalPts = function() {
         var naturalNormPlays = Math.floor($scope.naturalStam / $scope.norm.stam);
         var naturalTokens = naturalNormPlays * $scope.norm.toknEarn;
-        var naturalToknPlays = naturalTokens/$scope.tokn.cost;
-        return naturalTokens + naturalToknPlays*$scope.tokn.ptsEarned;
+        var naturalToknPlays = naturalTokens / $scope.tokn.cost;
+        return naturalTokens + naturalToknPlays * $scope.tokn.ptsEarned;
     }
 });

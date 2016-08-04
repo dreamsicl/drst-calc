@@ -96,3 +96,11 @@ form {
 a, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
   color: #3498db;
 }
+.btn-radio>input[type=radio] {
+  position       : absolute;
+  clip           : rect(0, 0, 0, 0);
+  pointer-events : none;
+}
+.form-group select {
+  margin-bottom: 15px;
+}

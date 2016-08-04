@@ -1,15 +1,28 @@
-<form>
+<form name="timing">
+    <!--<div class="btn-group">
+                                            <label class="btn btn-info btn-radio active">
+                                                <input type="radio" ng-model="time.manual" ng-value="false" checked="checked">Automatic Calculation
+                                            </label>
+                                            <label class="btn btn-info btn-radio">
+                                                <input type="radio" ng-model="time.manual" ng-value="true">Manual Input
+                                            </label>
+                                        </div>
+                                        <div ng-hide="time.manual">-->
     <h4>Automatic Calculation</h4>
     now:
-    {{clock | date: 'medium'}}
-    {{deadline | date: 'medium'}}
-    <p ng-show="deadline">
-        event end:
-        {{deadline | date: 'medium'}}
-        <br/>
-        time left:
-        {{ms/1000/60 | time:'mm':'hhh mmm':false}}
-        <br/>
-    </p>
-    <p ng-hide="deadline">no event!</p>
-</form>
+    {{time.clock | date: 'medium'}}<br/>
+    event end:
+    {{time.deadline | date: 'medium'}}
+    <br/>
+    time left:
+    {{time.remainingMs/1000/60 | time:'mm':'hhh mmm':false}}
+    <br/>
+    <p ng-hide="time.deadline">no event!</p>
+    <!--</div>
+                                    <div ng-show="time.manual">
+                                        <h4>Manual Input</h4>
+                                        <label>Hours Left:
+                                            <input type="number" min="0" ng-model="time.remaining" reg-ex-input reg-ex="^[0-9]*$"></label>
+                                    </div>
+                                    time:
+                                    {{time | json}}-->
