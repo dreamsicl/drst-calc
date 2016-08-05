@@ -1,5 +1,5 @@
 <!-- remaining time -->
-<div class="panel panel-default">
+<div class="panel panel-default col-lg-6">
     <div class="panel-heading" ng-click="collapse.time = !collapse.time">
         <h3 class="panel-title">
             <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.time, 'glyphicon-chevron-up': !collapse.time}"></span>
@@ -26,14 +26,14 @@
 
 <form name="tokenSettings" novalidate>
     <!-- live settings -->
-    <div class="panel panel-default" ng-include="'toknSettings.htm'"></div>
+    <div class="panel panel-default col-lg-6" ng-include="'toknSettings.htm'"></div>
 
     <!-- status -->
-    <div ng-class="tokenSettings.$error.required ? 'panel panel-warning' : 'panel panel-default' " ng-include="'toknStatus.htm'"></div>
+    <div ng-class="tokenSettings.$error.required ? 'panel panel-warning col-lg-6' : 'panel panel-default col-lg-6' " ng-include="'toknStatus.htm'"></div>
 </form>
 
 <!-- results -->
-<div class="panel panel-info">
+<div class="panel panel-info col-lg-6">
     <div class="panel-heading" ng-click="collapse.results = !collapse.results">
         <h3 class="panel-title">
             <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.results, 'glyphicon-chevron-up': !collapse.results}"></span>
