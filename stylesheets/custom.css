@@ -35,15 +35,6 @@ input:focus{
   padding: 0px;
   position: absolute;
 }
-.form-horizontal .control-label {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
-}
-.form-horizontal .controls {
-    display: inline-block;
-    margin-left: 20px;
-}
 html {
   position: relative;
   min-height: 100%;
@@ -81,7 +72,6 @@ footer {
  margin:  .5em;
  padding:  0;
  width:98%;
- min-width: 610px;
 }
 .panel-body .alert, .panel-body .list-group {
   margin: 0
@@ -106,4 +96,10 @@ a, a:hover, a:active, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-t
 .panel-heading {
   cursor: pointer;
   font: inherit;
+}
+.tokn .form-horizontal {
+  position: absolute;
+}
+.tokn .control-label {
+  height: 20px;
 }
