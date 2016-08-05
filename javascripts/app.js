@@ -123,13 +123,11 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
     $scope.norm.stam = $scope.staminas[0]; // set default
 
     /**** score settings ***/
-    $scope.scores = ['S', 'A', 'B', 'C'];
-    $scope.norm.score = $scope.scores[0]; // set default
-    $scope.tokn.score = $scope.scores[0];
+    $scope.norm.score = "S"; // set default
+    $scope.tokn.score = "S";
 
     /*** event difficulty ***/
-    $scope.difficulties = ['Debut', 'Regular', 'Pro', 'Master/Master+'];
-    $scope.tokn.diff = $scope.difficulties[0]; // set default
+    $scope.tokn.diff = "Debut"; // set default
 
     /*** multipliers ***/
     $scope.nmuls = [1, 2];
@@ -171,6 +169,7 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
     var findNormByStam = $filter('filter')(NormalLive, {
         "Stamina": $scope.norm.stam
     })[0];
+    console.log(findNormByStam);
     var searchNorm = function(rank, m) {
         for (var key in findNormByStam) {
             if (key === rank) $scope.norm.toknEarn = findNormByStam[key] * m;

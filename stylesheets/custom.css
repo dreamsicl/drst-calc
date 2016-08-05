@@ -10,6 +10,7 @@ select {
   padding: 3px 5px;
   display: inline;
   text-align: center;
+  margin: 5px 0px;
 }
 input {
     color: #ddd;
@@ -30,7 +31,18 @@ input:focus{
   transition: border-color: 300ms linear;
 }
 .form-horizontal {
-  margin-left: -15px;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+}
+.form-horizontal .control-label {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+.form-horizontal .controls {
+    display: inline-block;
+    margin-left: 20px;
 }
 html {
   position: relative;
@@ -69,7 +81,7 @@ footer {
  margin:  .5em;
  padding:  0;
  width:98%;
- min-width: 325px;
+ min-width: 610px;
 }
 .panel-body .alert, .panel-body .list-group {
   margin: 0
@@ -90,9 +102,6 @@ a, a:hover, a:active, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-t
   position       : absolute;
   clip           : rect(0, 0, 0, 0);
   pointer-events : none;
-}
-.form-group select {
-  margin-bottom: 15px;
 }
 .panel-heading {
   cursor: pointer;

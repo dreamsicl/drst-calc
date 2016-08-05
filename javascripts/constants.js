@@ -15,7 +15,7 @@ app.constant('TokenLive', [
   {"Difficulty": "Debut", "Token Cost": 75, "S": 130, "A": 124, "B": 117, "C": 111, "EXP": 42},
   {"Difficulty": "Regular", "Token Cost": 90, "S": 170, "A": 162, "B": 153, "C": 145, "EXP": 49},
   {"Difficulty": "Pro", "Token Cost": 120, "S": 240, "A": 228, "B": 216, "C": 204, "EXP": 53},
-  {"Difficulty": "Master/Master+", "Token Cost": 150, "S": 320, "A": 304, "B": 288, "C": 272, "EXP": 63}
+  {"Difficulty": "Master/+", "Token Cost": 150, "S": 320, "A": 304, "B": 288, "C": 272, "EXP": 63}
 ]);
 
 app.constant('Exp', [
