@@ -287,7 +287,11 @@ app.controller('GrooveCtrl', function($scope, autoTime) {
   $scope.user = {};
 
   /**** groove settings */
-  $scope.grve.diff = "Debut";
+  $scope.grve.grooveDiff = "Debut";
+  $scope.grve.grooveScore = "S";
+
+  $scope.grve.encoreDiff = "Debut";
+  $scope.grve.encoreScore = "S";
 
   $scope.grve.applauseLevels = ['Average', '50+']
   for (var i = 49; i > 0; i--){
@@ -295,7 +299,4 @@ app.controller('GrooveCtrl', function($scope, autoTime) {
   }
   $scope.grve.appl = $scope.grve.applauseLevels[0];
 
-  $scope.grve.scores = ['S','A','B','C'];
-  $scope.grve.encoreScore = $scope.grve.scores[0];
-  $scope.grve.grooveScore = $scope.grve.scores[0];
 });
