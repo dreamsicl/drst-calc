@@ -121,7 +121,7 @@ h2 {
 }
 @media (min-width: 1200px) {
     .btn {
-        padding: 7px 14px;
+        padding: 7px 11px;
         font-size: 15px;
     }
 }
