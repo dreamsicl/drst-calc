@@ -46,22 +46,6 @@ app.controller('TabCtrl', function($rootScope, $scope, $state) {
     });
 });
 
-app.factory('Data', function() {
-    var ret = {};
-
-    ret.data = {
-        timeLeft: ''
-    };
-
-    ret.getTimeLeft = function() {
-        return ret.data.timeLeft
-    };
-    ret.setTimeLeft = function(time) {
-        ret.data.timeLeft = time
-    };
-
-    return ret;
-});
 app.filter('time', function() {
 
     var conversions = {
@@ -116,48 +100,68 @@ app.directive("regExInput", function() {
     };
 });
 
-app.factory('autoTime', function($http, $timeout) {
-    var time = {};
-
+app.factory('autoDeadline', function($http, $timeout) {
+    var deadline = {};
     var url = "https://crossorigin.me/https://starlight.kirara.ca/api/v1/happening/now";
-    time.deadline = false;
+    deadline = false;
 
     $http.get(url).then(function(response) {
-        time.deadline = response.data.events[0].end_date * 1000;
+        deadline = response.data.events[0].end_date * 1000;
     }, function(response) {
-        time.deadline = false;
+        deadline = false;
     })
 
-    /** clock **/
-    time.clock = Date.now();
-    var tickInterval = 1000;
-    var tick = function() {
-        if (time.deadline) {
-            time.remainingMs = time.deadline - time.clock;
-            time.naturalStam = Math.floor(time.remainingMs / 1000 / 60 / 5);
-        }
-        time.clock = Date.now();
-        $timeout(tick, tickInterval);
-    }
-    $timeout(tick, tickInterval);
-
-    return time;
+    return deadline;
 });
 
 
-app.controller('TokenCtrl', function($scope, $cookies, autoTime, Data, $filter, NormalLive, TokenLive, Exp) {
+app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $filter, NormalLive, TokenLive, Exp) {
     $scope.panelSize = angular.element(document.getElementById('panel')).clientWidth;
     $scope.$watch('panelSize', (function(n, o) {
         if (n !== o) $scope.panelSize = n;
     }));
     $scope.collapse = {
-            time: false,
-            song: false,
-            status: false,
-            results: false,
+        time: false,
+        song: false,
+        status: false,
+        results: false
+    };
+    /*** timing settings ****/
+    $scope.time = {};
+
+    $scope.time.kind = 'auto';
+    $scope.time.hours = 194;
+    $scope.time.remainingMs = "Loading...";
+    $scope.time.naturalStam = "Loading...";
+    $scope.initTime = function(kind) {
+        $scope.time.kind = kind;
+        $scope.time.remainingMs = "Loading...";
+        $scope.time.naturalStam = "Loading...";
+        if ($scope.time.kind == 'auto') {
+            $scope.time.deadline = autoDeadline;
+        } else if ($scope.time.kind == 'manu') {
+            $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
         }
-        /*** timing settings ****/
-    $scope.time = autoTime;
+    };
+    $scope.updateTimeHrs = function() {
+        $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
+        $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
+        $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
+
+    };
+    /** clock **/
+    $scope.time.clock = Date.now();
+    var tickInterval = 1000;
+    var tick = function() {
+        if ($scope.time.deadline) {
+            $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
+            $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
+        }
+        $scope.time.clock = Date.now();
+        $timeout(tick, tickInterval);
+    }
+    $timeout(tick, tickInterval);
+
 
     /***** gather input *****/
     $scope.norm = {};
@@ -170,32 +174,12 @@ app.controller('TokenCtrl', function($scope, $cookies, autoTime, Data, $filter, 
         $scope.staminas.push(i);
     };
 
-    $scope.formInit = function() {
-        if ($cookies.norm == null) {
-            $scope.norm.stam = 10;
-            $scope.norm.score = "S"; // set default
-            $scope.norm.mul = 1;
-        } else $scope.norm = $cookies.norm;
-
-        if ($cookies.tokn == null) {
-            $scope.tokn.diff = "Debut";
-            $scope.tokn.score = "S";
-            $scope.tokn.mul = 1;
-        } else $scope.tokn = $cookies.tokn;
-
-        if ($cookies.user == null) {
-            $scope.user.lvl = 2;
-            $scope.user.exp = 0;
-            $scope.user.pts = 0;
-            $scope.user.tok = 0;
-            $scope.user.end = 5000;
-        } else $scope.user = $cookies.user;
-    };
 
 
     var lvlInfo = $filter('filter')(Exp, {
         "Level": $scope.user.lvl
     })[0];
+    var ptDeficit = $scope.user.end - $scope.user.pts;
     $scope.user.percentComplete = ($scope.user.pts / $scope.user.end) * 100;
     var getExpInfo = function(currExp) {
         for (var key in lvlInfo) {
@@ -207,18 +191,15 @@ app.controller('TokenCtrl', function($scope, $cookies, autoTime, Data, $filter, 
     getExpInfo($scope.user.exp);
 
     $scope.updateStatus = function() {
-        console.log("updateStatus()");
-        if ($scope.user.lvl > 300)
-        {
-          $scope.user.lvl = 300;
+        if ($scope.user.lvl > 300) {
+            $scope.user.lvl = 300;
         }
         lvlInfo = $filter('filter')(Exp, {
             "Level": $scope.user.lvl
         })[0];
         getExpInfo($scope.user.exp);
         if ($scope.user.exp > $scope.user.expToNext) {
-          $scope.user.exp = $scope.user.expToNext;
-          console.log("over max exp, resetting to expToNext")
+            $scope.user.exp = $scope.user.expToNext;
         }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
 
@@ -246,7 +227,7 @@ app.controller('TokenCtrl', function($scope, $cookies, autoTime, Data, $filter, 
     };
 
     // event lives: get token cost, point worth, & exp
-    var totalPtsTokn = $scope.tokn.cost + $scope.tokn.ptsEarned;
+    var totalPtsTokn = "";
     var findToknByDiff = $filter('filter')(TokenLive, {
         "Difficulty": $scope.tokn.diff
     })[0];
@@ -266,6 +247,37 @@ app.controller('TokenCtrl', function($scope, $cookies, autoTime, Data, $filter, 
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
         $cookies.tokn = $scope.tokn;
+    };
+
+
+
+    $scope.formInit = function() {
+        if ($cookies.norm == null) {
+            $scope.norm.stam = 10;
+            $scope.norm.score = "S"; // set default
+            $scope.norm.mul = 1;
+        } else $scope.norm = $cookies.norm;
+        $scope.updateNorm();
+
+        if ($cookies.tokn == null) {
+            $scope.tokn.diff = "Debut";
+            $scope.tokn.score = "S";
+            $scope.tokn.mul = 1;
+        } else $scope.tokn = $cookies.tokn;
+        $scope.updateTokn();
+
+        if ($cookies.user == null) {
+            $scope.user.lvl = 2;
+            $scope.user.exp = 0;
+            $scope.user.pts = 0;
+            $scope.user.tok = 0;
+            $scope.user.end = 5000;
+        } else $scope.user = $cookies.user;
+        $scope.updateStatus();
+
+        console.log($scope.norm);
+        console.log($scope.tokn);
+        console.log($scope.user);
     };
 
     /******** calculate output data *******/

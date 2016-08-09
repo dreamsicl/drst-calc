@@ -8,8 +8,17 @@
                     Remaining Time</h3>
             </div>
             <div uib-collapse="collapse.time" class="panel-body">
-                <form name="timing">
-                    <ul class="list-group">
+
+                <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
+                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="initTime('auto')">Automatic Calculation</label>
+                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="initTime('manu')">Manual Input</label>
+                </div>
+                <hr>
+                <div ng-if="time.kind=='auto'">
+                    <div class="alert alert-warning" ng-if="!time.deadline" class="list-group-item bg-warning">No ongoing event.
+                    </div>
+
+                    <ul class="list-group" ng-if="time.deadline">
                         <li class="list-group-item">Current time:
                             <span class="badge">{{time.clock | date: 'medium'}}</span>
                         </li>
@@ -20,8 +29,20 @@
                             <span class="badge">{{time.remainingMs/1000/60 | time:'mm':'hhh mmm':false}}
                             </span>
                         </li>
-                        <li ng-if="!time.deadline" class="list-group-item bg-warning">No ongoing event.
                     </ul>
+                </div>
+                <div ng-if="time.kind=='manu'">
+                    <ul class="list-group" style="margin-bottom: 15px;" ng-if="time.deadline">
+                        <li class="list-group-item">Current time:
+                            <span class="badge">{{time.clock | date: 'medium'}}</span>
+                        </li>
+                    </ul>
+                    <form name="timing" class="form-horizontal">
+                        <div class="form-group" style="margin-bottom:0px;">
+                            <label for="manualTime" class="control-label col-xs-4">Time left (in hours):</label>
+                            <input class="col-xs-7" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()"></input>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -44,7 +65,7 @@
     <!-- results -->
     <div class="col-lg-3 col-padding">
 
-        <div class="panel panel-info">
+        <div class="panel panel-primary">
             <div class="panel-heading" ng-click="collapse.results = !collapse.results">
                 <h3 class="panel-title">
                     <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.results, 'glyphicon-chevron-up': !collapse.results}"></span>
@@ -58,12 +79,12 @@
                     <span style="color:white; white-space:nowrap;">{{user.percentComplete}}
                     </span>
                 </uib-progressbar>-->
-                <div class="alert alert-warning" ng-show="toknSettings.$error.required">
+                <div class="alert alert-warning" ng-show="tokenSettings.$error.required" style="margin-top:15px;">
                     Missing input from Status.
                 </div>
                 <div ng-show="time.deadline">
 
-                    <div ng-hide="toknSettings.$error.required">
+                    <div ng-hide="tokenSettings.$error.required">
                         <ul class="list-group">
                             <li class="list-group-item">Event Lives Needed:
                                 <span class="badge">{{calcEventLivesNeeded()}}</span>
