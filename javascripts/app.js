@@ -1,4 +1,50 @@
-var app = angular.module('calc', ['ui.bootstrap']);
+var app = angular.module('calc', ['ui.bootstrap', 'ui.router']);
+
+app.config(function($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise("/token");
+
+    $stateProvider
+        .state("default", {
+            abstract: true,
+            url: "/",
+            templateUrl: "token.html"
+        })
+        .state("token", {
+            url: "/token",
+            templateUrl: "token.html"
+        })
+        .state("groove", {
+            url: "/groove",
+            templateUrl: "foreshadowing.html"
+        });
+});
+
+app.controller('TabCtrl', function($rootScope, $scope, $state) {
+    $scope.tabs = [{
+        heading: "Token",
+        route: "token",
+        active: true
+    }, {
+        heading: "Live Groove",
+        route: "groove",
+        active: false
+    }, ];
+
+    $scope.go = function(route) {
+        $state.go(route);
+    };
+
+    $scope.active = function(route) {
+        return $state.is(route);
+    };
+
+    $scope.$on("$stateChangeSuccess", function() {
+        $scope.tabs.forEach(function(tab) {
+            tab.active = $scope.active(tab.route);
+        });
+    });
+});
 
 app.factory('Data', function() {
     var ret = {};
@@ -100,14 +146,17 @@ app.factory('autoTime', function($http, $timeout) {
 
 
 app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive, TokenLive, Exp) {
-
+    $scope.panelSize = angular.element(document.getElementById('panel')).clientWidth;
+    $scope.$watch('panelSize', (function(n, o) {
+        if (n !== o) $scope.panelSize = n;
+    }));
     $scope.collapse = {
-      time: false,
-      song: false,
-      status: false,
-      results: false,
-    }
-    /*** timing settings ****/
+            time: false,
+            song: false,
+            status: false,
+            results: false,
+        }
+        /*** timing settings ****/
     $scope.time = autoTime;
 
     /***** gather input *****/
@@ -281,21 +330,21 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
 });
 
 app.controller('GrooveCtrl', function($scope, autoTime) {
-  $scope.time = autoTime;
-  $scope.grve = {};
-  $scope.user = {};
+    $scope.time = autoTime;
+    $scope.grve = {};
+    $scope.user = {};
 
-  /**** groove settings */
-  $scope.grve.grooveDiff = "Debut";
-  $scope.grve.grooveScore = "S";
+    /**** groove settings */
+    $scope.grve.grooveDiff = "Debut";
+    $scope.grve.grooveScore = "S";
 
-  $scope.grve.encoreDiff = "Debut";
-  $scope.grve.encoreScore = "S";
+    $scope.grve.encoreDiff = "Debut";
+    $scope.grve.encoreScore = "S";
 
-  $scope.grve.applauseLevels = ['Average', '50+']
-  for (var i = 49; i > 0; i--){
-    $scope.grve.applauseLevels.push(i);
-  }
-  $scope.grve.appl = $scope.grve.applauseLevels[0];
+    $scope.grve.applauseLevels = ['Average', '50+']
+    for (var i = 49; i > 0; i--) {
+        $scope.grve.applauseLevels.push(i);
+    }
+    $scope.grve.appl = $scope.grve.applauseLevels[0];
 
 });
