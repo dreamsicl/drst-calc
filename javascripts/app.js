@@ -1,4 +1,4 @@
-var app = angular.module('calc', ['ui.bootstrap', 'ui.router']);
+var app = angular.module('calc', ['ui.bootstrap', 'ui.router', 'ngCookies']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -145,7 +145,7 @@ app.factory('autoTime', function($http, $timeout) {
 });
 
 
-app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive, TokenLive, Exp) {
+app.controller('TokenCtrl', function($scope, $cookies, autoTime, Data, $filter, NormalLive, TokenLive, Exp) {
     $scope.panelSize = angular.element(document.getElementById('panel')).clientWidth;
     $scope.$watch('panelSize', (function(n, o) {
         if (n !== o) $scope.panelSize = n;
@@ -169,32 +169,34 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
     for (var i = 10; i < 20; i++) {
         $scope.staminas.push(i);
     };
-    $scope.norm.stam = $scope.staminas[0]; // set default
 
-    /**** score settings ***/
-    $scope.norm.score = "S"; // set default
-    $scope.tokn.score = "S";
+    $scope.formInit = function() {
+        if ($cookies.norm == null) {
+            $scope.norm.stam = 10;
+            $scope.norm.score = "S"; // set default
+            $scope.norm.mul = 1;
+        } else $scope.norm = $cookies.norm;
 
-    /*** event difficulty ***/
-    $scope.tokn.diff = "Debut"; // set default
+        if ($cookies.tokn == null) {
+            $scope.tokn.diff = "Debut";
+            $scope.tokn.score = "S";
+            $scope.tokn.mul = 1;
+        } else $scope.tokn = $cookies.tokn;
 
-    /*** multipliers ***/
-    $scope.nmuls = [1, 2];
-    $scope.norm.mul = $scope.nmuls[0];
-    $scope.tmuls = [1, 2, 4];
-    $scope.tokn.mul = $scope.tmuls[0];
+        if ($cookies.user == null) {
+            $scope.user.lvl = 2;
+            $scope.user.exp = 0;
+            $scope.user.pts = 0;
+            $scope.user.tok = 0;
+            $scope.user.end = 5000;
+        } else $scope.user = $cookies.user;
+    };
 
-    /** status defaults **/
-    $scope.user.lvl = 2;
-    $scope.user.exp = 0;
-    $scope.user.pts = 0;
-    $scope.user.tok = 0;
-    $scope.user.end = 5000;
 
     var lvlInfo = $filter('filter')(Exp, {
         "Level": $scope.user.lvl
     })[0];
-    var ptDeficit = $scope.user.end - $scope.user.pts;
+    $scope.user.percentComplete = ($scope.user.pts / $scope.user.end) * 100;
     var getExpInfo = function(currExp) {
         for (var key in lvlInfo) {
             if (key === "EXP to Next") $scope.user.expToNext = lvlInfo[key];
@@ -211,6 +213,9 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
         })[0];
         getExpInfo($scope.user.exp);
         if ($scope.user.exp > $scope.user.expToNext) $scope.user.exp = $scope.user.expToNext;
+        $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
+
+        $cookies.user = $scope.user;
     }
 
     /*********** process input, get relevent constants ******/
@@ -218,7 +223,6 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
     var findNormByStam = $filter('filter')(NormalLive, {
         "Stamina": $scope.norm.stam
     })[0];
-    console.log(findNormByStam);
     var searchNorm = function(rank, m) {
         for (var key in findNormByStam) {
             if (key === rank) $scope.norm.toknEarn = findNormByStam[key] * m;
@@ -231,6 +235,7 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
             "Stamina": $scope.norm.stam
         })[0];
         searchNorm($scope.norm.score, $scope.norm.mul);
+        $cookies.norm = $scope.norm;
     };
 
     // event lives: get token cost, point worth, & exp
@@ -253,6 +258,7 @@ app.controller('TokenCtrl', function($scope, autoTime, Data, $filter, NormalLive
             "Difficulty": $scope.tokn.diff
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
+        $cookies.tokn = $scope.tokn;
     };
 
     /******** calculate output data *******/

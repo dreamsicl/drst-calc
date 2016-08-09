@@ -1,5 +1,5 @@
 <div class="panel-group container-fluid row" id="token" ng-controller="TokenCtrl">
-
+<pre>norm: {{norm}}</pre>
     <!-- remaining time -->
     <div class="col-lg-4 col-padding">
         <div class="panel panel-default">
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <form name="tokenSettings" novalidate>
+    <form name="tokenSettings" ng-init="formInit()" novalidate>
         <!-- live settings -->
         <div class="col-lg-4 col-padding">
 
@@ -55,14 +55,17 @@
                 <div ng-hide="time.deadline" class="alert alert-warning">
                     No ongoing event.
                 </div>
+                <!--<uib-progressbar value="user.percentComplete">
+                    <span style="color:white; white-space:nowrap;">{{user.percentComplete}}
+                    </span>
+                </uib-progressbar>-->
+                <div class="alert alert-warning" ng-show="toknSettings.$error.required">
+                    Missing input from Status.
+                </div>
                 <div ng-show="time.deadline">
-                    <div class="alert alert-warning" ng-show="toknSettings.$error.required">
-                        Missing input from Status.
-                    </div>
+
                     <div ng-hide="toknSettings.$error.required">
                         <ul class="list-group">
-                            <!--Progress: {{user.pts/user.end*100}}
-                                    <div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="{{getPercentCompletion()}}" aria-valuemin="0" aria-valuemax="100" style="width: {{getPercentCompletion()}}%"></div></div>-->
                             <li class="list-group-item">Event Lives Needed:
                                 <span class="badge">{{calcEventLivesNeeded()}}</span>
                             </li>

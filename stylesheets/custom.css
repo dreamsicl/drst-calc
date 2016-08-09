@@ -10,7 +10,7 @@ select {
     padding: 3px 5px;
     display: inline;
     text-align: center;
-    width: 95%;
+    width: 97%;
     margin: 5px 10px 0px 10px;
 }
 input {
@@ -22,6 +22,8 @@ input {
     -webkit-transition: 0.5s;
     transition: 0.5s;
     width: inherit;
+    margin-left:10px;
+    width: 97% !important;
 }
 input:focus {
     background-color: #ddd;
@@ -86,8 +88,8 @@ a, a:hover, a:active, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-t
 .tokn .control-label {
     height: 20px;
 }
-.bg-warning {
-    background: #f39c12 !important;
+.bg-warning, .panel-warning .panel-heading, .alert-warning {
+    background: #B97D1B !important;
 }
 .song-table {
     width: 100%;
