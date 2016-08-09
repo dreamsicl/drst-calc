@@ -1,4 +1,4 @@
-var app = angular.module('calc', ['ui.bootstrap', 'ui.router', 'ngCookies']);
+var app = angular.module('calc', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngAnimate']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
