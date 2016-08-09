@@ -23,14 +23,7 @@
         <header>
             <h2>starlight stage event calculator</h2>
             <uib-tabset>
-                <uib-tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active"></uib-tab>
-
-                <!--<uib-tab index="0" heading="Token" >
-                                <div class="panel-group container-fluid row" id="token" ng-controller="TokenCtrl" ng-include="'token.htm'"></div>
-                            </uib-tab>
-                            <uib-tab index="1" heading="Live Groove">
-
-                            </uib-tab>-->
+                <uib-tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active" ng-style="{'padding-left' : (t.heading=='Token') ? 25 : 5}"></uib-tab>
             </uib-tabset>
         </header>
         <section class="container">
