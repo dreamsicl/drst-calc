@@ -207,12 +207,19 @@ app.controller('TokenCtrl', function($scope, $cookies, autoTime, Data, $filter, 
     getExpInfo($scope.user.exp);
 
     $scope.updateStatus = function() {
-        if ($scope.user.lvl > 300) $scope.user.lvl = 300;
+        console.log("updateStatus()");
+        if ($scope.user.lvl > 300)
+        {
+          $scope.user.lvl = 300;
+        }
         lvlInfo = $filter('filter')(Exp, {
             "Level": $scope.user.lvl
         })[0];
         getExpInfo($scope.user.exp);
-        if ($scope.user.exp > $scope.user.expToNext) $scope.user.exp = $scope.user.expToNext;
+        if ($scope.user.exp > $scope.user.expToNext) {
+          $scope.user.exp = $scope.user.expToNext;
+          console.log("over max exp, resetting to expToNext")
+        }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
 
         $cookies.user = $scope.user;

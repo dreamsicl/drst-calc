@@ -1,6 +1,6 @@
 <div class="panel-group container-fluid row" id="token" ng-controller="TokenCtrl">
     <!-- remaining time -->
-    <div class="col-lg-4 col-padding">
+    <div class="col-lg-3 col-padding">
         <div class="panel panel-default">
             <div class="panel-heading" ng-click="collapse.time = !collapse.time">
                 <h3 class="panel-title">
@@ -29,20 +29,20 @@
 
     <form name="tokenSettings" ng-init="formInit()" novalidate>
         <!-- live settings -->
-        <div class="col-lg-4 col-padding">
+        <div class="col-lg-3 col-padding">
 
             <div class="panel panel-default" ng-include="'toknSettings.htm'"></div>
         </div>
 
         <!-- status -->
-        <div class="col-lg-4 col-padding">
+        <div class="col-lg-3 col-padding">
             <div class="panel status" ng-class="tokenSettings.$error.required ? 'panel-warning' : 'panel-default' " ng-include="'toknStatus.htm'"></div>
         </div>
 
     </form>
 
     <!-- results -->
-    <div class="col-lg-4 col-padding">
+    <div class="col-lg-3 col-padding">
 
         <div class="panel panel-info">
             <div class="panel-heading" ng-click="collapse.results = !collapse.results">
