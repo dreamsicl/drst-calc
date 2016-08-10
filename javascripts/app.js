@@ -204,7 +204,7 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
 
         $cookies.user = $scope.user;
-        console.log($cookies);
+        console.log($cookies.user);
     }
 
     /*********** process input, get relevent constants ******/
@@ -225,7 +225,7 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
         })[0];
         searchNorm($scope.norm.score, $scope.norm.mul);
         $cookies.norm = $scope.norm;
-        console.log($cookies);
+        console.log($cookies.norm);
     };
 
     // event lives: get token cost, point worth, & exp
@@ -249,7 +249,7 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
         $cookies.tokn = $scope.tokn;
-        console.log($cookies);
+        console.log($cookies.tokn);
     };
 
 
