@@ -114,9 +114,16 @@ app.factory('autoDeadline', function($http, $timeout) {
     return deadline;
 });
 
+app.factory('Data', function() {
+    var data = {
+        user: '',
+    };
+    data.getData
+    return data;
+});
+
 
 app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $filter, NormalLive, TokenLive, Exp) {
-    $scope.panelSize = angular.element(document.getElementById('panel')).clientWidth;
     $scope.$watch('panelSize', (function(n, o) {
         if (n !== o) $scope.panelSize = n;
     }));
@@ -255,18 +262,30 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
 
 
     $scope.formInit = function() {
+      console.log("initalizing form");
+      console.log("$cookies.user: " + $cookies.user);
+      console.log("$cookies.tokn: " + $cookies.tokn);
+      console.log("$cookies.norm: " + $cookies.norm);
+
         if ($cookies.norm == null) {
             $scope.norm.stam = 10;
             $scope.norm.score = "S"; // set default
             $scope.norm.mul = 1;
-        } else $scope.norm = $cookies.norm;
+        } else {
+            $scope.norm = $cookies.norm;
+            console.log("filling user with cookies");
+        }
         $scope.updateNorm();
 
         if ($cookies.tokn == null) {
             $scope.tokn.diff = "Debut";
             $scope.tokn.score = "S";
             $scope.tokn.mul = 1;
-        } else $scope.tokn = $cookies.tokn;
+        } else {
+            $scope.tokn = $cookies.tokn;
+
+            console.log("filling tokn with cookies");
+        }
         $scope.updateTokn();
 
         if ($cookies.user == null) {
@@ -275,7 +294,10 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
             $scope.user.pts = 0;
             $scope.user.tok = 0;
             $scope.user.end = 5000;
-        } else $scope.user = $cookies.user;
+        } else {
+            console.log("filling user with cookies");
+            $scope.user = $cookies.user;
+        }
         $scope.updateStatus();
     };
 
