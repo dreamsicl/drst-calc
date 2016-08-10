@@ -1,4 +1,11 @@
-var app = angular.module('calc', ['ui.bootstrap', 'ui.router', 'ngCookies', 'ngAnimate']);
+var app = angular.module('calc', ['LocalStorageModule', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
+
+app.config(function (localStorageServiceProvider) {
+  localStorageServiceProvider
+    .setPrefix('calc')
+    .setStorageType('localStorage')
+    .setNotify(true, true)
+});
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -123,7 +130,7 @@ app.factory('Data', function() {
 });
 
 
-app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $filter, NormalLive, TokenLive, Exp) {
+app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, NormalLive, TokenLive, Exp, localStorageService) {
     $scope.$watch('panelSize', (function(n, o) {
         if (n !== o) $scope.panelSize = n;
     }));
@@ -210,8 +217,6 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
         }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
 
-        $cookies.putObject('user', $scope.user);
-        console.log($cookies.user);
     }
 
     /*********** process input, get relevent constants ******/
@@ -231,8 +236,7 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
             "Stamina": $scope.norm.stam
         })[0];
         searchNorm($scope.norm.score, $scope.norm.mul);
-        $cookies.putObject('norm', $scope.norm);
-        console.log($cookies.norm);
+
     };
 
     // event lives: get token cost, point worth, & exp
@@ -255,48 +259,46 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
             "Difficulty": $scope.tokn.diff
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
-        $cookies.putObject('tokn', $scope.tokn);
-        console.log($cookies.tokn);
+
     };
 
 
 
     $scope.formInit = function() {
       console.log("initalizing form");
-      console.log("$cookies.user: " + $cookies.user);
-      console.log("$cookies.tokn: " + $cookies.tokn);
-      console.log("$cookies.norm: " + $cookies.norm);
+      var localNorm = localStorageService.get('norm');
+      var localTokn = localStorageService.get('tokn');
+      var localUser = localStorageService.get('user');
 
-        if ($cookies.norm == null) {
+        if (localNorm == null) {
             $scope.norm.stam = 10;
             $scope.norm.score = "S"; // set default
             $scope.norm.mul = 1;
         } else {
-            $scope.norm = $cookies.norm;
-            console.log("filling user with cookies");
+            $scope.norm = localNorm;
+            console.log("filling norm with localStorage");
         }
         $scope.updateNorm();
 
-        if ($cookies.tokn == null) {
+        if (localTokn == null) {
             $scope.tokn.diff = "Debut";
             $scope.tokn.score = "S";
             $scope.tokn.mul = 1;
         } else {
-            $scope.tokn = $cookies.tokn;
-
-            console.log("filling tokn with cookies");
+            $scope.tokn = localTokn;
+            console.log("filling tokn with localStorage");
         }
         $scope.updateTokn();
 
-        if ($cookies.user == null) {
+        if (localUser == null) {
             $scope.user.lvl = 2;
             $scope.user.exp = 0;
             $scope.user.pts = 0;
             $scope.user.tok = 0;
             $scope.user.end = 5000;
         } else {
-            console.log("filling user with cookies");
-            $scope.user = $cookies.user;
+            console.log("filling user with localStorage");
+            $scope.user = localUser;
         }
         $scope.updateStatus();
     };
