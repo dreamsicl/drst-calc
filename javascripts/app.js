@@ -210,7 +210,7 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
         }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
 
-        $cookies.put('user', $scope.user);
+        $cookies.putObject('user', $scope.user);
         console.log($cookies.user);
     }
 
@@ -231,7 +231,7 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
             "Stamina": $scope.norm.stam
         })[0];
         searchNorm($scope.norm.score, $scope.norm.mul);
-        $cookies.put('norm', $scope.norm);
+        $cookies.putObject('norm', $scope.norm);
         console.log($cookies.norm);
     };
 
@@ -255,7 +255,7 @@ app.controller('TokenCtrl', function($scope, $cookies, $timeout, autoDeadline, $
             "Difficulty": $scope.tokn.diff
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
-        $cookies.put('tokn', $scope.tokn);
+        $cookies.putObject('tokn', $scope.tokn);
         console.log($cookies.tokn);
     };
 
