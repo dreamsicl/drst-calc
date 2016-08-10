@@ -10,8 +10,8 @@
             <div uib-collapse="collapse.time" class="panel-body">
 
                 <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
-                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="initTime('auto')">Automatic Calculation</label>
-                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="initTime('manu')">Manual Input</label>
+                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="initTime('auto')">Automatic</label>
+                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="initTime('manu')">Manual</label>
                 </div>
                 <hr>
                 <div ng-if="time.kind=='auto'">
@@ -33,14 +33,14 @@
                 </div>
                 <div ng-if="time.kind=='manu'">
                     <ul class="list-group" style="margin-bottom: 15px;" ng-if="time.deadline">
-                        <li class="list-group-item">Current time:
+                        <li class="list-group-item list-group-item-tall">Current time:
                             <span class="badge">{{time.clock | date: 'medium'}}</span>
                         </li>
                     </ul>
-                    <form name="timing" class="form-horizontal">
-                        <div class="form-group" style="margin-bottom:0px;">
-                            <label for="manualTime" class="control-label col-xs-4">Time left (in hours):</label>
-                            <input class="col-xs-7" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()"></input>
+                    <form name="timing" class="form-horizontal timing">
+                        <div class="form-group col-xs-12" style="margin-bottom:0px;">
+                            <label for="manualTime">Time left (in hours):</label>
+                            <input class="col-xs-12" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()"></input>
                         </div>
                     </div>
                 </form>
@@ -95,7 +95,7 @@
                             <li class="list-group-item">End Rank:
                                 <span class="badge">{{calcEndRank()}}</span>
                             </li>
-                            <li class="list-group-item">Points w/ Natural Stamina:
+                            <li class="list-group-item list-group-item-tall">Points w/ Natural Stamina:
                                 <span class="badge">{{calcNaturalPts() | number: 0}}</span>
                             </li>
                             <li class="list-group-item">Stamina Deficit:

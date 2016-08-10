@@ -99,7 +99,7 @@ h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-.status .form-group {
+.status .form-group, .timing .form-group {
     margin: 0px 0px 10px 0px;
 }
 .status .panel-body {
@@ -112,16 +112,15 @@ h2 {
     .panel {
       min-width: 275px;
     }
-    .btn {
-        padding: 6px 12px;
-        font-size: 15px;
-    }
     .diffs {
-        padding: 3px 8px !important;
+        padding: 3px 5px !important;
         font-size: 11px !important;
     }
-    .list-group-item {
+    .list-group-item-tall {
       height: 60px;
       padding: 3% 8%;
     }
+}
+form {
+  margin: 0px;
 }
