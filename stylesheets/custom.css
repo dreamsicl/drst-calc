@@ -108,12 +108,16 @@ h2 {
 .panel-group {
     padding-top: 15px;
 }
+.diffs {
+    padding: 10px 0px !important;
+    font-size: 13px !important;
+}
 @media (min-width: 1200px) {
     .panel {
       min-width: 275px;
     }
     .diffs {
-        padding: 3px 5px !important;
+        padding: 3px 0px !important;
         font-size: 11px !important;
     }
     .list-group-item-tall {
