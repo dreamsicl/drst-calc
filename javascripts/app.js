@@ -143,8 +143,10 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     /*** timing settings ****/
     $scope.time = {};
 
+    var localTimeHrs = localStorageService.get('timeHrs');
+    if (localTimeHrs == null) $scope.time.hours = 194;
+    else $scope.time.hours = localTimeHrs;
     $scope.time.kind = 'auto';
-    $scope.time.hours = 194;
     $scope.time.remainingMs = "Loading...";
     $scope.time.naturalStam = "Loading...";
     $scope.initTime = function(kind) {
@@ -163,6 +165,9 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
 
     };
+    $scope.setLocalStorageTime = function {
+      localStorageService.set('timeHrs', $scope.time.hrs);
+    }
     /** clock **/
     $scope.time.clock = Date.now();
     var tickInterval = 1000;
