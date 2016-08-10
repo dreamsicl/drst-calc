@@ -165,8 +165,8 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
 
     };
-    $scope.setLocalStorageTime = function {
-      localStorageService.set('timeHrs', $scope.time.hrs);
+    $scope.setLocalStorageTime = function() {
+        localStorageService.set('user', $scope.user);
     }
     /** clock **/
     $scope.time.clock = Date.now();
