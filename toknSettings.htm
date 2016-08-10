@@ -31,9 +31,9 @@
         <div class="form-group col-xs-12">
             <label class="control-label">Normal Song Multiplier:</label>
             <div class="btn-group btn-group-justified">
-                <label class="btn btn-primary" ng-model="norm.mul" uib-btn-radio="1">
+                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" uib-btn-radio="1">
                     1</label>
-                <label class="btn btn-primary" ng-model="norm.mul" uib-btn-radio="2">
+                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" uib-btn-radio="2">
                     2</label>
             </div>
 
