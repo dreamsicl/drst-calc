@@ -155,6 +155,8 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     } else {
         $scope.time.kind = localTimeKind;
         $scope.time.hours = localTimeHrs;
+        $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
+
     }
 
     $scope.initTime = function(kind) {
