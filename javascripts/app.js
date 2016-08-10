@@ -143,20 +143,31 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     /*** timing settings ****/
     $scope.time = {};
 
-    var localTimeHrs = localStorageService.get('timeHrs');
-    if (localTimeHrs == null) $scope.time.hours = 194;
-    else $scope.time.hours = localTimeHrs;
-    $scope.time.kind = 'auto';
+
     $scope.time.remainingMs = "Loading...";
     $scope.time.naturalStam = "Loading...";
+
+    var localTimeHrs = localStorageService.get('timeHrs');
+    var localTimeKind = localStorageService.get('timeKind');
+    if (localTimeKind == null) {
+        $scope.time.kind = 'auto';
+        $scope.time.hours = 194;
+    } else {
+        $scope.time.kind = localTimeKind;
+        $scope.time.hours = localTimeHrs;
+    }
+
     $scope.initTime = function(kind) {
+
         $scope.time.kind = kind;
         $scope.time.remainingMs = "Loading...";
         $scope.time.naturalStam = "Loading...";
         if ($scope.time.kind == 'auto') {
             $scope.time.deadline = autoDeadline;
+            localStorageService.set('timeKind', 'auto');
         } else if ($scope.time.kind == 'manu') {
             $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
+            localStorageService.set('timeKind', 'manu');
         }
     };
     $scope.updateTimeHrs = function() {
@@ -166,9 +177,9 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
 
     };
     $scope.setLocalStorageTime = function() {
-        localStorageService.set('user', $scope.user);
-    }
-    /** clock **/
+            localStorageService.set('timeHrs', $scope.time.hours);
+        }
+        /** clock **/
     $scope.time.clock = Date.now();
     var tickInterval = 1000;
     var tick = function() {
