@@ -8,22 +8,22 @@
 
         <div class="form-group col-xs-12">
             <label class="control-label" for="n_stam">Normal Song Stamina Cost:</label>
-            <select name="n_stam" id="n_stam" ng-model="norm.stam" ng-options="stam for stam in staminas" ng-change="updateNorm()"></select>
+            <select name="n_stam" id="n_stam" ng-model="norm.stam" ng-options="stam for stam in staminas" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()"></select>
         </div>
 
         <div class="form-group col-xs-12">
             <label class="control-label">Normal Song Score:</label>
             <div class="btn-group btn-group-justified">
-                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'S'" ng-change="updateNorm()" ng-blur="">
+                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'S'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
                     S</label>
 
-                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'A'" ng-change="updateNorm()">
+                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'A'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
                     A</label>
 
-                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'B'" ng-change="updateNorm()">
+                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'B'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
                     B</label>
 
-                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'C'" ng-change="updateNorm()">
+                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'C'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
                     C</label>
             </div>
         </div>
@@ -31,9 +31,9 @@
         <div class="form-group col-xs-12">
             <label class="control-label">Normal Song Multiplier:</label>
             <div class="btn-group btn-group-justified">
-                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" uib-btn-radio="1">
+                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()" uib-btn-radio="1">
                     1</label>
-                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" uib-btn-radio="2">
+                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()" uib-btn-radio="2">
                     2</label>
             </div>
 
@@ -42,16 +42,16 @@
         <div class="form-group col-xs-12">
             <label class="control-label">Event Difficulty:</label>
             <div class="btn-group btn-group-justified">
-                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Debut'" ng-change="updateTokn()">
+                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Debut'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     Debut</label>
 
-                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Regular'" ng-change="updateTokn()">
+                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Regular'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     Regular</label>
 
-                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Pro'" ng-change="updateTokn()">
+                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Pro'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     Pro</label>
 
-                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Master/+'" ng-change="updateTokn()">
+                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Master/+'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     Master/+</label>
             </div>
 
@@ -60,16 +60,16 @@
         <div class="form-group col-xs-12">
             <label class="control-label">Event Song Score:</label>
             <div class="btn-group btn-group-justified">
-                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'S'" ng-change="updateTokn()">
+                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'S'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     S</label>
 
-                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'A'" ng-change="updateTokn()">
+                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'A'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     A</label>
 
-                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'B'" ng-change="updateTokn()">
+                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'B'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     B</label>
 
-                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'C'" ng-change="updateTokn()">
+                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'C'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     C</label>
             </div>
         </div>
@@ -77,11 +77,11 @@
         <div class="form-group col-xs-12">
             <label class="control-label">Event Song Multiplier:</label>
             <div class="btn-group btn-group-justified">
-                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="1" ng-change="updateTokn()">
+                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="1" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     1</label>
-                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="2" ng-change="updateTokn()">
+                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="2" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     2</label>
-                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="4" ng-change="updateTokn()">
+                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="4" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
                     4</label>
             </div>
         </div>

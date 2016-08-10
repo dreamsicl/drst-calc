@@ -15,8 +15,7 @@
                 </div>
                 <hr>
                 <div ng-if="time.kind=='auto'">
-                    <div class="alert alert-warning" ng-if="!time.deadline" class="list-group-item bg-warning">No ongoing event.
-                    </div>
+                    <div class="alert alert-warning" ng-if="!time.deadline" class="list-group-item bg-warning">No ongoing event.</div>
 
                     <ul class="list-group" ng-if="time.deadline">
                         <li class="list-group-item">Current time:
@@ -37,7 +36,7 @@
                             <span class="badge">{{time.clock | date: 'medium'}}</span>
                         </li>
                     </ul>
-                    <form name="timing" class="form-horizontal timing">
+                    <form name="timing" class="form-horizontal timing" ng-init="initManuTime()">
                         <div class="form-group col-xs-12" style="margin-bottom:0px;">
                             <label for="manualTime">Time left (in hours):</label>
                             <input class="col-xs-12" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()"></input>

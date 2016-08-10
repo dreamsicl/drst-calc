@@ -1,10 +1,10 @@
 var app = angular.module('calc', ['LocalStorageModule', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
 
-app.config(function (localStorageServiceProvider) {
-  localStorageServiceProvider
-    .setPrefix('calc')
-    .setStorageType('localStorage')
-    .setNotify(true, true)
+app.config(function(localStorageServiceProvider) {
+    localStorageServiceProvider
+        .setPrefix('calc')
+        .setStorageType('localStorage')
+        .setNotify(true, true)
 });
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -216,11 +216,11 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             $scope.user.exp = $scope.user.expToNext;
         }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
-        localStorageService.set('user', $scope.user);
-        console.log("localStorage.user: " + localStorageService.get('user'));
-
-
     }
+    $scope.setLocalStorageUser = function() {
+        localStorageService.set('user', $scope.user);
+    }
+
 
     /*********** process input, get relevent constants ******/
     // normal lives: get tokens & exp
@@ -239,10 +239,11 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             "Stamina": $scope.norm.stam
         })[0];
         searchNorm($scope.norm.score, $scope.norm.mul);
-        localStorageService.set('norm', $scope.norm);
-        console.log("localStorage.norm: " + localStorageService.get('norm'));
-
     };
+    $scope.setLocalStorageNorm = function() {
+        localStorageService.set('norm', $scope.norm);
+    }
+
 
     // event lives: get token cost, point worth, & exp
     var totalPtsTokn = "";
@@ -264,18 +265,16 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             "Difficulty": $scope.tokn.diff
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
-        localStorageService.set('tokn', $scope.tokn);
-        console.log("localStorage.tokn: " + localStorageService.get('tokn'));
-
     };
-
+    $scope.setLocalStorageTokn = function() {
+        localStorageService.set('tokn', $scope.tokn);
+    }
 
 
     $scope.formInit = function() {
-      console.log("initalizing form");
-      var localNorm = localStorageService.get('norm');
-      var localTokn = localStorageService.get('tokn');
-      var localUser = localStorageService.get('user');
+        var localNorm = localStorageService.get('norm');
+        var localTokn = localStorageService.get('tokn');
+        var localUser = localStorageService.get('user');
 
         if (localNorm == null) {
             $scope.norm.stam = 10;
@@ -283,7 +282,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             $scope.norm.mul = 1;
         } else {
             $scope.norm = localNorm;
-            console.log("filling norm with localStorage");
         }
         $scope.updateNorm();
 
@@ -293,7 +291,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             $scope.tokn.mul = 1;
         } else {
             $scope.tokn = localTokn;
-            console.log("filling tokn with localStorage");
         }
         $scope.updateTokn();
 
@@ -304,7 +301,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             $scope.user.tok = 0;
             $scope.user.end = 5000;
         } else {
-            console.log("filling user with localStorage");
             $scope.user = localUser;
         }
         $scope.updateStatus();
