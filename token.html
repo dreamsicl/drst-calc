@@ -32,11 +32,6 @@
                         </ul>
                     </div>
                     <div ng-if="time.kind=='manu'">
-                        <ul class="list-group" style="margin-bottom: 15px;">
-                            <li class="list-group-item list-group-item-tall">Current time:
-                                <span class="badge">{{time.clock | date: 'medium'}}</span>
-                            </li>
-                        </ul>
                         <div class="form-group col-xs-12" style="margin-bottom:0px;">
                             <label for="manualTime">Time left (in hours):</label>
                             <input name="hours" class="col-xs-12" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()" ng-blur="setLocalStorageTime()" required></input>

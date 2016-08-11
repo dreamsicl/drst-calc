@@ -146,11 +146,9 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         $scope.collapse = localCollapse;
     }
 
-    console.log($scope.collapse);
     $scope.setLocalCollapse = function() {
         localStorageService.set('collapse', $scope.collapse);
         var localCollapse = localStorageService.get('collapse');
-        console.log(localCollapse);
     }
 
 
@@ -163,16 +161,16 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     var localTimeKind = localStorageService.get('timeKind');
     if (localTimeKind == null) {
         $scope.time.kind = 'auto';
-
         $scope.time.hours = 194;
     } else {
         $scope.time.kind = localTimeKind;
-
         if ($scope.time.kind == 'auto') {
             $scope.time.deadline = autoDeadline;
         } else {
             $scope.time.hours = localTimeHrs;
-            $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
+            $scope.time.remainingMs = $scope.time.hours * 3600000;
+            $scope.time.deadline = Date.now() + $scope.time.remainingMs;
+            $scope.time.naturalStam = $scope.time.hours*60/5;
         }
 
     }
@@ -194,15 +192,15 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
         $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
         $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
-
     };
     $scope.setLocalStorageTime = function() {
-            localStorageService.set('timeHrs', $scope.time.hours);
-        }
-        /** clock **/
-    $scope.time.clock = Date.now();
+        localStorageService.set('timeHrs', $scope.time.hours);
+    };
+
+    /** clock **/
     var tickInterval = 1000;
     var tick = function() {
+    $scope.time.clock = Date.now();
         if ($scope.time.deadline) {
             $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
             $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
@@ -210,7 +208,7 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         $scope.time.clock = Date.now();
         $timeout(tick, tickInterval);
     }
-    $timeout(tick, tickInterval);
+    if ($scope.time.kind == 'auto') $timeout(tick, tickInterval);
 
 
     /***** gather input *****/
@@ -412,9 +410,9 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         var naturalToknPlays = naturalTokens / $scope.tokn.cost;
         return naturalTokens + naturalToknPlays * $scope.tokn.ptsEarned;
     }
-    $scope.calcPointsPerDay = function () {
-      var daysLeft = Math.floor($scope.time.remainingMs / 1000 / 60 / 60 / 24);
-      return ptDeficit / daysLeft;
+    $scope.calcPointsPerDay = function() {
+        var daysLeft = Math.floor($scope.time.remainingMs / 1000 / 60 / 60 / 24);
+        return ptDeficit / daysLeft;
     }
 });
 
