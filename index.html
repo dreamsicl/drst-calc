@@ -26,7 +26,7 @@
         <header ng-controller="TabCtrl">
             <h2>deresute event calculator</h2>
             <uib-tabset>
-                <uib-tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active" ng-style="{'margin-left' : (t.heading=='Token') ? 25 : 5}"></uib-tab>
+                <uib-tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active" ng-style="{'margin-left' : (t.heading=='Token') ? '25px' : '5px'}"></uib-tab>
             </uib-tabset>
         </header>
         <section class="container">
