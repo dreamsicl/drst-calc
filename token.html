@@ -47,101 +47,190 @@
         <!-- live settings -->
         <div class="col-lg-3 col-padding">
 
-            <div class="panel panel-default" ng-include="'toknSettings.htm'"></div>
-        </div>
-
-        <!-- status -->
-        <div class="col-lg-3 col-padding">
-            <div class="panel status" ng-class="tokenSettings.$error.required ? 'panel-warning' : 'panel-default'">
-                <div class="panel-heading" ng-click="collapse.status = !collapse.status;setLocalCollapse()">
+            <div class="panel panel-default">
+                <div class="panel-heading" ng-click="collapse.song = !collapse.song;setLocalCollapse()">
                     <h3 class="panel-title">
-                        <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.status, 'glyphicon-chevron-up': !collapse.status}"></span>
-                        Status</h3>
+                        <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.song, 'glyphicon-chevron-up': !collapse.song}"></span>
+                        Song Settings</h3>
                 </div>
-                <div uib-collapse="collapse.status" class="panel-body">
-                    <form class="form-horizontal" role="form" name="status">
-                        <div class="form-group">
-                            <label class="control-label" for="lvl">Rank:</label>
-                            <input class="col-xs-12" type="number" min="2" name="lvl" ng-model="user.lvl" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required>
-                            <br/>
+                <div uib-collapse="collapse.song" class="panel-body tokn">
+                    <form class="form-horizontal" role="form" name="lives" ng-submit="submit" form-autofill-fix>
+
+                        <div class="form-group col-xs-12">
+                            <label class="control-label" for="n_stam">Normal Song Stamina Cost:</label>
+                            <select name="n_stam" id="n_stam" ng-model="norm.stam" ng-options="stam for stam in staminas" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()"></select>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="exp">Current EXP:</label>
-                            <input class="col-xs-12" type="number" min="0" name="exp" ng-model="user.exp" reg-ex-input reg-ex="^[0-9]*$" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" required><br/>
+
+                        <div class="form-group col-xs-12">
+                            <label class="control-label">Normal Song Score:</label>
+                            <div class="btn-group btn-group-justified">
+                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'S'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
+                                    S</label>
+
+                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'A'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
+                                    A</label>
+
+                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'B'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
+                                    B</label>
+
+                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'C'" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()">
+                                    C</label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="pts">Points Earned:</label>
-                            <input class="col-xs-12" type="number" min="0" name="pts" ng-model="user.pts" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+
+                        <div class="form-group col-xs-12">
+                            <label class="control-label">Normal Song Multiplier:</label>
+                            <div class="btn-group btn-group-justified">
+                                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()" uib-btn-radio="1">
+                                    1</label>
+                                <label class="btn btn-primary" ng-model="norm.mul" ng-change="updateNorm()" ng-blur="setLocalStorageNorm()" uib-btn-radio="2">
+                                    2</label>
+                            </div>
+
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="tok">Current Tokens:</label>
-                            <input class="col-xs-12" type="number" min="0" name="tok" ng-model="user.tok" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+
+                        <div class="form-group col-xs-12">
+                            <label class="control-label">Event Difficulty:</label>
+                            <div class="btn-group btn-group-justified">
+                                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Debut'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    Debut</label>
+
+                                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Regular'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    Regular</label>
+
+                                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Pro'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    Pro</label>
+
+                                <label class="btn btn-primary diffs" ng-model="tokn.diff" uib-btn-radio="'Master/+'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    Master/+</label>
+                            </div>
+
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="end">Goal:</label>
-                            <input class="col-xs-12" type="number" min="0" name="end" ng-model="user.end" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required>
+
+                        <div class="form-group col-xs-12">
+                            <label class="control-label">Event Song Score:</label>
+                            <div class="btn-group btn-group-justified">
+                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'S'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    S</label>
+
+                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'A'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    A</label>
+
+                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'B'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    B</label>
+
+                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'C'" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    C</label>
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
-    </form>
-
-    <!-- results -->
-    <div class="col-lg-3 col-padding">
-
-        <div class="panel panel-primary">
-            <div class="panel-heading" ng-click="collapse.results = !collapse.results;setLocalCollapse()">
-                <h3 class="panel-title">
-                    <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.results, 'glyphicon-chevron-up': !collapse.results}"></span>
-                    Results</h3>
-            </div>
-            <div uib-collapse="collapse.results" class="panel-body">
-                <div ng-show="!time.deadline || timing.$error.required" class="alert alert-warning">
-                    <span ng-show="!time.deadline">No ongoing event.</span>
-                    <span ng-show="timing.$error.required">Missing time left input.</span>
-                </div>
-
-                <!--<uib-progressbar value="user.percentComplete">
-                    <span style="color:white; white-space:nowrap;">{{user.percentComplete}}
-                    </span>
-                </uib-progressbar>-->
-                <div class="alert alert-warning" ng-show="tokenSettings.$error.required" style="margin-top:15px;">
-                    Missing input from Status.
-                </div>
-                <div ng-show="time.deadline">
-
-                    <div ng-hide="tokenSettings.$error.required || timing.$error.required">
-                        <ul class="list-group">
-                            <li class="list-group-item">Event Lives Needed:
-                                <span class="badge">{{calcEventLivesNeeded()}}</span>
-                            </li>
-                            <li class="list-group-item">Normal Lives Needed:
-                                <span class="badge">{{calcNormalLivesNeeded()}}</span>
-                            </li>
-                            <li class="list-group-item list-group-item-tall">Min. Points/Day to Reach Goal:
-                                <span class="badge">{{calcPointsPerDay() | number: 0}}</span>
-                            </li>
-                            <li class="list-group-item">End Rank:
-                                <span class="badge">{{calcEndRank()}}</span>
-                            </li>
-                            <li class="list-group-item list-group-item-tall">Points w/ Natural Stamina:
-                                <span class="badge">{{calcNaturalPts() | number: 0}}</span>
-                            </li>
-
-                            <li class="list-group-item">Stamina Deficit:
-                                <span class="badge">{{calcStamDeficit()}}</span>
-                            </li>
-                            <li class="list-group-item" ng-class="">Play Time:
-                                <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
-                            </li>
-                        </ul>
-                        <div class="alert alert-warning" ng-show="{{enoughTime()}}">The event will have ended before reaching your goal :(</div>
+                        <div class="form-group col-xs-12">
+                            <label class="control-label">Event Song Multiplier:</label>
+                            <div class="btn-group btn-group-justified">
+                                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="1" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    1</label>
+                                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="2" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    2</label>
+                                <label class="btn btn-primary" ng-model="tokn.mul" uib-btn-radio="4" ng-change="updateTokn()" ng-blur="setLocalStorageTokn()">
+                                    4</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- status -->
+            <div class="col-lg-3 col-padding">
+                <div class="panel status" ng-class="tokenSettings.$error.required ? 'panel-warning' : 'panel-default'">
+                    <div class="panel-heading" ng-click="collapse.status = !collapse.status;setLocalCollapse()">
+                        <h3 class="panel-title">
+                            <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.status, 'glyphicon-chevron-up': !collapse.status}"></span>
+                            Status</h3>
+                    </div>
+                    <div uib-collapse="collapse.status" class="panel-body">
+                        <form class="form-horizontal" role="form" name="status">
+                            <div class="form-group">
+                                <label class="control-label" for="lvl">Rank:</label>
+                                <input class="col-xs-12" type="number" min="2" name="lvl" ng-model="user.lvl" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required>
+                                <br/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="exp">Current EXP:</label>
+                                <input class="col-xs-12" type="number" min="0" name="exp" ng-model="user.exp" reg-ex-input reg-ex="^[0-9]*$" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" required><br/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="pts">Points Earned:</label>
+                                <input class="col-xs-12" type="number" min="0" name="pts" ng-model="user.pts" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="tok">Current Tokens:</label>
+                                <input class="col-xs-12" type="number" min="0" name="tok" ng-model="user.tok" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="end">Goal:</label>
+                                <input class="col-xs-12" type="number" min="0" name="end" ng-model="user.end" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- results -->
+        <div class="col-lg-3 col-padding">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" ng-click="collapse.results = !collapse.results;setLocalCollapse()">
+                    <h3 class="panel-title">
+                        <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.results, 'glyphicon-chevron-up': !collapse.results}"></span>
+                        Results</h3>
+                </div>
+                <div uib-collapse="collapse.results" class="panel-body">
+                    <div ng-show="!time.deadline || timing.$error.required" class="alert alert-warning">
+                        <span ng-show="!time.deadline">No ongoing event.</span>
+                        <span ng-show="timing.$error.required">Missing time left input.</span>
+                    </div>
+
+                    <!--<uib-progressbar value="user.percentComplete">
+                    <span style="color:white; white-space:nowrap;">{{user.percentComplete}}
+                    </span>
+                </uib-progressbar>-->
+                    <div class="alert alert-warning" ng-show="tokenSettings.$error.required" style="margin-top:15px;">
+                        Missing input from Status.
+                    </div>
+                    <div ng-show="time.deadline">
+
+                        <div ng-hide="tokenSettings.$error.required || timing.$error.required">
+                            <ul class="list-group">
+                                <li class="list-group-item">Event Lives Needed:
+                                    <span class="badge">{{calcEventLivesNeeded()}}</span>
+                                </li>
+                                <li class="list-group-item">Normal Lives Needed:
+                                    <span class="badge">{{calcNormalLivesNeeded()}}</span>
+                                </li>
+                                <li class="list-group-item list-group-item-tall">Min. Points/Day to Reach Goal:
+                                    <span class="badge">{{calcPointsPerDay() | number: 0}}</span>
+                                </li>
+                                <li class="list-group-item">End Rank:
+                                    <span class="badge">{{calcEndRank()}}</span>
+                                </li>
+                                <li class="list-group-item list-group-item-tall">Points w/ Natural Stamina:
+                                    <span class="badge">{{calcNaturalPts() | number: 0}}</span>
+                                </li>
+
+                                <li class="list-group-item">Stamina Deficit:
+                                    <span class="badge">{{calcStamDeficit()}}</span>
+                                </li>
+                                <li class="list-group-item" ng-class="">Play Time:
+                                    <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
+                                </li>
+                            </ul>
+                            <div class="alert alert-warning" ng-show="{{enoughTime()}}">The event will have ended before reaching your goal :(</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
