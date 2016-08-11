@@ -1,50 +1,51 @@
 <div class="panel-group container-fluid row" id="token" ng-controller="TokenCtrl">
     <!-- remaining time -->
     <div class="col-lg-3 col-padding">
-        <div class="panel panel-default">
-            <div class="panel-heading" ng-click="collapse.time = !collapse.time">
-                <h3 class="panel-title">
-                    <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.time, 'glyphicon-chevron-up': !collapse.time}"></span>
-                    Remaining Time</h3>
-            </div>
-            <div uib-collapse="collapse.time" class="panel-body">
+        <form name="timing" class="form-horizontal timing" ng-init="initManuTime()">
 
-                <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
-                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="initTime('auto')">Automatic</label>
-                    <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="initTime('manu')">Manual</label>
+            <div class="panel" ng-class="timing.$error.required ? 'panel-warning' : 'panel-default'">
+                <div class="panel-heading" ng-click="collapse.time = !collapse.time;setLocalCollapse()">
+                    <h3 class="panel-title">
+                        <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.time, 'glyphicon-chevron-up': !collapse.time}"></span>
+                        Remaining Time</h3>
                 </div>
-                <hr>
-                <div ng-if="time.kind=='auto'">
-                    <div class="alert alert-warning" ng-if="!time.deadline" class="list-group-item bg-warning">No ongoing event.</div>
+                <div uib-collapse="collapse.time" class="panel-body">
+                    <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
+                        <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="initTime('auto')">Automatic</label>
+                        <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="initTime('manu')">Manual</label>
+                    </div>
+                    <hr>
+                    <div ng-if="time.kind=='auto'">
+                        <div class="alert alert-warning" ng-if="!time.deadline" class="list-group-item bg-warning">No ongoing event.</div>
 
-                    <ul class="list-group" ng-if="time.deadline">
-                        <li class="list-group-item">Current time:
-                            <span class="badge">{{time.clock | date: 'medium'}}</span>
-                        </li>
-                        <li ng-if="time.deadline" class="list-group-item">Event ends at:
-                            <span class="badge">{{time.deadline | date: 'medium'}}</span>
-                        </li>
-                        <li ng-if="time.deadline" class="list-group-item">Time left:
-                            <span class="badge">{{time.remainingMs/1000/60 | time:'mm':'hhh mmm':false}}
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                <div ng-if="time.kind=='manu'">
-                    <ul class="list-group" style="margin-bottom: 15px;">
-                        <li class="list-group-item list-group-item-tall">Current time:
-                            <span class="badge">{{time.clock | date: 'medium'}}</span>
-                        </li>
-                    </ul>
-                    <form name="timing" class="form-horizontal timing" ng-init="initManuTime()">
+                        <ul class="list-group" ng-if="time.deadline">
+                            <li class="list-group-item">Current time:
+                                <span class="badge">{{time.clock | date: 'medium'}}</span>
+                            </li>
+                            <li ng-if="time.deadline" class="list-group-item">Event ends at:
+                                <span class="badge">{{time.deadline | date: 'medium'}}</span>
+                            </li>
+                            <li ng-if="time.deadline" class="list-group-item">Time left:
+                                <span class="badge">{{time.remainingMs/1000/60 | time:'mm':'hhh mmm':false}}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div ng-if="time.kind=='manu'">
+                        <ul class="list-group" style="margin-bottom: 15px;">
+                            <li class="list-group-item list-group-item-tall">Current time:
+                                <span class="badge">{{time.clock | date: 'medium'}}</span>
+                            </li>
+                        </ul>
                         <div class="form-group col-xs-12" style="margin-bottom:0px;">
                             <label for="manualTime">Time left (in hours):</label>
-                            <input class="col-xs-12" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()" ng-blur="setLocalStorageTime()"></input>
+                            <input name="hours" class="col-xs-12" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()" ng-blur="setLocalStorageTime()" required></input>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
+
     </div>
 
     <form name="tokenSettings" ng-init="formInit()" novalidate>
@@ -56,7 +57,38 @@
 
         <!-- status -->
         <div class="col-lg-3 col-padding">
-            <div class="panel status" ng-class="tokenSettings.$error.required ? 'panel-warning' : 'panel-default' " ng-include="'toknStatus.htm'"></div>
+            <div class="panel status" ng-class="tokenSettings.$error.required ? 'panel-warning' : 'panel-default'">
+                <div class="panel-heading" ng-click="collapse.status = !collapse.status;setLocalCollapse()">
+                    <h3 class="panel-title">
+                        <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.status, 'glyphicon-chevron-up': !collapse.status}"></span>
+                        Status</h3>
+                </div>
+                <div uib-collapse="collapse.status" class="panel-body">
+                    <form class="form-horizontal" role="form" name="status">
+                        <div class="form-group">
+                            <label class="control-label" for="lvl">Rank:</label>
+                            <input class="col-xs-12" type="number" min="2" name="lvl" ng-model="user.lvl" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required>
+                            <br/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="exp">Current EXP:</label>
+                            <input class="col-xs-12" type="number" min="0" name="exp" ng-model="user.exp" reg-ex-input reg-ex="^[0-9]*$" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" required><br/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="pts">Points Earned:</label>
+                            <input class="col-xs-12" type="number" min="0" name="pts" ng-model="user.pts" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="tok">Current Tokens:</label>
+                            <input class="col-xs-12" type="number" min="0" name="tok" ng-model="user.tok" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required><br/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="end">Goal:</label>
+                            <input class="col-xs-12" type="number" min="0" name="end" ng-model="user.end" ng-change="updateStatus()" ng-blur="setLocalStorageUser()" reg-ex-input reg-ex="^[0-9]*$" required>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
     </form>
@@ -65,15 +97,17 @@
     <div class="col-lg-3 col-padding">
 
         <div class="panel panel-primary">
-            <div class="panel-heading" ng-click="collapse.results = !collapse.results">
+            <div class="panel-heading" ng-click="collapse.results = !collapse.results;setLocalCollapse()">
                 <h3 class="panel-title">
                     <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.results, 'glyphicon-chevron-up': !collapse.results}"></span>
                     Results</h3>
             </div>
             <div uib-collapse="collapse.results" class="panel-body">
-                <div ng-hide="time.deadline" class="alert alert-warning">
-                    No ongoing event.
+                <div ng-show="!time.deadline || timing.$error.required" class="alert alert-warning">
+                    <span ng-show="!time.deadline">No ongoing event.</span>
+                    <span ng-show="timing.$error.required">Missing time left input.</span>
                 </div>
+
                 <!--<uib-progressbar value="user.percentComplete">
                     <span style="color:white; white-space:nowrap;">{{user.percentComplete}}
                     </span>
@@ -83,7 +117,7 @@
                 </div>
                 <div ng-show="time.deadline">
 
-                    <div ng-hide="tokenSettings.$error.required">
+                    <div ng-hide="tokenSettings.$error.required || timing.$error.required">
                         <ul class="list-group">
                             <li class="list-group-item">Event Lives Needed:
                                 <span class="badge">{{calcEventLivesNeeded()}}</span>
@@ -96,6 +130,10 @@
                             </li>
                             <li class="list-group-item list-group-item-tall">Points w/ Natural Stamina:
                                 <span class="badge">{{calcNaturalPts() | number: 0}}</span>
+                            </li>
+
+                            <li class="list-group-item">Min. Points/Day to Reach Goal:
+                                <span class="badge">{{calcPointsPerDay() | number: 0}}</span>
                             </li>
                             <li class="list-group-item">Stamina Deficit:
                                 <span class="badge">{{calcStamDeficit()}}</span>

@@ -136,14 +136,26 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     }));
     $scope.collapse = {
         time: false,
-        song: false,
         status: false,
+        song: false,
         results: false
     };
+
+    var localCollapse = localStorageService.get('collapse');
+    if (localCollapse != null) {
+        $scope.collapse = localCollapse;
+    }
+
+    console.log($scope.collapse);
+    $scope.setLocalCollapse = function() {
+        localStorageService.set('collapse', $scope.collapse);
+        var localCollapse = localStorageService.get('collapse');
+        console.log(localCollapse);
+    }
+
+
     /*** timing settings ****/
     $scope.time = {};
-
-
     $scope.time.remainingMs = "Loading...";
     $scope.time.naturalStam = "Loading...";
 
@@ -151,16 +163,22 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     var localTimeKind = localStorageService.get('timeKind');
     if (localTimeKind == null) {
         $scope.time.kind = 'auto';
+
         $scope.time.hours = 194;
     } else {
         $scope.time.kind = localTimeKind;
-        $scope.time.hours = localTimeHrs;
-        $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
+
+        if ($scope.time.kind == 'auto') {
+            $scope.time.deadline = autoDeadline;
+        } else {
+            $scope.time.hours = localTimeHrs;
+            $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
+        }
 
     }
 
     $scope.initTime = function(kind) {
-
+        $scope.time.deadline = false;
         $scope.time.kind = kind;
         $scope.time.remainingMs = "Loading...";
         $scope.time.naturalStam = "Loading...";
@@ -262,7 +280,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         localStorageService.set('norm', $scope.norm);
     }
 
-
     // event lives: get token cost, point worth, & exp
     var totalPtsTokn = "";
     var findToknByDiff = $filter('filter')(TokenLive, {
@@ -360,7 +377,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         return endRank;
     }
 
-
     $scope.calcStamDeficit = function() {
         var nPlay = $scope.calcNormalLivesNeeded();
         var endRank = $scope.calcEndRank();
@@ -395,6 +411,10 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         var naturalTokens = naturalNormPlays * $scope.norm.toknEarn;
         var naturalToknPlays = naturalTokens / $scope.tokn.cost;
         return naturalTokens + naturalToknPlays * $scope.tokn.ptsEarned;
+    }
+    $scope.calcPointsPerDay = function () {
+      var daysLeft = Math.floor($scope.time.remainingMs / 1000 / 60 / 60 / 24);
+      return ptDeficit / daysLeft;
     }
 });
 
