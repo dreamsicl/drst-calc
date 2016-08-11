@@ -24,6 +24,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state("groove", {
             url: "/groove",
             templateUrl: "foreshadowing.html"
+        })
+        .state("party", {
+            url: "/party",
+            templateUrl: "foreshadowing.html"
         });
 });
 
@@ -35,6 +39,10 @@ app.controller('TabCtrl', function($rootScope, $scope, $state) {
     }, {
         heading: "Live Groove",
         route: "groove",
+        active: false
+    },{
+        heading: "Live Party",
+        route: "party",
         active: false
     }, ];
 
