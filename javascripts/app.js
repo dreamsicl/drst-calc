@@ -40,7 +40,7 @@ app.controller('TabCtrl', function($rootScope, $scope, $state) {
         heading: "Live Groove",
         route: "groove",
         active: false
-    },{
+    }, {
         heading: "Live Party",
         route: "party",
         active: false
@@ -115,30 +115,30 @@ app.directive("regExInput", function() {
     };
 });
 
-app.factory('autoDeadline', function($http, $timeout) {
-    var deadline = {};
-    var url = "https://crossorigin.me/https://starlight.kirara.ca/api/v1/happening/now";
-    deadline = false;
+app.factory('Time', function($http) {
+    var ret = {};
 
-    $http.get(url).then(function(response) {
-        deadline = response.data.events[0].end_date * 1000;
-    }, function(response) {
-        deadline = false;
-    })
-
-    return deadline;
+    ret.getTimedInfo = function(url) {
+        return $http.get(url);
+    }
+    return ret;
 });
 
 app.factory('Data', function() {
     var data = {
-        user: '',
+        collapse: '',
     };
-    data.getData
+    data.getCollapse = function() {
+        return data.collapse
+    };
+    data.setCollapse = function(collapse) {
+        data.collapse = collapse
+    };
     return data;
 });
 
 
-app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, NormalLive, TokenLive, Exp, localStorageService) {
+app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLive, TokenLive, Exp, localStorageService) {
     $scope.$watch('panelSize', (function(n, o) {
         if (n !== o) $scope.panelSize = n;
     }));
@@ -161,64 +161,84 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
 
 
     /*** timing settings ****/
+    var getDeadlineSuccess = function(data, status) {
+        $scope.time.deadline = data.events[0].end_date * 1000;
+        console.log($scope.time.deadline)
+    }
+    var url = "https://starlight.kirara.ca/api/v1/happening/now";
+    var getDeadline = function() {
+        Time.getTimedInfo(url).success(getDeadlineSuccess);
+    };
+
+
     $scope.time = {};
     $scope.time.remainingMs = "Loading...";
     $scope.time.naturalStam = "Loading...";
+    $scope.time.clock = "Loading...";
+    var promise;
+    var stopInterval = function () {
+      $interval.cancel(promise);
+      $scope.time.remainingMs = "Loading...";
+      $scope.time.naturalStam = "Loading...";
+      $scope.time.clock = "Loading...";
+    }
+    var startInterval = function () {
+      stopInterval();
+      promise = $interval(function() {
+        $scope.time.clock = Date.now();
+        $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
+        $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
+      }, 1000);
+    }
 
     var localTimeHrs = localStorageService.get('timeHrs');
     var localTimeKind = localStorageService.get('timeKind');
-    if (localTimeKind == null) {
-        $scope.time.kind = 'auto';
-        $scope.time.hours = 194;
-        $scope.time.remainingMs = $scope.time.hours * 3600000;
-        $scope.time.naturalStam = $scope.time.hours*60/5;
-    } else {
-        $scope.time.kind = localTimeKind;
-        if ($scope.time.kind == 'auto') {
-            $scope.time.deadline = autoDeadline;
-        } else {
-            $scope.time.hours = localTimeHrs;
-            $scope.time.remainingMs = $scope.time.hours * 3600000;
-            $scope.time.deadline = Date.now() + $scope.time.remainingMs;
-            $scope.time.naturalStam = $scope.time.hours*60/5;
-        }
 
-    }
-
-    $scope.initTime = function(kind) {
-        $scope.time.deadline = false;
-        $scope.time.kind = kind;
-        $scope.time.remainingMs = "Loading...";
-        $scope.time.naturalStam = "Loading...";
-        if ($scope.time.kind == 'auto') {
-            $scope.time.deadline = autoDeadline;
-            localStorageService.set('timeKind', 'auto');
-        } else if ($scope.time.kind == 'manu') {
-            $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
-            localStorageService.set('timeKind', 'manu');
-        }
-    };
     $scope.updateTimeHrs = function() {
-        $scope.time.deadline = Date.now() + $scope.time.hours * 3600000;
-        $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
+        $scope.time.remainingMs = $scope.time.hours * 3600000;
+        $scope.time.deadline = Date.now() + $scope.time.remainingMs;
         $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
-    };
-    $scope.setLocalStorageTime = function() {
         localStorageService.set('timeHrs', $scope.time.hours);
     };
+    $scope.updateTimeKind = function(kind) {
+        console.log("updateTimeKind(" + kind + ")");
+        $scope.time.kind = kind;
+        if (kind == 'auto') {
+            $scope.time.deadline = getDeadline();
+            startInterval();
 
-    /** clock **/
-    var tickInterval = 1000;
-    var tick = function() {
-    $scope.time.clock = Date.now();
-        if ($scope.time.deadline) {
-            $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
-            $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
+        } else {
+          stopInterval();
+            $scope.updateTimeHrs();
+
         }
-        $scope.time.clock = Date.now();
-        $timeout(tick, tickInterval);
+
+        localStorageService.set('timeKind', kind);
     }
-    if ($scope.time.kind == 'auto') $timeout(tick, tickInterval);
+
+
+    $scope.initTime = function() {
+        $scope.time.deadline = false;
+        if (localTimeKind == null) {
+            $scope.updateTimeKind('auto');
+        } else {
+            $scope.updateTimeKind(localTimeKind);
+        }
+        if (localTimeHrs == null) $scope.time.hours = 198;
+        else $scope.time.hours = localTimeHrs;
+
+        $scope.updateTimeKind($scope.time.kind);
+
+        /*$scope.time.remainingMs = "Loading...";
+        $scope.time.naturalStam = "Loading...";
+        if ($scope.time.kind == 'auto') {
+            $scope.updateTimeKind('auto');
+        } else if ($scope.time.kind == 'manu') {
+            $scope.updateTimeKind('manu');
+        }*/
+    };
+
+
 
 
     /***** gather input *****/
@@ -359,7 +379,7 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
 
         var nPlay = Math.ceil((totalToknsNeeded - $scope.user.tok) / $scope.norm.toknEarn);
 
-        var extraNorm = Math.ceil((($scope.user.end - $scope.user.pts) - ($scope.tokn.cost+$scope.tokn.ptsEarned)*ePlay)/$scope.norm.toknEarn);
+        var extraNorm = Math.ceil((($scope.user.end - $scope.user.pts) - ($scope.tokn.cost + $scope.tokn.ptsEarned) * ePlay) / $scope.norm.toknEarn);
         if (extraNorm > 0) {
             nPlay += extraNorm;
         }
@@ -423,8 +443,8 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     }
 });
 
-app.controller('GrooveCtrl', function($scope, autoTime) {
-    $scope.time = autoTime;
+app.controller('GrooveCtrl', function($scope, autoDeadline) {
+    $scope.time = autoDeadline;
     $scope.grve = {};
     $scope.user = {};
 

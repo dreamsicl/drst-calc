@@ -9,10 +9,11 @@
                         <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.time, 'glyphicon-chevron-up': !collapse.time}"></span>
                         Remaining Time</h3>
                 </div>
-                <div uib-collapse="collapse.time" class="panel-body">
+                <div uib-collapse="collapse.time" class="panel-body" ng-init="initTime()">
+                  <p><tt>{{time|json}}</tt></p>
                     <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
-                        <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="initTime('auto')">Automatic</label>
-                        <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="initTime('manu')">Manual</label>
+                        <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="updateTimeKind('auto')">Automatic</label>
+                        <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="updateTimeKind('manu')">Manual</label>
                     </div>
                     <hr>
                     <div ng-if="time.kind=='auto'">
@@ -20,13 +21,13 @@
 
                         <ul class="list-group" ng-if="time.deadline">
                             <li class="list-group-item">Current time:
-                                <span class="badge">{{time.clock | date: 'medium'}}</span>
+                                <span class="label label-default pull-right">{{time.clock | date: 'medium'}}</span>
                             </li>
                             <li ng-if="time.deadline" class="list-group-item">Event ends at:
-                                <span class="badge">{{time.deadline | date: 'medium'}}</span>
+                                <span class="label label-default pull-right">{{time.deadline | date: 'medium'}}</span>
                             </li>
                             <li ng-if="time.deadline" class="list-group-item">Time left:
-                                <span class="badge">{{time.remainingMs/1000/60 | time:'mm':'hhh mmm':false}}
+                                <span class="label label-default pull-right">{{time.remainingMs/1000/60 | time:'mm':'hhh mmm':false}}
                                 </span>
                             </li>
                         </ul>
@@ -34,7 +35,7 @@
                     <div ng-if="time.kind=='manu'">
                         <div class="form-group col-xs-12" style="margin-bottom:0px;">
                             <label for="manualTime">Time left (in hours):</label>
-                            <input name="hours" class="col-xs-12" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()" ng-blur="setLocalStorageTime()" required></input>
+                            <input name="hours" class="col-xs-12" type="number" min="0" name="manualTime" ng-model="time.hours" ng-change="updateTimeHrs()" required></input>
                         </div>
                     </div>
                 </div>
