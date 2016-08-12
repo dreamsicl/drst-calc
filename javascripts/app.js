@@ -152,17 +152,7 @@ app.factory('Data', function() {
 
 
 app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLive, TokenLive, Exp, localStorageService, bsLoadingOverlayService) {
-    $scope.showOverlay = function() {
-        bsLoadingOverlayService.start();
-    };
 
-    $scope.hideOverlay = function() {
-        bsLoadingOverlayService.stop();
-    }
-
-    $scope.$watch('panelSize', (function(n, o) {
-        if (n !== o) $scope.panelSize = n;
-    }));
     $scope.collapse = {
         time: false,
         status: false,
@@ -211,9 +201,6 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         }, 1000);
     }
 
-    var localTimeHrs = localStorageService.get('timeHrs');
-    var localTimeKind = localStorageService.get('timeKind');
-
     $scope.updateTimeHrs = function() {
         $scope.time.remainingMs = $scope.time.hours * 3600000;
         $scope.time.deadline = Date.now() + $scope.time.remainingMs;
@@ -225,16 +212,15 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         if (kind == 'auto') {
             $scope.time.deadline = getDeadline();
             startInterval();
-
         } else {
             stopInterval();
             $scope.updateTimeHrs();
-
         }
-
         localStorageService.set('timeKind', kind);
     }
 
+    var localTimeHrs = localStorageService.get('timeHrs');
+    var localTimeKind = localStorageService.get('timeKind');
 
     $scope.initTime = function() {
         $scope.time.deadline = false;
@@ -251,20 +237,16 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
     };
 
 
-
-
     /***** gather input *****/
     $scope.norm = {};
     $scope.tokn = {};
     $scope.user = {};
-    /***** stamina settings *****/
+
     /** populate stam options **/
     $scope.staminas = [];
     for (var i = 10; i < 20; i++) {
         $scope.staminas.push(i);
     };
-
-
 
     var lvlInfo = $filter('filter')(Exp, {
         "Level": $scope.user.lvl
