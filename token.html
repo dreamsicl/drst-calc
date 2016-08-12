@@ -226,7 +226,7 @@
                                     <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
                                 </li>
                             </ul>
-                            <div class="alert alert-warning" ng-show="{{enoughTime()}}">The event will have ended before reaching your goal :(</div>
+                            <div class="alert alert-warning" ng-hide="{{calcPlayTime() < (time.remainingMs/1000/60)}}">The event will have ended before reaching your goal :(</div>
                         </div>
                     </div>
                 </div>

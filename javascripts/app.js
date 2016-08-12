@@ -170,6 +170,8 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     if (localTimeKind == null) {
         $scope.time.kind = 'auto';
         $scope.time.hours = 194;
+        $scope.time.remainingMs = $scope.time.hours * 3600000;
+        $scope.time.naturalStam = $scope.time.hours*60/5;
     } else {
         $scope.time.kind = localTimeKind;
         if ($scope.time.kind == 'auto') {
@@ -359,8 +361,8 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     $scope.calcNormalLivesNeeded = function() {
         var ePlay = $scope.calcEventLivesNeeded();
         var tokNeed = ePlay * $scope.tokn.cost * $scope.tokn.mul;
-        var nPlay = Math.floor((tokNeed - $scope.user.tok) / ($scope.norm.toknEarn));
-        var extraNorm = Math.ceil((ptDeficit - totalPtsTokn * ePlay) / $scope.norm.toknEarn);
+        var nPlay = Math.floor((tokNeed - $scope.user.tok) / ($scope.norm.toknEarn * $scope.norm.mul));
+        var extraNorm = Math.ceil((ptDeficit - totalPtsTokn * ePlay) / $scope.norm.toknEarn * $scope.norm.mul);
         if (extraNorm > 0) {
             nPlay += extraNorm;
         }
@@ -398,13 +400,13 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
     $scope.calcPlayTime = function() {
         var ePlay = $scope.calcEventLivesNeeded();
         var nPlay = $scope.calcNormalLivesNeeded();
+        $scope.playTime = (ePlay + nPlay) * 2.25;
         return (ePlay + nPlay) * 2.25;
     }
 
     // time left/play time
     $scope.enoughTime = function() {
-        var playTime = $scope.calcPlayTime();
-        return playTime < $scope.timeLeft;
+        return $scope.playTime < ($scope.time.remainingMs / 1000 / 60);
     }
 
     // percent to goal
