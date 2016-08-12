@@ -260,8 +260,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             $scope.user.exp = $scope.user.expToNext;
         }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
-    }
-    $scope.setLocalStorageUser = function() {
         localStorageService.set('user', $scope.user);
     }
 
@@ -283,8 +281,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             "Stamina": $scope.norm.stam
         })[0];
         searchNorm($scope.norm.score, $scope.norm.mul);
-    };
-    $scope.setLocalStorageNorm = function() {
         localStorageService.set('norm', $scope.norm);
     }
 
@@ -308,8 +304,7 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             "Difficulty": $scope.tokn.diff
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
-    };
-    $scope.setLocalStorageTokn = function() {
+        
         localStorageService.set('tokn', $scope.tokn);
     }
 
