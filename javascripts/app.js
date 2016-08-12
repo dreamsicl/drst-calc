@@ -163,7 +163,6 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
     /*** timing settings ****/
     var getDeadlineSuccess = function(data, status) {
         $scope.time.deadline = data.events[0].end_date * 1000;
-        console.log($scope.time.deadline)
     }
     var url = "https://starlight.kirara.ca/api/v1/happening/now";
     var getDeadline = function() {
@@ -201,7 +200,6 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         localStorageService.set('timeHrs', $scope.time.hours);
     };
     $scope.updateTimeKind = function(kind) {
-        console.log("updateTimeKind(" + kind + ")");
         $scope.time.kind = kind;
         if (kind == 'auto') {
             $scope.time.deadline = getDeadline();
@@ -229,13 +227,6 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
 
         $scope.updateTimeKind($scope.time.kind);
 
-        /*$scope.time.remainingMs = "Loading...";
-        $scope.time.naturalStam = "Loading...";
-        if ($scope.time.kind == 'auto') {
-            $scope.updateTimeKind('auto');
-        } else if ($scope.time.kind == 'manu') {
-            $scope.updateTimeKind('manu');
-        }*/
     };
 
 

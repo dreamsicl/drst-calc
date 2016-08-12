@@ -10,7 +10,6 @@
                         Remaining Time</h3>
                 </div>
                 <div uib-collapse="collapse.time" class="panel-body" ng-init="initTime()">
-                  <p><tt>{{time|json}}</tt></p>
                     <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
                         <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="updateTimeKind('auto')">Automatic</label>
                         <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="updateTimeKind('manu')">Manual</label>
