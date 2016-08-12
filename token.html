@@ -204,26 +204,26 @@
                         <div ng-hide="tokenSettings.$error.required || timing.$error.required">
                             <ul class="list-group">
                                 <li class="list-group-item">Event Lives Needed:
-                                    <span class="badge">{{calcEventLivesNeeded() | number: 0}}</span>
+                                    <span class="label label-default pull-right">{{calcEventLivesNeeded() | number: 0}}</span>
                                 </li>
                                 <li class="list-group-item">Normal Lives Needed:
-                                    <span class="badge">{{calcNormalLivesNeeded() | number: 0}}</span>
+                                    <span class="label label-default pull-right">{{calcNormalLivesNeeded() | number: 0}}</span>
                                 </li>
-                                <li class="list-group-item list-group-item-tall">Min. Points/Day to Reach Goal:
-                                    <span class="badge">{{calcPointsPerDay() | number: 0}}</span>
+                                <li class="list-group-item">Min. Points/Day:
+                                    <span class="label label-default pull-right">{{calcPointsPerDay() | number: 0}}</span>
+                                </li>
+                                <li class="list-group-item">Pts w/ Natural Stamina:
+                                    <span class="label label-default pull-right">{{calcNaturalPts() | number: 0}}</span>
                                 </li>
                                 <li class="list-group-item">End Rank:
-                                    <span class="badge">{{calcEndRank()}}</span>
-                                </li>
-                                <li class="list-group-item list-group-item-tall">Points w/ Natural Stamina:
-                                    <span class="badge">{{calcNaturalPts() | number: 0}}</span>
+                                    <span class="label label-default pull-right">{{calcEndRank()}}</span>
                                 </li>
 
                                 <li class="list-group-item">Stamina Deficit:
-                                    <span class="badge">{{calcStamDeficit()}}</span>
+                                    <span class="label label-default pull-right">{{calcStamDeficit()}}</span>
                                 </li>
-                                <li class="list-group-item" ng-class="enoughTime() ? '' : 'bg-warning'">Play Time:
-                                    <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
+                                <li class="list-group-item">Play Time:
+                                    <span  class="label label-default pull-right" ng-class="enoughTime() ? '' : 'label-danger'">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
                                 </li>
                             </ul>
                             <center ng-hide="enoughTime()" style="margin: 5px">The event will have ended before reaching your goal.</center>

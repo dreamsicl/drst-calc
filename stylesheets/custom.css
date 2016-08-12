@@ -64,7 +64,7 @@ footer {
 .panel-group .panel+.panel {
     margin-top: .5em;
 }
-a, a:hover, a:active, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+a, a:hover, a:active, a:focus, .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
     color: #3498db;
 }
 .panel-heading {
@@ -120,11 +120,14 @@ h2 {
         padding: 3px 0px !important;
         font-size: 11px !important;
     }
-    .list-group-item-tall {
-      height: 60px;
-      padding: 3% 8%;
-    }
 }
 form {
   margin: 0px;
+}
+.list-group-item {
+  height: auto;
+  overflow:hidden;
+}
+.label {
+    font-size: 13px;
 }
