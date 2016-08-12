@@ -26,9 +26,9 @@ input:focus {
     background-color: #ddd;
     color: #333;
 }
-.panel, .panel-heading, .panel-body {
-    transition: background-color 300ms linear;
-    transition: border-color: 300ms linear;
+.panel, .panel-heading, .panel-body, .list-group-item {
+    transition: background-color 200ms linear;
+    transition: border-color: 200ms linear;
 }
 html {
     position: relative;

@@ -222,11 +222,11 @@
                                 <li class="list-group-item">Stamina Deficit:
                                     <span class="badge">{{calcStamDeficit()}}</span>
                                 </li>
-                                <li class="list-group-item" ng-class="">Play Time:
+                                <li class="list-group-item" ng-class="enoughTime() ? '' : 'bg-warning'">Play Time:
                                     <span class="badge">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
                                 </li>
                             </ul>
-                            <div class="alert alert-warning" ng-hide="{{calcPlayTime() < (time.remainingMs/1000/60)}}">The event will have ended before reaching your goal :(</div>
+                            <center ng-hide="enoughTime()" style="margin: 5px">The event will have ended before reaching your goal.</center>
                         </div>
                     </div>
                 </div>
