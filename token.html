@@ -9,7 +9,8 @@
                         <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.time, 'glyphicon-chevron-up': !collapse.time}"></span>
                         Remaining Time</h3>
                 </div>
-                <div uib-collapse="collapse.time" class="panel-body" ng-init="initTime()">
+
+                <div uib-collapse="collapse.time" class="panel-body" ng-init="initTime()" bs-loading-overlay>
                     <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
                         <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="updateTimeKind('auto')">Automatic</label>
                         <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="updateTimeKind('manu')">Manual</label>

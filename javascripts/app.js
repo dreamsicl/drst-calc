@@ -1,4 +1,17 @@
-var app = angular.module('calc', ['LocalStorageModule', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
+var app = angular.module('calc', ['bsLoadingOverlay', 'bsLoadingOverlaySpinJs', 'bsLoadingOverlayHttpInterceptor', 'LocalStorageModule', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
+
+
+app.factory('allHttpInterceptor', function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
+    return bsLoadingOverlayHttpInterceptorFactoryFactory();
+})
+app.config(function($httpProvider) {
+    $httpProvider.interceptors.push('allHttpInterceptor');
+})
+app.run(function(bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'loading-overlay.html'
+    });
+});
 
 app.config(function(localStorageServiceProvider) {
     localStorageServiceProvider
@@ -138,7 +151,15 @@ app.factory('Data', function() {
 });
 
 
-app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLive, TokenLive, Exp, localStorageService) {
+app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLive, TokenLive, Exp, localStorageService, bsLoadingOverlayService) {
+    $scope.showOverlay = function() {
+        bsLoadingOverlayService.start();
+    };
+
+    $scope.hideOverlay = function() {
+        bsLoadingOverlayService.stop();
+    }
+
     $scope.$watch('panelSize', (function(n, o) {
         if (n !== o) $scope.panelSize = n;
     }));
@@ -175,19 +196,19 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
     $scope.time.naturalStam = "Loading...";
     $scope.time.clock = "Loading...";
     var promise;
-    var stopInterval = function () {
-      $interval.cancel(promise);
-      $scope.time.remainingMs = "Loading...";
-      $scope.time.naturalStam = "Loading...";
-      $scope.time.clock = "Loading...";
+    var stopInterval = function() {
+        $interval.cancel(promise);
+        $scope.time.remainingMs = "Loading...";
+        $scope.time.naturalStam = "Loading...";
+        $scope.time.clock = "Loading...";
     }
-    var startInterval = function () {
-      stopInterval();
-      promise = $interval(function() {
-        $scope.time.clock = Date.now();
-        $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
-        $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
-      }, 1000);
+    var startInterval = function() {
+        stopInterval();
+        promise = $interval(function() {
+            $scope.time.clock = Date.now();
+            $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
+            $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
+        }, 1000);
     }
 
     var localTimeHrs = localStorageService.get('timeHrs');
@@ -206,7 +227,7 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
             startInterval();
 
         } else {
-          stopInterval();
+            stopInterval();
             $scope.updateTimeHrs();
 
         }
