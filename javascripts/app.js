@@ -360,7 +360,6 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
         var nPlay = Math.ceil((totalToknsNeeded - $scope.user.tok) / $scope.norm.toknEarn);
 
         var extraNorm = Math.ceil((($scope.user.end - $scope.user.pts) - ($scope.tokn.cost+$scope.tokn.ptsEarned)*ePlay)/$scope.norm.toknEarn);
-        console.log(extraNorm);
         if (extraNorm > 0) {
             nPlay += extraNorm;
         }
