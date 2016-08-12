@@ -304,7 +304,7 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
             "Difficulty": $scope.tokn.diff
         })[0];
         searchTokn($scope.tokn.score, $scope.tokn.mul);
-        
+
         localStorageService.set('tokn', $scope.tokn);
     }
 
@@ -350,14 +350,17 @@ app.controller('TokenCtrl', function($scope, $timeout, autoDeadline, $filter, No
 
     // total event lives needed
     $scope.calcEventLivesNeeded = function() {
-        return Math.max(Math.floor(ptDeficit / totalPtsTokn), 0);
+        return Math.max(Math.floor(($scope.user.end - $scope.user.pts) / ($scope.tokn.cost + $scope.tokn.ptsEarned)), 0);
     }
 
     $scope.calcNormalLivesNeeded = function() {
         var ePlay = $scope.calcEventLivesNeeded();
-        var tokNeed = ePlay * $scope.tokn.cost * $scope.tokn.mul;
-        var nPlay = Math.floor((tokNeed - $scope.user.tok) / ($scope.norm.toknEarn * $scope.norm.mul));
-        var extraNorm = Math.ceil((ptDeficit - totalPtsTokn * ePlay) / $scope.norm.toknEarn * $scope.norm.mul);
+        var totalToknsNeeded = ePlay * $scope.tokn.cost;
+
+        var nPlay = Math.ceil((totalToknsNeeded - $scope.user.tok) / $scope.norm.toknEarn);
+
+        var extraNorm = Math.ceil((($scope.user.end - $scope.user.pts) - ($scope.tokn.cost+$scope.tokn.ptsEarned)*ePlay)/$scope.norm.toknEarn);
+        console.log(extraNorm);
         if (extraNorm > 0) {
             nPlay += extraNorm;
         }

@@ -204,10 +204,10 @@
                         <div ng-hide="tokenSettings.$error.required || timing.$error.required">
                             <ul class="list-group">
                                 <li class="list-group-item">Event Lives Needed:
-                                    <span class="badge">{{calcEventLivesNeeded()}}</span>
+                                    <span class="badge">{{calcEventLivesNeeded() | number: 0}}</span>
                                 </li>
                                 <li class="list-group-item">Normal Lives Needed:
-                                    <span class="badge">{{calcNormalLivesNeeded()}}</span>
+                                    <span class="badge">{{calcNormalLivesNeeded() | number: 0}}</span>
                                 </li>
                                 <li class="list-group-item list-group-item-tall">Min. Points/Day to Reach Goal:
                                     <span class="badge">{{calcPointsPerDay() | number: 0}}</span>
