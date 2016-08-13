@@ -378,6 +378,10 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         if (extraNorm > 0) {
             nPlay += extraNorm;
         }
+        console.log($scope.tokn)
+        console.log("numerator: " + (($scope.tokn.cost + $scope.tokn.ptsEarned) * ePlay))
+        console.log("extraNorm: " + extraNorm)
+
         return Math.max(nPlay, 0);
     }
 
@@ -390,7 +394,7 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         for (var i = 0; i < Exp.length; i++) // iterate over all lvls
         {
             if (Exp[i]["Total EXP"] > endExp) {
-                endRank = Exp[i]["Level"];
+                endRank = Exp[i-1]["Level"];
                 break;
             }
         }
