@@ -187,7 +187,7 @@
                         <span class="glyphicon" ng-class="{'glyphicon-chevron-down': collapse.results, 'glyphicon-chevron-up': !collapse.results}"></span>
                         Results</h3>
                 </div>
-                <div uib-collapse="collapse.results" class="panel-body">
+                <div uib-collapse="collapse.results" class="panel-body" bs-loading-overlay>
                     <div ng-show="!time.deadline || timing.$error.required" class="alert alert-warning">
                         <span ng-show="!time.deadline">No ongoing event.</span>
                         <span ng-show="timing.$error.required">Missing time left input.</span>
