@@ -10,7 +10,7 @@
                         Remaining Time</h3>
                 </div>
 
-                <div uib-collapse="collapse.time" class="panel-body" ng-init="initTime()" bs-loading-overlay>
+                <div uib-collapse="collapse.time" class="panel-body" ng-init="initTime();" bs-loading-overlay>
                     <div class="btn-group btn-group-justified" style-"width: 100%; display: block">
                         <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'auto'" ng-click="updateTimeKind('auto')">Automatic</label>
                         <label class="btn btn-primary" ng-model="time.kind" uib-btn-radio="'manu'" ng-click="updateTimeKind('manu')">Manual</label>
@@ -65,17 +65,15 @@
                         <div class="form-group col-xs-12">
                             <label class="control-label">Normal Song Score:</label>
                             <div class="btn-group btn-group-justified">
+                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'C'" ng-change="updateNorm()">
+                                    C</label>
+                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'B'" ng-change="updateNorm()">
+                                    B</label>
+                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'A'" ng-change="updateNorm()">
+                                    A</label>
                                 <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'S'" ng-change="updateNorm()">
                                     S</label>
 
-                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'A'" ng-change="updateNorm()">
-                                    A</label>
-
-                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'B'" ng-change="updateNorm()">
-                                    B</label>
-
-                                <label class="btn btn-primary" ng-model="norm.score" uib-btn-radio="'C'" ng-change="updateNorm()">
-                                    C</label>
                             </div>
                         </div>
 
@@ -111,17 +109,18 @@
                         <div class="form-group col-xs-12">
                             <label class="control-label">Event Song Score:</label>
                             <div class="btn-group btn-group-justified">
-                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'S'" ng-change="updateTokn()">
-                                    S</label>
-
-                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'A'" ng-change="updateTokn()">
-                                    A</label>
-
-                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'B'" ng-change="updateTokn()">
-                                    B</label>
 
                                 <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'C'" ng-change="updateTokn()">
                                     C</label>
+
+                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'B'" ng-change="updateTokn()">
+                                    B</label>
+                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'A'" ng-change="updateTokn()">
+                                    A</label>
+
+                                <label class="btn btn-primary" ng-model="tokn.score" uib-btn-radio="'S'" ng-change="updateTokn()">
+                                    S</label>
+
                             </div>
                         </div>
 
@@ -223,7 +222,7 @@
                                     <span class="label label-default pull-right">{{calcStamDeficit() | number: 0}}</span>
                                 </li>
                                 <li ng-show="enoughTime()" class="list-group-item">Min. Play Time/Day
-                                  <span class="label label-default pull-right">{{calcPlayTime()/(time.remainingMs/3600000/24) | time:'mm':'hhh mmm':false}}</span>
+                                    <span class="label label-default pull-right">{{calcPlayTime()/(time.remainingMs/3600000/24) | time:'mm':'hhh mmm':false}}</span>
 
                                 </li>
                                 <li class="list-group-item">Total Play Time:

@@ -1,12 +1,6 @@
 var app = angular.module('calc', ['bsLoadingOverlay', 'bsLoadingOverlaySpinJs', 'bsLoadingOverlayHttpInterceptor', 'LocalStorageModule', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
 
 
-app.factory('allHttpInterceptor', function(bsLoadingOverlayHttpInterceptorFactoryFactory) {
-    return bsLoadingOverlayHttpInterceptorFactoryFactory();
-})
-app.config(function($httpProvider) {
-    $httpProvider.interceptors.push('allHttpInterceptor');
-})
 app.run(function(bsLoadingOverlayService) {
     bsLoadingOverlayService.setGlobalConfig({
         templateUrl: 'loading-overlay.html'
@@ -151,7 +145,7 @@ app.factory('Data', function() {
 });
 
 
-app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLive, TokenLive, Exp, localStorageService, bsLoadingOverlayService) {
+app.controller('TokenCtrl', function($scope, $interval, $timeout, Time, $filter, NormalLive, TokenLive, Exp, localStorageService, bsLoadingOverlayService) {
 
     $scope.collapse = {
         time: false,
@@ -210,6 +204,7 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
     $scope.updateTimeKind = function(kind) {
         $scope.time.kind = kind;
         if (kind == 'auto') {
+    		bsLoadingOverlayService.wrap({}, $timeout(angular.noop, 1300));
             $scope.time.deadline = getDeadline();
             startInterval();
         } else {
