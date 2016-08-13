@@ -227,7 +227,7 @@
                                     <span  class="label label-default pull-right" ng-class="enoughTime() ? '' : 'label-danger'">{{calcPlayTime() | time:'mm':'hhh mmm':false}}</span>
                                 </li>
                             </ul>
-                            <center ng-hide="enoughTime()" style="margin: 5px">The event will have ended before reaching your goal.</center>
+                            <center ng-hide="enoughTime()" class="text-danger" style="margin: 5px">The event will have ended before reaching your goal.</center>
                         </div>
                     </div>
                 </div>
