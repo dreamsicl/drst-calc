@@ -457,7 +457,7 @@ app.controller('GrooveCtrl', function($scope, autoDeadline) {
     $scope.grve.appl = $scope.grve.applauseLevels[0];
 
 });
-var modalController = function ($scope, $uibModalInstance) {
+var modalController = function($scope, $uibModalInstance) {
     $scope.close = function() {
         $uibModalInstance.close();
     };
@@ -467,7 +467,6 @@ modalController.$inject = ['$scope', '$uibModalInstance'];
 
 app.controller('ChangelogCtrl', function($scope, $uibModal) {
     $scope.open = function(size) {
-
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'changelog.html',
@@ -476,5 +475,16 @@ app.controller('ChangelogCtrl', function($scope, $uibModal) {
             resolve: {}
         });
     };
+})
 
+app.controller('ResourcesCtrl', function($scope, $uibModal) {
+    $scope.open = function(size) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'resources.html',
+            controller: modalController,
+            size: size,
+            resolve: {}
+        });
+    };
 })

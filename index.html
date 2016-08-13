@@ -37,16 +37,13 @@
             <div ui-view></div>
 
         </section>
-        <footer ng-controller="ChangelogCtrl">
-            <small class="text-muted"><a href="#" ng-click="open()">Changelog</a> &mdash; Issues? Contact
+        <footer>
+            <small class="text-muted">
+              <div ng-controller="ChangelogCtrl" style="display: inline"><a href="#" ng-click="open()">Changelog</a></div>
+                &mdash; Issues? Contact
                 <a href="http://twitter.com/aloIaninetales">@aloIaninetales</a>
                 &mdash;
-                Theme:
-                <a href="https://bootswatch.com/darkly/">Darkly by Bootswatch</a>
-                &mdash;
-                Resources: <a href="http://angularjs.org">AngularJS</a> | <a href="http://starlight.kirara.ca">The Starlight Database</a> | <a href="http://imascg-slstage-wiki.gamerch.com">アイマス デレステ攻略まとめwiki</a>
-                &mdash;
-                Inspired by <a href="http://suyo.be/llsif/calc/">LLSIF Calculator</a>
+              <div ng-controller="ResourcesCtrl" style="display: inline"><a href="#" ng-click="open()">Resources used</a></div>
             </small>
         </li>
     </footer>
