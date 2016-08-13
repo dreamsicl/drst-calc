@@ -378,10 +378,6 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         if (extraNorm > 0) {
             nPlay += extraNorm;
         }
-        console.log($scope.tokn)
-        console.log("numerator: " + (($scope.tokn.cost + $scope.tokn.ptsEarned) * ePlay))
-        console.log("extraNorm: " + extraNorm)
-
         return Math.max(nPlay, 0);
     }
 
@@ -394,7 +390,7 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         for (var i = 0; i < Exp.length; i++) // iterate over all lvls
         {
             if (Exp[i]["Total EXP"] > endExp) {
-                endRank = Exp[i-1]["Level"];
+                endRank = Exp[i - 1]["Level"];
                 break;
             }
         }
@@ -461,3 +457,24 @@ app.controller('GrooveCtrl', function($scope, autoDeadline) {
     $scope.grve.appl = $scope.grve.applauseLevels[0];
 
 });
+var modalController = function ($scope, $uibModalInstance) {
+    $scope.close = function() {
+        $uibModalInstance.close();
+    };
+};
+
+modalController.$inject = ['$scope', '$uibModalInstance'];
+
+app.controller('ChangelogCtrl', function($scope, $uibModal) {
+    $scope.open = function(size) {
+
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'changelog.html',
+            controller: modalController,
+            size: size,
+            resolve: {}
+        });
+    };
+
+})

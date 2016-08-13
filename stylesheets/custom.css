@@ -124,9 +124,13 @@ h2 {
 form {
   margin: 0px;
 }
-.list-group-item {
+.modal-header {
+  background:#464545
+}
+.list-group-item, .well {
   height: auto;
   overflow:hidden;
+  background: #222;
 }
 .label {
     font-size: 13px;
