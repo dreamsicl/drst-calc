@@ -18,6 +18,75 @@ app.constant('TokenLive', [
   {"Difficulty": "Master/+", "Token Cost": 150, "S": 320, "A": 304, "B": 288, "C": 272, "EXP": 63}
 ]);
 
+app.constant('Encore', [
+  {"Difficulty":"Debut","S":32,"A":30,"B":29,"C":27},
+  {"Difficulty":"Regular","S":53,"A":50,"B":48,"C":46},
+  {"Difficulty":"Pro","S":76,"A":73,"B":70,"C":63},
+  {"Difficulty":"Master","S":103,"A":98,"B":94,"C":89},
+  {"Difficulty":"Master+","S":114,"A":109,"B":105,"C":99}
+]);
+
+app.constant('Groove', [
+  {"Applause Level":0,"Master":311,"Pro":229,"Regular":159,"Debut":97},
+  {"Applause Level":1,"Master":311,"Pro":229,"Regular":159,"Debut":97},
+  {"Applause Level":2,"Master":316,"Pro":232,"Regular":161,"Debut":98},
+  {"Applause Level":3,"Master":320,"Pro":236,"Regular":163,"Debut":100},
+  {"Applause Level":4,"Master":324,"Pro":239,"Regular":165,"Debut":101},
+  {"Applause Level":5,"Master":328,"Pro":242,"Regular":168,"Debut":102},
+  {"Applause Level":6,"Master":333,"Pro":245,"Regular":170,"Debut":104},
+  {"Applause Level":7,"Master":337,"Pro":248,"Regular":172,"Debut":105},
+  {"Applause Level":8,"Master":341,"Pro":252,"Regular":174,"Debut":106},
+  {"Applause Level":9,"Master":346,"Pro":255,"Regular":176,"Debut":108},
+  {"Applause Level":10,"Master":350,"Pro":258,"Regular":179,"Debut":109},
+  {"Applause Level":11,"Master":355,"Pro":261,"Regular":180,"Debut":110},
+  {"Applause Level":12,"Master":359,"Pro":264,"Regular":183,"Debut":112},
+  {"Applause Level":13,"Master":363,"Pro":268,"Regular":185,"Debut":113},
+  {"Applause Level":14,"Master":368,"Pro":271,"Regular":188,"Debut":114},
+  {"Applause Level":15,"Master":372,"Pro":274,"Regular":189,"Debut":116},
+  {"Applause Level":16,"Master":376,"Pro":277,"Regular":192,"Debut":116},
+  {"Applause Level":17,"Master":380,"Pro":280,"Regular":194,"Debut":118},
+  {"Applause Level":18,"Master":385,"Pro":284,"Regular":196,"Debut":120},
+  {"Applause Level":19,"Master":389,"Pro":287,"Regular":199,"Debut":121},
+  {"Applause Level":20,"Master":393,"Pro":290,"Regular":200,"Debut":123},
+  {"Applause Level":21,"Master":398,"Pro":293,"Regular":203,"Debut":124},
+  {"Applause Level":22,"Master":402,"Pro":296,"Regular":205,"Debut":125},
+  {"Applause Level":23,"Master":407,"Pro":300,"Regular":208,"Debut":127},
+  {"Applause Level":24,"Master":411,"Pro":303,"Regular":209,"Debut":128},
+  {"Applause Level":25,"Master":412,"Pro":304,"Regular":210,"Debut":128},
+  {"Applause Level":26,"Master":414,"Pro":306,"Regular":211,"Debut":129},
+  {"Applause Level":27,"Master":416,"Pro":307,"Regular":212,"Debut":129},
+  {"Applause Level":28,"Master":418,"Pro":309,"Regular":213,"Debut":130},
+  {"Applause Level":29,"Master":420,"Pro":310,"Regular":214,"Debut":131},
+  {"Applause Level":30,"Master":422,"Pro":312,"Regular":215,"Debut":131},
+  {"Applause Level":31,"Master":424,"Pro":313,"Regular":217,"Debut":132},
+  {"Applause Level":32,"Master":426,"Pro":315,"Regular":218,"Debut":132},
+  {"Applause Level":33,"Master":428,"Pro":316,"Regular":219,"Debut":133},
+  {"Applause Level":34,"Master":430,"Pro":318,"Regular":220,"Debut":134},
+  {"Applause Level":35,"Master":432,"Pro":319,"Regular":221,"Debut":134},
+  {"Applause Level":36,"Master":434,"Pro":321,"Regular":222,"Debut":135},
+  {"Applause Level":37,"Master":436,"Pro":323,"Regular":224,"Debut":136},
+  {"Applause Level":38,"Master":437,"Pro":324,"Regular":225,"Debut":136},
+  {"Applause Level":39,"Master":439,"Pro":325,"Regular":226,"Debut":137},
+  {"Applause Level":40,"Master":441,"Pro":327,"Regular":227,"Debut":137},
+  {"Applause Level":41,"Master":443,"Pro":329,"Regular":228,"Debut":138},
+  {"Applause Level":42,"Master":445,"Pro":330,"Regular":229,"Debut":139},
+  {"Applause Level":43,"Master":447,"Pro":332,"Regular":230,"Debut":139},
+  {"Applause Level":44,"Master":449,"Pro":333,"Regular":232,"Debut":140},
+  {"Applause Level":45,"Master":451,"Pro":335,"Regular":233,"Debut":140},
+  {"Applause Level":46,"Master":453,"Pro":336,"Regular":234,"Debut":141},
+  {"Applause Level":47,"Master":455,"Pro":338,"Regular":235,"Debut":142},
+  {"Applause Level":48,"Master":457,"Pro":339,"Regular":236,"Debut":142},
+  {"Applause Level":49,"Master":459,"Pro":341,"Regular":237,"Debut":143},
+  {"Applause Level":50,"Master":461,"Pro":343,"Regular":239,"Debut":144}
+])
+
+app.constant('GrveAvg', [
+  {"Difficulty":"Debut","Stamina":20,"Avg. EXP":115.5,"Avg. Applause":28.5,"Avg. Points":130},
+  {"Difficulty":"Regular","Stamina":30,"Avg. EXP":142.5,"Avg. Applause":45,"Avg. Points":233},
+  {"Difficulty":"Pro","Stamina":40,"Avg. EXP":157.5,"Avg. Applause":64.5,"Avg. Points":343},
+  {"Difficulty":"Master","Stamina":50,"Avg. EXP":178.5,"Avg. Applause":79.5,"Avg. Points":461}
+]);
+
 app.constant('Exp', [
   {"Level":1,"EXP to Next":30,"Total EXP":30,"Stamina":40},
   {"Level":2,"EXP to Next":50,"Total EXP":80,"Stamina":41},

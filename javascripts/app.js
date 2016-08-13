@@ -1,6 +1,5 @@
 var app = angular.module('calc', ['bsLoadingOverlay', 'bsLoadingOverlaySpinJs', 'bsLoadingOverlayHttpInterceptor', 'LocalStorageModule', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
 
-
 app.run(function(bsLoadingOverlayService) {
     bsLoadingOverlayService.setGlobalConfig({
         templateUrl: 'loading-overlay.html'
@@ -22,15 +21,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state("default", {
             abstract: true,
             url: "/",
-            templateUrl: "token.html"
+            templateUrl: "groove.html"
         })
         .state("token", {
             url: "/token",
-            templateUrl: "token.html"
+            templateUrl: "groove.html"
         })
         .state("groove", {
             url: "/groove",
-            templateUrl: "foreshadowing.html"
+            templateUrl: "groove.html"
         })
         .state("party", {
             url: "/party",
@@ -102,6 +101,7 @@ app.filter('time', function() {
         return format.replace(/hh/, hh).replace(/mm/, mm).replace(/ss/, ss);
     };
 });
+
 app.directive("regExInput", function() {
     "use strict";
     return {
@@ -174,7 +174,6 @@ app.controller('TokenCtrl', function($scope, $interval, $timeout, Time, $filter,
         Time.getTimedInfo(url).success(getDeadlineSuccess);
     };
 
-
     $scope.time = {};
     $scope.time.remainingMs = "Loading...";
     $scope.time.naturalStam = "Loading...";
@@ -204,7 +203,7 @@ app.controller('TokenCtrl', function($scope, $interval, $timeout, Time, $filter,
     $scope.updateTimeKind = function(kind) {
         $scope.time.kind = kind;
         if (kind == 'auto') {
-    		bsLoadingOverlayService.wrap({}, $timeout(angular.noop, 1300));
+            bsLoadingOverlayService.wrap({}, $timeout(angular.noop, 1300));
             $scope.time.deadline = getDeadline();
             startInterval();
         } else {
@@ -433,25 +432,144 @@ app.controller('TokenCtrl', function($scope, $interval, $timeout, Time, $filter,
     }
 });
 
-app.controller('GrooveCtrl', function($scope, autoDeadline) {
-    $scope.time = autoDeadline;
+app.controller('GrooveCtrl', function($scope, Time, $interval, $timeout, Exp, bsLoadingOverlayService, localStorageService, Encore, $filter) {
+    $scope.grooveCollapse = {
+        time: false,
+        status: false,
+        song: false,
+        results: false
+    };
+
+    var localCollapse = localStorageService.get('grooveCollapse');
+    if (localCollapse != null) {
+        $scope.grooveCollapse = localCollapse;
+    }
+
+    $scope.setLocalCollapse = function() {
+        localStorageService.set('grooveCollapse', $scope.grooveCollapse);
+    }
+
+
+    /*** timing settings ****/
+    $scope.time = {};
+    var getDeadlineSuccess = function(data, status) {
+        $scope.time.deadline = data.events[0].end_date * 1000;
+    }
+    var url = "https://starlight.kirara.ca/api/v1/happening/now";
+    var getDeadline = function() {
+        Time.getTimedInfo(url).success(getDeadlineSuccess);
+    };
+
+    $scope.time = {};
+    $scope.time.remainingMs = "Loading...";
+    $scope.time.naturalStam = "Loading...";
+    $scope.time.clock = "Loading...";
+    var promise;
+    var stopInterval = function() {
+        $interval.cancel(promise);
+        $scope.time.remainingMs = "Loading...";
+        $scope.time.naturalStam = "Loading...";
+        $scope.time.clock = "Loading...";
+    }
+    var startInterval = function() {
+        stopInterval();
+        promise = $interval(function() {
+            $scope.time.clock = Date.now();
+            $scope.time.remainingMs = $scope.time.deadline - $scope.time.clock;
+            $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
+        }, 1000);
+    }
+
+    $scope.updateTimeHrs = function() {
+        $scope.time.remainingMs = $scope.time.hours * 3600000;
+        $scope.time.deadline = Date.now() + $scope.time.remainingMs;
+        $scope.time.naturalStam = Math.floor($scope.time.remainingMs / 1000 / 60 / 5);
+        localStorageService.set('timeHrs', $scope.time.hours);
+    };
+    $scope.updateTimeKind = function(kind) {
+        $scope.time.kind = kind;
+        if (kind == 'auto') {
+            bsLoadingOverlayService.wrap({}, $timeout(angular.noop, 1300));
+            $scope.time.deadline = getDeadline();
+            startInterval();
+        } else {
+            stopInterval();
+            $scope.updateTimeHrs();
+        }
+        localStorageService.set('timeKind', kind);
+    }
+
+    var localTimeHrs = localStorageService.get('timeHrs');
+    var localTimeKind = localStorageService.get('timeKind');
+
+    $scope.initTime = function() {
+        $scope.time.deadline = false;
+        if (localTimeKind == null) {
+            $scope.updateTimeKind('auto');
+        } else {
+            $scope.updateTimeKind(localTimeKind);
+        }
+        if (localTimeHrs == null) $scope.time.hours = 198;
+        else $scope.time.hours = localTimeHrs;
+
+        $scope.updateTimeHrs();
+        $scope.updateTimeKind($scope.time.kind);
+
+    };
+
     $scope.grve = {};
+    $scope.encr = {};
     $scope.user = {};
 
-    /**** groove settings */
-    $scope.grve.grooveDiff = "Debut";
-    $scope.grve.grooveScore = "S";
+    /**** groove settings *****/
+    $scope.grve.diff = "Debut";
+    $scope.grve.score = "S";
 
-    $scope.grve.encoreDiff = "Debut";
-    $scope.grve.encoreScore = "S";
+    $scope.encr.diff = "Debut";
+    $scope.encr.score = "S";
 
-    $scope.grve.applauseLevels = ['Average', '50+']
+    $scope.applauseLevels = ['Average', '50+']
     for (var i = 49; i > 0; i--) {
-        $scope.grve.applauseLevels.push(i);
+        $scope.applauseLevels.push(i);
     }
-    $scope.grve.appl = $scope.grve.applauseLevels[0];
+    $scope.grve.appl = $scope.applauseLevels[0];
+
+
+
+
+    var lvlInfo = $filter('filter')(Exp, {
+        "Level": $scope.user.lvl
+    })[0];
+    var ptDeficit = $scope.user.end - $scope.user.pts;
+    $scope.user.percentComplete = ($scope.user.pts / $scope.user.end) * 100;
+    var getExpInfo = function(currExp) {
+        for (var key in lvlInfo) {
+            if (key === "EXP to Next") $scope.user.expToNext = lvlInfo[key];
+            if (key === "Total EXP") $scope.user.totalExp = lvlInfo[key] + currExp;
+            ptDeficit = $scope.user.end - $scope.user.pts;
+        }
+    }
+    getExpInfo($scope.user.exp);
+
+    $scope.updateStatus = function() {
+        if ($scope.user.lvl > 300) {
+            $scope.user.lvl = 300;
+        }
+        lvlInfo = $filter('filter')(Exp, {
+            "Level": $scope.user.lvl
+        })[0];
+        getExpInfo($scope.user.exp);
+        if ($scope.user.exp > $scope.user.expToNext) {
+            $scope.user.exp = $scope.user.expToNext;
+        }
+        $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
+        localStorageService.set('user', $scope.user);
+    }
 
 });
+
+
+
 var modalController = function($scope, $uibModalInstance) {
     $scope.close = function() {
         $uibModalInstance.close();
