@@ -21,15 +21,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state("default", {
             abstract: true,
             url: "/",
-            templateUrl: "groove.html"
+            templateUrl: "token.html"
         })
         .state("token", {
             url: "/token",
-            templateUrl: "groove.html"
+            templateUrl: "token.html"
         })
         .state("groove", {
             url: "/groove",
-            templateUrl: "groove.html"
+            templateUrl: "foreshadowing.html"
         })
         .state("party", {
             url: "/party",
