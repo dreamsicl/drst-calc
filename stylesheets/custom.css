@@ -42,7 +42,8 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    /* Set the fixed height of the footer here */``
+    /* Set the fixed height of the footer here */
+    ``
     /*height: 30px;*/
     margin: 0px;
     padding: 5px 10px;
@@ -114,7 +115,7 @@ h2 {
 }
 @media (min-width: 1200px) {
     .panel {
-      min-width: 275px;
+        min-width: 275px;
     }
     .diffs {
         padding: 3px 0px !important;
@@ -122,22 +123,24 @@ h2 {
     }
 }
 form {
-  margin: 0px;
+    margin: 0px;
 }
 .modal-header {
-  background:#464545
+    background: #464545;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 .list-group-item, .well {
-  height: auto;
-  overflow:hidden;
-  background: #222;
+    height: auto;
+    overflow: hidden;
+    background: #222;
 }
 .label {
     font-size: 13px;
 }
 .well {
-  margin-bottom: 0px
+    margin-bottom: 0px
 }
 .well div {
-  font-size: 14px;
+    font-size: 14px;
 }
