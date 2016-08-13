@@ -232,6 +232,7 @@ app.controller('TokenCtrl', function($scope, $interval, Time, $filter, NormalLiv
         if (localTimeHrs == null) $scope.time.hours = 198;
         else $scope.time.hours = localTimeHrs;
 
+        $scope.updateTimeHrs();
         $scope.updateTimeKind($scope.time.kind);
 
     };
