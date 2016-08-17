@@ -15,7 +15,7 @@ app.config(function(localStorageServiceProvider) {
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/token");
+    $urlRouterProvider.otherwise("/");
 
     $stateProvider
         .state("default", {
