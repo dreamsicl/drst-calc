@@ -14,8 +14,8 @@
         <script src="https://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
         <script src="https://rawgit.com/grevory/angular-local-storage/master/dist/angular-local-storage.min.js"></script>
         <script src="https://rawgit.com/bsalex/angular-loading-overlay/master/dist/angular-loading-overlay.js"></script>
-        <script src="http://spin.js.org/spin.min.js"></script>
-        <script src="https://rawgit.com/bsalex/angular-loading-overlay-spinjs/master/dist/angular-loading-overlay-spinjs.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
+        <script src="https://rawgit.com/rpocklin/ui-router-tabs/master/src/ui-router-tabs.js"></script>
         <script src="https://rawgit.com/bsalex/angular-loading-overlay-http-interceptor/master/dist/angular-loading-overlay-http-interceptor.js"></script>
         <script src="javascripts/app.js"></script>
         <script src="javascripts/constants.js"></script>
@@ -30,7 +30,7 @@
         <header ng-controller="TabCtrl">
             <h2>deresute event calculator</h2>
             <uib-tabset>
-                <uib-tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active" ng-style="{'margin-left' : (t.heading=='Token') ? '25px' : '5px'}"></uib-tab>
+                <uib-tab data="tabs" type="tabs"></uib-tab>
             </uib-tabset>
         </header>
         <section class="container">
@@ -39,11 +39,15 @@
         </section>
         <footer>
             <small class="text-muted">
-              <div ng-controller="ChangelogCtrl" style="display: inline"><a href="#" ng-click="open()">Changelog</a></div>
+                <div ng-controller="ChangelogCtrl" style="display: inline">
+                    <a href="#" ng-click="open()">Changelog</a>
+                </div>
                 &mdash; Issues? Contact
                 <a href="http://twitter.com/aloIaninetales">@aloIaninetales</a>
                 &mdash;
-              <div ng-controller="ResourcesCtrl" style="display: inline"><a href="#" ng-click="open()">Resources used</a></div>
+                <div ng-controller="ResourcesCtrl" style="display: inline">
+                    <a href="#" ng-click="open()">Resources used</a>
+                </div>
             </small>
         </li>
     </footer>

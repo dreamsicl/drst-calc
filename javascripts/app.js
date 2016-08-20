@@ -1,8 +1,11 @@
-var app = angular.module('calc', ['bsLoadingOverlay', 'bsLoadingOverlaySpinJs', 'bsLoadingOverlayHttpInterceptor', 'LocalStorageModule', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
+var app = angular.module('calc', [
+  'bsLoadingOverlay', 'bsLoadingOverlayHttpInterceptor', 'LocalStorageModule',
+  'ui.bootstrap', 'ui.router', 'ngAnimate','ngSanitize','ui.router.tabs']);
 
 app.run(function(bsLoadingOverlayService) {
     bsLoadingOverlayService.setGlobalConfig({
-        templateUrl: 'loading-overlay.html'
+        templateUrl: 'loading-overlay.html',
+        delay: 1000
     });
 });
 
