@@ -142,7 +142,8 @@
                             Status</h3>
                     </div>
                     <div uib-collapse="collapse.status" class="panel-body">
-                        <form class="form-horizontal" role="form" name="status">
+                        <form class="form-horizontal" role="form" name="status" novalidate>
+                          <tt>status: {{status.$error}}</tt>
                             <div class="form-group">
                                 <label class="control-label" for="lvl">Rank:</label>
                                 <input class="col-xs-12" type="number" min="2" name="lvl" ng-model="user.lvl" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
