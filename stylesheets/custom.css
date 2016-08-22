@@ -36,15 +36,12 @@ html {
 }
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 70px;
+    margin-bottom: 30px;
 }
 footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    /* Set the fixed height of the footer here */
-    ``
-    /*height: 30px;*/
     margin: 0px;
     padding: 5px 10px;
     vertical-align: middle;

@@ -26,14 +26,13 @@
         [if lt IE 9]> <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     </head>
 
-    <body ng-app="calc">
-        <header ng-controller="TabCtrl">
+    <body ng-app="calc" ng-controller="TabCtrl" ng-init="init()">
+        <header>
             <h2>deresute event calculator</h2>
-            <uib-tabset>
- <uib-tab ng-repeat="t in tabs" heading="{{t.heading}}" select="go(t.route)" active="t.active" ng-style="{'margin-left' : (t.heading=='Token') ? '25px' : '5px'}"></uib-tab>            </uib-tabset>
         </header>
         <section class="container">
-            <div ui-view></div>
+
+          <tabs data="tabs" type="tabs"></tabs>
 
         </section>
         <footer>

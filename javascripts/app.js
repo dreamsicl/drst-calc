@@ -41,34 +41,53 @@ app.config(function($stateProvider, $urlRouterProvider) {
         });
 });
 
-app.controller('TabCtrl', function($rootScope, $scope, $state) {
+app.controller('TabCtrl', function($rootScope, $scope, $state, localStorageService) {
     $scope.tabs = [{
         heading: "Token",
         route: "token",
-        active: true
     }, {
         heading: "Live Groove",
         route: "groove",
-        active: false
     }, {
         heading: "Live Party",
         route: "party",
-        active: false
-    }, ];
+    }];
 
+    var len = $scope.tabs.length;
+    var tab;
+    $scope.active = function() {
+        for (var i = 0; i < len; i++) {
+            tab = $scope.tabs[i];
+            tab.active = $state.is(tab.route);
+            console.log("active = " + tab.active + " for " + tab.heading);
+
+        };
+    };
     $scope.go = function(route) {
         $state.go(route);
+        $scope.active();
+        console.log('current state = ' + $state.current.name)
+        localStorageService.set('route', route)
     };
 
-    $scope.active = function(route) {
-        return $state.is(route);
-    };
+    // init
+    $scope.init = function() {
+        var localRoute = localStorageService.get('route');
+        $state.go(localRoute);
+        console.log(localRoute + ", type " + typeof(localRoute))
+        console.log('current state = ' + $state.current.name)
 
-    $scope.$on("$stateChangeSuccess", function() {
-        $scope.tabs.forEach(function(tab) {
-            tab.active = $scope.active(tab.route);
-        });
-    });
+        for (var i = 0; i < len; i++) {
+            tab = $scope.tabs[i];
+            tab.active = tab.route == localRoute;
+            console.log(tab)
+            console.log(localRoute)
+            console.log("active = " + tab.active + " for " + tab.heading);
+
+        };
+    }
+
+
 });
 
 app.filter('time', function() {
