@@ -1,10 +1,10 @@
 <div class="panel-group container-fluid row" id="groove" ng-controller="GrooveCtrl">
-  <div class="col-lg-3 alert alert-danger col-padding">
+  <div class="col-lg-12 alert alert-danger">
     This is a work in progress. Basic calculations should be fine, but other functions (input, saving, etc.) will not be as smooth as the Token calculator.
   </div>
     <!--- remaining time -->
     <div class="col-lg-3 col-padding">
-        <form name="timing" class="form-horizontal timing">
+        <form name="timing" class="timing">
 
             <div class="panel" ng-class="timing.$error.required ? 'panel-warning' : 'panel-default'">
                 <div class="panel-heading" ng-click="grooveCollapse.time = !grooveCollapse.time;setLocalCollapse()">
@@ -55,11 +55,9 @@
                     Song Settings</h3>
             </div>
             <div uib-collapse="grooveCollapse.song" class="panel-body">
-                <form class="form-horizontal" style="margin: 0px auto" role="form" name="lives" ng-submit="submit" form-autofill-fix>
-                    <tt>grve:
-                        {{ grve}}</tt>
+                <form style="margin: 0px auto" role="form" name="lives" ng-submit="submit" form-autofill-fix>
                     <div class="form-group col-xs-12">
-                        <label class="control-label">Groove Difficulty:</label>
+                        <label class="control-label">Groove Difficulty:
                         <div class="btn-group btn-group-justified">
                             <label class="btn btn-primary diffs" ng-model="grve.diff" uib-btn-radio="'Debut'" ng-change="updateGrve()">
                                 Debut</label>
@@ -72,7 +70,7 @@
 
                             <label class="btn btn-primary diffs" ng-model="grve.diff" uib-btn-radio="'Master'" ng-change="updateGrve()">
                                 Master/+</label>
-                        </div>
+                        </div></label>
 
                     </div>
 
@@ -98,19 +96,19 @@
                         <div class="form-group">
                             <label>Encore Difficulty<br/>
                                 <div class="btn-group btn-group-justified">
-                                    <label class="btn btn-primary btn-sm" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Debut'">
+                                    <label class="btn btn-primary btn-sm diffs" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Debut'">
                                         Debut</label>
 
-                                    <label class="btn btn-primary btn-sm" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Regular'">
+                                    <label class="btn btn-primary btn-sm diffs" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Regular'">
                                         Regular</label>
 
-                                    <label class="btn btn-primary btn-sm" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Pro'">
+                                    <label class="btn btn-primary btn-sm diffs" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Pro'">
                                         Pro</label>
 
-                                    <label class="btn btn-primary btn-sm" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Master'">
+                                    <label class="btn btn-primary btn-sm diffs" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Master'">
                                         Master</label>
 
-                                    <label class="btn btn-primary btn-sm" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Master+'">
+                                    <label class="btn btn-primary btn-sm diffs" ng-model="encr.diff" ng-change="updateEncr()" uib-btn-radio="'Master+'">
                                         Master+</label>
 
                                 </label>
@@ -191,7 +189,7 @@
                                 <li class="list-group-item">End Rank:
                                     <span class="label label-default pull-right">{{calcEndRank()}}</span>
                                 </li>
-                                <li class="list-group-item">Stamina Deficit:
+                                <li class="list-group-item">Stamina Needed:
                                     <span class="label label-default pull-right">{{calcStamDeficit() | number: 0}}</span>
                                 </li>
                                 <li ng-show="enoughTime()" class="list-group-item">Min. Play Time/Day
