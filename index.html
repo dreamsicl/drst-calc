@@ -17,8 +17,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
         <script src="https://rawgit.com/rpocklin/ui-router-tabs/master/src/ui-router-tabs.js"></script>
         <script src="https://rawgit.com/bsalex/angular-loading-overlay-http-interceptor/master/dist/angular-loading-overlay-http-interceptor.js"></script>
+
         <script src="javascripts/app.js"></script>
-        <script src="javascripts/constants.js"></script>
+                <script src="javascripts/constants.js"></script>
         <link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css">
         <link rel="stylesheet" href="stylesheets/custom.css">
         <link rel="icon" type="image/png" href="favicon.png">
@@ -26,11 +27,11 @@
         [if lt IE 9]> <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     </head>
 
-    <body ng-app="calc" ng-controller="TabCtrl" ng-init="init()">
+    <body ng-app="calc">
         <header>
             <h2>deresute event calculator</h2>
         </header>
-        <section class="container">
+        <section class="container" ng-controller="TabCtrl">
 
           <tabs data="tabs" type="tabs"></tabs>
 
