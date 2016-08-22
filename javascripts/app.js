@@ -1,6 +1,7 @@
 var app = angular.module('calc', [
-  'bsLoadingOverlay', 'bsLoadingOverlayHttpInterceptor', 'LocalStorageModule',
-  'ui.bootstrap', 'ui.router', 'ngAnimate','ngSanitize','ui.router.tabs']);
+    'bsLoadingOverlay', 'bsLoadingOverlayHttpInterceptor', 'LocalStorageModule',
+    'ui.bootstrap', 'ui.router', 'ngAnimate', 'ngSanitize', 'ui.router.tabs'
+]);
 
 app.run(function(bsLoadingOverlayService) {
     bsLoadingOverlayService.setGlobalConfig({
@@ -24,15 +25,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state("default", {
             abstract: true,
             url: "/",
-            templateUrl: "token.html"
+            templateUrl: "groove.html"
         })
         .state("token", {
             url: "/token",
-            templateUrl: "token.html"
+            templateUrl: "groove.html"
         })
         .state("groove", {
             url: "/groove",
-            templateUrl: "foreshadowing.html"
+            templateUrl: "groove.html"
         })
         .state("party", {
             url: "/party",
@@ -273,7 +274,7 @@ app.controller('TokenCtrl', function($scope, $interval, $timeout, Time, $filter,
         }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
         localStorageService.set('user', $scope.user);
-    }
+    };
 
 
     /*********** process input, get relevent constants ******/
@@ -435,7 +436,7 @@ app.controller('TokenCtrl', function($scope, $interval, $timeout, Time, $filter,
     }
 });
 
-app.controller('GrooveCtrl', function($scope, Time, $interval, $timeout, Exp, bsLoadingOverlayService, localStorageService, Encore, $filter) {
+app.controller('GrooveCtrl', function($scope, Time, $interval, $timeout, Exp, bsLoadingOverlayService, localStorageService, Groove, GrveAvg, Encore, $filter) {
     $scope.grooveCollapse = {
         time: false,
         status: false,
@@ -525,11 +526,6 @@ app.controller('GrooveCtrl', function($scope, Time, $interval, $timeout, Exp, bs
     $scope.user = {};
 
     /**** groove settings *****/
-    $scope.grve.diff = "Debut";
-    $scope.grve.score = "S";
-
-    $scope.encr.diff = "Debut";
-    $scope.encr.score = "S";
 
     $scope.applauseLevels = ['Average', '50+']
     for (var i = 49; i > 0; i--) {
@@ -537,6 +533,57 @@ app.controller('GrooveCtrl', function($scope, Time, $interval, $timeout, Exp, bs
     }
     $scope.grve.appl = $scope.applauseLevels[0];
 
+
+    var grveAvg;
+    var grveInfo;
+    var diff;
+    var appl;
+
+    $scope.updateGrve = function() {
+
+        grveAvg = $filter('filter')(GrveAvg, {
+            "Difficulty": $scope.grve.diff
+        })[0];
+
+        if ($scope.grve.appl == "50+") appl = 50;
+        else appl = $scope.grve.appl;
+        grveInfo = $filter('filter')(Groove, {
+            "Applause Level": appl
+        })[0];
+
+        for (var key in grveInfo) {
+            if (key == $scope.grve.diff) {
+                $scope.grve.ptsEarned = grveInfo[key];
+                break;
+            }
+        };
+
+        for (var key in grveAvg) {
+            if (key == "Avg. Points") $scope.grve.avgPtsEarned = grveAvg[key];
+            if (key == "Avg. EXP") $scope.grve.avgEXP = grveAvg[key];
+        }
+        // stam per grve
+        diff = $scope.grve.diff;
+        if (diff == "Debut") $scope.grve.stam = 20;
+        else if (diff == "Regular") $scope.grve.stam = 30;
+        else if (diff == "Pro") $scope.grve.stam = 40;
+        else if (diff == "Master") $scope.grve.stam = 50;
+
+
+        localStorageService.set('grve', $scope.grve);
+
+    }
+
+    var encrInfo;
+    $scope.updateEncr = function() {
+        encrInfo = $filter('filter')(Encore, {
+            "Difficulty": $scope.encr.diff
+        })[0];
+        for (var key in encrInfo) {
+            if (key == $scope.encr.score) $scope.encr.ptsEarned = encrInfo[key];
+        }
+        localStorageService.set('encr', $scope.encr);
+    }
 
 
 
@@ -567,6 +614,93 @@ app.controller('GrooveCtrl', function($scope, Time, $interval, $timeout, Exp, bs
         }
         $scope.user.percentComplete = $scope.user.pts / $scope.user.end;
         localStorageService.set('user', $scope.user);
+    };
+
+    var formInit = function() {
+        var localGrve = localStorageService.get('grve');
+        var localEncr = localStorageService.get('encr');
+        var localUser = localStorageService.get('user');
+
+        if (localGrve == null) {
+            $scope.grve.diff = "Pro";
+            $scope.grve.score = "S";
+            $scope.updateGrve();
+        } else {
+            $scope.grve = localGrve;
+        }
+
+        if (localEncr == null) {
+            $scope.encr.diff = "Pro";
+            $scope.encr.score = "S";
+            $scope.updateEncr();
+        } else {
+            $scope.encr = localEncr;
+        }
+
+        if (localUser == null) {
+            $scope.user.lvl = 2;
+            $scope.user.exp = 0;
+            $scope.user.pts = 0;
+            $scope.user.end = 10000;
+            $scope.updateStatus();
+        } else {
+            $scope.user = localUser;
+        }
+    };
+
+    formInit();
+
+    /**** results ****/
+    $scope.calcGroovesNeeded = function() {
+        var grvePts;
+        if ($scope.grve.appl == "Average") grvePts = $scope.grve.avgPtsEarned;
+        else grvePts = $scope.grve.ptsEarned;
+        return Math.max(0, Math.ceil(($scope.user.end - $scope.user.pts) / ($scope.encr.ptsEarned + grvePts)))
+    }
+
+    $scope.calcPlayTime = function() {
+        var grveNeed = $scope.calcGroovesNeeded();
+        return grveNeed * 2.25 * 4;
+    }
+
+    // time left/play time
+    $scope.enoughTime = function() {
+        var playTime = $scope.calcPlayTime();
+        return playTime < ($scope.time.remainingMs / 1000 / 60);
+    }
+
+    $scope.calcPointsPerDay = function() {
+        var daysLeft = Math.floor($scope.time.remainingMs / 1000 / 60 / 60 / 24);
+        return ($scope.user.end - $scope.user.pts) / daysLeft;
+    };
+    $scope.calcNaturalPts = function() {
+        var naturalGrvePlays = Math.floor($scope.time.naturalStam / $scope.grve.stam);
+        return naturalGrvePlays * $scope.grve.ptsEarned;
+    };
+    $scope.calcEndRank = function() {
+        var gPlay = $scope.calcGroovesNeeded();
+        var expGain = gPlay * $scope.grve.avgEXP;
+        var endExp = $scope.user.totalExp + expGain;
+        var endRank = $scope.user.lvl;
+        for (var i = 0; i < Exp.length; i++) // iterate over all lvls
+        {
+            if (Exp[i]["Total EXP"] > endExp) {
+                endRank = Exp[i - 1]["Level"];
+                break;
+            }
+        }
+        return endRank;
+    }
+
+    $scope.calcStamDeficit = function() {
+        var gPlay = $scope.calcGroovesNeeded();
+        var endRank = $scope.calcEndRank();
+
+        var staFromLevelUp = 0;
+        for (var i = $scope.user.lvl + 1; i <= endRank; i++) {
+            staFromLevelUp += Exp[i - 1]["Stamina"];
+        }
+        return Math.max($scope.grve.stam * gPlay - staFromLevelUp - $scope.time.naturalStam, 0);
     }
 
 });
