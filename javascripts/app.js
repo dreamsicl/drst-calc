@@ -22,6 +22,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("");
 
     $stateProvider
+        .state("default", {
+          url: '',
+          templateUrl: "token.html"
+        })
         .state("token", {
             url: "/token",
             templateUrl: "token.html"
