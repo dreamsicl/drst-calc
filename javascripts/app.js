@@ -19,14 +19,9 @@ app.config(function(localStorageServiceProvider) {
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("");
 
     $stateProvider
-        .state("default", {
-            abstract: true,
-            url: "/",
-            templateUrl: "token.html"
-        })
         .state("token", {
             url: "/token",
             templateUrl: "token.html"
@@ -45,6 +40,7 @@ app.controller('TabCtrl', function($rootScope, $scope, $state) {
     $scope.tabs = [{
         heading: "Token",
         route: "token",
+
     }, {
         heading: "Live Groove",
         route: "groove",
