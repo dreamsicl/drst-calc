@@ -23,8 +23,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state("default", {
-          url: '',
-          templateUrl: "token.html"
+            url: '',
+            templateUrl: "token.html"
         })
         .state("token", {
             url: "/token",
@@ -427,10 +427,7 @@ app.controller('GrooveCtrl', function($scope, Time, $interval, $timeout, Exp, bs
         results: false
     };
 
-    var localCollapse = localStorageService.get('grooveCollapse');
-    if (localCollapse != null) {
-        $scope.grooveCollapse = localCollapse;
-    }
+    $scope.grooveCollapse = localStorageService.get('grooveCollapse');
 
     $scope.setLocalCollapse = function() {
         localStorageService.set('grooveCollapse', $scope.grooveCollapse);
