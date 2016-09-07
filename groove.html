@@ -144,7 +144,7 @@
                         Status</h3>
                 </div>
                 <div uib-collapse="grooveCollapse.status" class="panel-body">
-                    <form name="status" class="form-horizontal" role="form">
+                    <form name="status" role="form">
                         <div class="form-group">
                             <label class="control-label" for="lvl">Rank:</label>
                             <input class="col-xs-12" type="number" min="2" name="lvl" ng-model="user.lvl" ng-change="updateStatus()" reg-ex-input reg-ex="^[0-9]*$" required>
