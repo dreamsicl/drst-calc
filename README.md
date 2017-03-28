@@ -7,3 +7,5 @@ A points calculator for Token and Live Groove events from [The iDOLM@STER Cinder
 * automatically grabs current event data from [The Starlight Database's API](https://starlight.kirara.ca/)
 * mobile-friendly theme
 
+## To-do:
+- [ ] thorough testing on "Results" output
